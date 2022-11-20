@@ -1,0 +1,58 @@
+import 'dart:async';
+import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import '../../../app/models/games.dart';
+import '../../../app/routes/routes.dart';
+import '../../../app/services/auth_service.dart';
+
+
+class GameStartScreenController extends GetxController
+    with GetSingleTickerProviderStateMixin {
+  AnimationController? animation;
+  final DgAuthService dgAuthService = DgAuthService();
+  Rxn<GameModel> gameModel = Rxn<GameModel>();
+  Rx<int> countdown = 2.obs;
+  Timer? _timer;
+  RxBool gameStarted = false.obs;
+
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    gameModel(Get.arguments);
+    animation =
+        AnimationController(vsync: this, duration: Duration(seconds: 5));
+    Future.delayed(const Duration(milliseconds: 1200), timerCountDown);
+    super.onInit();
+  }
+
+  timerCountDown() {
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(oneSec, (timer) {
+      if (countdown.value == 0) {
+        _timer?.cancel();
+        gameStarted(true);
+        Get.offNamed(DgRoutes.authRoute(DgRoutes.activeGamePlayScreen),
+            arguments: {'url': gameModel.value?.url});
+      } else {
+        countdown.value--;
+      }
+    });
+  }
+
+  void goToGame() {
+    Get.offNamed(DgRoutes.authRoute(DgRoutes.activeGamePlayScreen),
+        arguments: {'url': gameModel.value?.url});
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    _timer?.cancel();
+    animation?.dispose();
+  }
+}
