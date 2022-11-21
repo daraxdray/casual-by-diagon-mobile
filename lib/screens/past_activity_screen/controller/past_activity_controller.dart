@@ -2,9 +2,10 @@
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
-import '../../../models/pagination_filter.dart';
-import '../../../providers/user_provider.dart';
-import '../../../services/auth_service.dart';
+import '../../../app/models/pagination_filter.dart';
+import '../../../app/providers/user_provider.dart';
+import '../../../app/services/auth_service.dart';
+import '../models/past_activity_item_model.dart';
 import '../models/past_activity_model.dart';
 
 class PastActivityController extends GetxController {
@@ -17,6 +18,7 @@ class PastActivityController extends GetxController {
   int get limit => _paginationFilter.value.limit ?? 15;
   int get _page => _paginationFilter.value.page ?? 1;
   bool get lastPage => _lastPage.value;
+  RxBool isLoading = false.obs;
   @override
   void onReady() {
     super.onReady();
@@ -30,14 +32,16 @@ class PastActivityController extends GetxController {
 
   @override
   void onInit() async{
-
     ever(_paginationFilter, (_) => _getAllActivities());
     _changePaginationFilter(1, 12);
     super.onInit();
   }
 
 void _getAllActivities()async {
-  pastActivityList.addAll(await userProvider.getActivities(_paginationFilter.value));
+    isLoading(true);
+   List<PastActivityItemModel> result = await userProvider.getActivities(_paginationFilter.value);
+  pastActivityList.addAll(result);
+  isLoading(false);
   if(pastActivityList.value.isEmpty){
     _lastPage(true);
   }

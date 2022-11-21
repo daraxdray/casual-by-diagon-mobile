@@ -1,15 +1,15 @@
-export './past_activities.dart';
-export './controller/past_activity_controller.dart';
-export './binding/past_activity_binding.dart';
+export './high_score_screen.dart';
+export './controller/high_score_controller.dart';
+export './binding/highscore_binding.dart';
 // import 'package:get/get.dart';
 // import '../../widgets/common_image_view.dart';
 // import '../past_activity_screen/widgets/past_activity_item_widget.dart';
-// import 'controller/past_activity_controller.dart';
+// import 'controller/high_score_controller.dart';
 // import 'models/past_activity_item_model.dart';
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 //
-// class PastActivityScreen extends GetWidget<PastActivityController> {
+// class PastActivityScreen extends GetWidget<HighScoreController> {
 //
 //   @override
 //   Widget build(BuildContext context) {

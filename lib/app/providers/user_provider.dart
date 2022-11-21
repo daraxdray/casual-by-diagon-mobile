@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import '../../screens/auth/login/models/log_in_model.dart';
 import '../../screens/auth/sign_up_two_screen/models/sign_up_two_model.dart';
+import '../../screens/past_activity_screen/models/past_activity_item_model.dart';
 import '../../widgets/snackbar.dart';
 import '../models/game_result_model.dart';
 import '../models/pagination_filter.dart';
@@ -54,6 +55,13 @@ class UserProvider extends GetConnect with DgMixing{
     });
       return response != null;
   }
+  Future<bool> updateProfile(Map<String,String> data) async {
+    var response = await dgResponse(() async {
+      return networkService.post(
+        DgApiRoutes.profile, body: data);
+    });
+      return response != null;
+  }
 
   Future<bool>verifyEmail(String code) async {
     var respon = await dgResponse(() async =>networkService.post(DgApiRoutes.verify, body: {"code":code,"userID":dgAuthService.getAuthUser().id})
@@ -72,6 +80,14 @@ class UserProvider extends GetConnect with DgMixing{
 
 
   Future<UserModel> getProfile() async {
+    Map<String,dynamic> result = await networkService.get(
+        "${DgApiRoutes.profile}${dgAuthService.getAuthUser().id}",);
+    dgAuthService.setAuthProfile(result);
+    result['avatar'] = dgAuthService.userData.read("avatar") ?? "assets/img/avatars/avatar72.png";
+      return UserModel.profileFromJson(result);
+  }
+
+  Future<UserModel> getHighScore() async {
     Map<String,dynamic> result = await networkService.get(
         "${DgApiRoutes.profile}${dgAuthService.getAuthUser().id}",);
     dgAuthService.setAuthProfile(result);
@@ -107,13 +123,13 @@ class UserProvider extends GetConnect with DgMixing{
   }
 
 
-  // Future<List<PastActivityItemModel>> getActivities(PaginationFilter filter) async {
-  //
-  //
-  //   List<dynamic> result = await networkService.get(
-  //     "${DgApiRoutes.activity}${dgAuthService.getAuthUser().id}?offset=${filter.page}&limit=${filter.limit}",);
-  //   return  result.map((e) => PastActivityItemModel.fromJson(e)).toList();
-  // }
+  Future<List<PastActivityItemModel>> getActivities(PaginationFilter filter) async {
+
+
+    List<dynamic> result = await networkService.get(
+      "${DgApiRoutes.activity}${dgAuthService.getAuthUser().id}?offset=${filter.page}&limit=${filter.limit}",);
+    return  result.map((e) => PastActivityItemModel.fromJson(e)).toList();
+  }
 
   Future<dynamic> checkNameAvailability(String name) async {
     Map<String,dynamic>? result = await dgResponse(() async => await networkService.post(

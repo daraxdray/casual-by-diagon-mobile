@@ -6,6 +6,8 @@ import '../../screens/game_over_dialog/index.dart';
 import '../../screens/game_rules/index.dart';
 import '../../screens/game_start_screen_screen/index.dart';
 import '../../screens/home/home.dart';
+import '../../screens/past_activity_screen/index.dart';
+import '../../screens/high_score_screen/index.dart';
 import '../../screens/profile/index.dart';
 import '../middleware/auth_gaurd.dart';
 import './../../screens/auth/add_username/add_username_screen.dart';
@@ -50,8 +52,9 @@ static String logInScreen = '/login';
 static String selectAvatarScreen = '/select_avatar_screen';
 static String gameHomeScreen = '/home';
 static String pastActivityScreen = '/past_activity_screen';
+static String highScoreScreen = '/high_score';
 static String walletScreen = '/wallet_screen';
-static String nameEditingScreen = '/name_editing_screen';
+static String editProfileScreen = '/name_editing_screen';
 static String gamePlayScreenRemarkScreen = '/game_play_screen_remark_screen';
 static String gameRulesScreen = '/game_details_screen';
 static String gamePlayGameOver = '/game_play_game_over';
@@ -87,12 +90,13 @@ static List<GetPage> pages = [
         GetPage(name:gameStart, page: ()=> GameStartScreen(),transition: Transition.rightToLeft, bindings: [ GameStartBinding()],),
         GetPage(name:activeGamePlayScreen, page: ()=>const  ActiveGamePlayScreen(),transition: Transition.rightToLeftWithFade, bindings:[ ActiveGamePlayBinding() ]),
         GetPage(name:gamePlayGameOver, page: ()=> GamePlayScreenGameOverDialog(),transition: Transition.rightToLeftWithFade,),
+        GetPage(name:editProfileScreen, page: ()=> EditProfileView(),transition: Transition.rightToLeftWithFade, bindings: [ EditProfileBinding()]),
+        GetPage(name:pastActivityScreen, page: ()=> PastActivitiesView(),transition: Transition.rightToLeftWithFade, bindings: [ PastActivityBinding()]),
+        GetPage(name:highScoreScreen, page: ()=> HighScoreView(),transition: Transition.rightToLeftWithFade, bindings: [ HighScoreBinding()]),
  //        GetPage(name:leaderBoardScreen, page: ()=> LeaderBoardScreen(),transition: Transition.rightToLeftWithFade, bindings: [ LeaderBoardBinding()]),
  //        GetPage(name:gamePlayScreenRemarkScreen, page: ()=> GamePlayScreenRemarkScreen(),transition: Transition.rightToLeftWithFade, bindings: [ GamePlayScreenRemarkBinding()]),
  //        GetPage(name:gameRankingScreen, page: ()=> GameRankingScreen(),transition: Transition.rightToLeftWithFade, bindings: [ GameRankingBinding()]),
- //        GetPage(name:nameEditingScreen, page: ()=> NameEditingScreen(),transition: Transition.rightToLeftWithFade, bindings: [ NameEditingBinding()]),
  //        GetPage(name:walletScreen, page: ()=> WalletScreen(),transition: Transition.rightToLeftWithFade, bindings: [ WalletBinding()]),
- //        GetPage(name:pastActivityScreen, page: ()=> PastActivityScreen(),transition: Transition.rightToLeftWithFade, bindings: [ PastActivityBinding()]),
  //        GetPage(name:refillScreen, page: ()=> RefillScreen(),transition: Transition.rightToLeftWithFade, bindings: [ RefillBinding()]),
  //        GetPage(name:noInternet, page: ()=> const NoInternetScreen(),transition: Transition.rightToLeftWithFade,),
  //      GetPage(name: transactionHistoryScreen,

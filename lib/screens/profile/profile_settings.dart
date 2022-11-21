@@ -1,7 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+import '../../app/routes/routes.dart';
 import '../../widgets/index.dart';
 import 'controller/profile_settings_controller.dart';
 
@@ -81,7 +84,9 @@ class ProfileSettingView extends GetView<ProfileSettingsController> {
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Row(children: [
-              Image.asset('assets/img/user_profile.png', height: 33, width: 33),
+              Image.asset(controller
+                  .authService
+                  .getAvatar(), height: 33, width: 33),
               const SizedBox(width: 10),
               AppText.text('Name & Avatar', fontWeight: FontWeight.w500)
             ]),
@@ -103,7 +108,7 @@ class ProfileSettingView extends GetView<ProfileSettingsController> {
                             const BoxConstraints(minWidth: 70, minHeight: 35.0),
                         alignment: Alignment.center,
                         child: AppText.text('Edit', fontSize: 15))),
-                onPressed: () {})
+                onPressed: () =>Get.toNamed(DgRoutes.authRoute(DgRoutes.editProfileScreen)))
           ])),
       gradientContainer(context,
           child:

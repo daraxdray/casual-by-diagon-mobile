@@ -324,7 +324,7 @@ class ProfileView extends GetView<UserProfileController> {
         padding: const EdgeInsets.symmetric(horizontal: 20)
             .add(const EdgeInsets.only(top: 10)),
         child: AppButton.button(
-            onPressed: () {},
+            onPressed: () => Get.toNamed(DgRoutes.authRoute(DgRoutes.highScoreScreen)),
             backgroundColor: const Color(0xFF251654),
             child: Row(children: [
               SvgPicture.asset('assets/svg/high_score.svg'),
@@ -338,7 +338,7 @@ class ProfileView extends GetView<UserProfileController> {
         padding: const EdgeInsets.symmetric(horizontal: 20)
             .add(const EdgeInsets.only(top: 10)),
         child: AppButton.button(
-            onPressed: () {},
+            onPressed: () =>Get.toNamed(DgRoutes.authRoute(DgRoutes.pastActivityScreen)),
             backgroundColor: const Color(0xFF123732),
             child: Row(children: [
               SvgPicture.asset('assets/svg/past_activity.svg'),

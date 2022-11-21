@@ -2,11 +2,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 import '../../app/utils/colors.dart';
 import '../../widgets/index.dart';
+import 'controller/high_score_controller.dart';
 
-class HighScoreView extends StatelessWidget {
+class HighScoreView extends GetWidget<HighScoreController> {
   const HighScoreView({Key? key}) : super(key: key);
 
   @override

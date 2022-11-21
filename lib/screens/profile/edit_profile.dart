@@ -1,10 +1,13 @@
 import 'dart:ui';
+import 'package:casual/widgets/full_page_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../app/utils/index.dart';
-import '../widgets/index.dart';
+import 'package:get/get.dart';
+import '../../app/utils/index.dart';
+import '../../widgets/index.dart';
+import 'controller/edit_profile_controller.dart';
 
-class EditProfileView extends StatelessWidget {
+class EditProfileView extends GetWidget<EditProfileController> {
   const EditProfileView({Key? key}) : super(key: key);
 
   @override
@@ -14,29 +17,38 @@ class EditProfileView extends StatelessWidget {
         body: SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: Stack(children: [
-              SingleChildScrollView(
-                  padding: const EdgeInsets.only(bottom: 40),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(width: MediaQuery.of(context).size.width),
-                        title(context),
-                        editProfileImage(context),
-                        updateUserinfo(context)
-                      ])),
-              SizedBox(
-                  child: ClipRect(
-                      child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                          child:
-                              Column(mainAxisSize: MainAxisSize.min, children: [
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).padding.top)),
-                            profileAppBar(context),
-                          ]))))
-            ])));
+            child: Obx(() => FullScreenLoader(
+                isloading: controller.loading.value,
+                child: Stack(
+                  children: [
+                    SingleChildScrollView(
+                        padding: const EdgeInsets.only(bottom: 40),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                  width: MediaQuery.of(context).size.width),
+                              title(context),
+                              editProfileImage(context),
+                              updateUserinfo(context)
+                            ])),
+                    SizedBox(
+                        child: ClipRect(
+                            child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                    sigmaX: 10.0, sigmaY: 10.0),
+                                child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              top: MediaQuery.of(context)
+                                                  .padding
+                                                  .top)),
+                                      profileAppBar(context),
+                                    ]))))
+                  ],
+                )))));
   }
 
   Widget profileAppBar(context) {
@@ -75,13 +87,13 @@ class EditProfileView extends StatelessWidget {
               height: 122,
               child: Stack(
                 children: [
-                  const Positioned(
+                  Positioned(
                       width: 122,
                       top: 0,
                       right: 0,
                       child: Image(
                           fit: BoxFit.cover,
-                          image: AssetImage('assets/img/user_profile.png'),
+                          image: AssetImage(controller.authService.getAvatar()),
                           height: 122,
                           width: 122)),
                   Positioned(
@@ -97,55 +109,70 @@ class EditProfileView extends StatelessWidget {
   Widget updateUserinfo(context) {
     return Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, top: 40),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(children: [
-              Expanded(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20),
-                  AppText.text('First Name',
-                      color: AppColors.mutedText,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15),
-                  const SizedBox(height: 8),
-                  AppTextInput.input(
-                      fillColor: AppColors.accent,
-                      cursorColor: Colors.white,
-                      textColor: Colors.white)
-                ],
-              )),
-              const SizedBox(width: 20),
-              Expanded(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+        child: Form(
+          key: controller.formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(children: [
+                Expanded(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     const SizedBox(height: 20),
-                    AppText.text('Last Name',
+                    AppText.text('First Name',
                         color: AppColors.mutedText,
                         fontWeight: FontWeight.w600,
                         fontSize: 15),
                     const SizedBox(height: 8),
                     AppTextInput.input(
+                        key: controller.fNameField,
+                        onChanged: (val) =>
+                            controller.fNameField.currentState!.validate(),
+                        controller: controller.firstNameCtr,
                         fillColor: AppColors.accent,
                         cursorColor: Colors.white,
                         textColor: Colors.white)
-                  ]))
-            ]),
-            const SizedBox(height: 20),
-            AppText.text('Username',
-                color: AppColors.mutedText,
-                fontWeight: FontWeight.w600,
-                fontSize: 15),
-            const SizedBox(height: 8),
-            AppTextInput.input(
-                fillColor: AppColors.accent,
-                cursorColor: Colors.white,
-                textColor: Colors.white),
-            saveChanges(context)
-          ],
+                  ],
+                )),
+                const SizedBox(width: 20),
+                Expanded(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                      const SizedBox(height: 20),
+                      AppText.text('Last Name',
+                          color: AppColors.mutedText,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15),
+                      const SizedBox(height: 8),
+                      AppTextInput.input(
+                          key: controller.lNameField,
+                          onChanged: (val) =>
+                              controller.lNameField.currentState!.validate(),
+                          controller: controller.lastNameCtr,
+                          fillColor: AppColors.accent,
+                          cursorColor: Colors.white,
+                          textColor: Colors.white)
+                    ]))
+              ]),
+              const SizedBox(height: 20),
+              AppText.text('Username',
+                  color: AppColors.mutedText,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15),
+              const SizedBox(height: 8),
+              AppTextInput.input(
+                  key: controller.uNameField,
+                  onChanged: (val) =>
+                      controller.uNameField.currentState!.validate(),
+                  controller: controller.usernameCtr,
+                  fillColor: AppColors.accent,
+                  cursorColor: Colors.white,
+                  textColor: Colors.white),
+              saveChanges(context)
+            ],
+          ),
         ));
   }
 
@@ -172,6 +199,6 @@ class EditProfileView extends StatelessWidget {
                     alignment: Alignment.center,
                     child: AppText.text('Save changes',
                         fontSize: 15, fontWeight: FontWeight.w600))),
-            onPressed: () {}));
+            onPressed: ()=>controller.submitData()));
   }
 }

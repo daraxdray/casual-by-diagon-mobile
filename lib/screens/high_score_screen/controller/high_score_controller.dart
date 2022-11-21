@@ -3,12 +3,13 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 import '../../../app/models/pagination_filter.dart';
+import '../../../app/models/user.dart';
 import '../../../app/providers/user_provider.dart';
 import '../../../app/services/auth_service.dart';
 import '../models/past_activity_item_model.dart';
-import '../models/past_activity_model.dart';
+import '../models/high_score_model.dart';
 
-class PastActivityController extends GetxController {
+class HighScoreController extends GetxController {
   Rx<PastActivityModel> pastActivityModelObj = PastActivityModel().obs;
   RxList pastActivityList = [].obs;
   final UserProvider userProvider = UserProvider();
@@ -32,15 +33,16 @@ class PastActivityController extends GetxController {
 
   @override
   void onInit() async{
-    ever(_paginationFilter, (_) => _getAllActivities());
+    ever(_paginationFilter, (_) => _getAllHighScore());
     _changePaginationFilter(1, 12);
     super.onInit();
   }
 
-void _getAllActivities()async {
+void _getAllHighScore()async {
     isLoading(true);
-   List<PastActivityItemModel> result = await userProvider.getActivities(_paginationFilter.value);
-  pastActivityList.addAll(result);
+   UserModel result = await userProvider.getHighScore();
+
+  // pastActivityList.addAll(result);
   isLoading(false);
   if(pastActivityList.value.isEmpty){
     _lastPage(true);

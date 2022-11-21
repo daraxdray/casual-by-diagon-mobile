@@ -119,13 +119,13 @@ class AllGamesView extends StatelessWidget {
                       ],
                     )))),
         const SizedBox(height: 20),
-        TextButton(
-            onPressed: () {},
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              SvgPicture.asset('assets/svg/circle_right.svg'),
-              const SizedBox(width: 5),
-              const Text('See More', style: TextStyle(color: Colors.white))
-            ]))
+        // TextButton(
+        //     onPressed: () {},
+        //     child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        //       SvgPicture.asset('assets/svg/circle_right.svg'),
+        //       const SizedBox(width: 5),
+        //       const Text('See More', style: TextStyle(color: Colors.white))
+        //     ]))
       ],
     );
   }

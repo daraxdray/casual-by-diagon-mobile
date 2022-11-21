@@ -11,7 +11,11 @@ abstract class DgMixing {
 
       return result;
     }on BadRequestException catch(resp, cust) {
+      if(resp.response.runtimeType != String){
+      failedSnack("Error",resp.response['message'][0]);
+      }else{
       failedSnack("Error",resp.response['message'],);
+      }
       return null;
     }on UnknownResource catch(resp, cust) {
       failedSnack("Error",resp.response['message'],);
