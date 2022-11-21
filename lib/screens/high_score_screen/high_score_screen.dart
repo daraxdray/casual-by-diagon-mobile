@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../app/utils/colors.dart';
-import '../widgets/index.dart';
+import '../../app/utils/colors.dart';
+import '../../widgets/index.dart';
 
 class HighScoreView extends StatelessWidget {
   const HighScoreView({Key? key}) : super(key: key);
