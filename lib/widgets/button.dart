@@ -13,6 +13,7 @@ class AppButton {
       bool? isLoading,
       BorderSide? borderSide,
       BorderRadiusGeometry? borderRadius,
+        BoxDecoration? decoration,
       EdgeInsetsGeometry? padding}) {
     return TextButton(
         style: TextButton.styleFrom(
@@ -31,7 +32,9 @@ class AppButton {
             child: const CircularProgressIndicator(
               strokeWidth: 1.4,
               color: Colors.white,
-            ))
+            ),
+          decoration: decoration
+        )
             : child);
   }
 }

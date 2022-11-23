@@ -79,6 +79,8 @@ class CustomButton extends StatelessWidget {
     switch (padding) {
       case ButtonPadding.PaddingAll11:
         return const EdgeInsets.all(11);
+      case ButtonPadding.PaddingAll8:
+        return const EdgeInsets.all(8);
       case ButtonPadding.PaddingAll19:
         return EdgeInsets.all(
           19,
@@ -452,6 +454,7 @@ enum ButtonShape {
 enum ButtonPadding {
   PaddingAll16,
   PaddingAll11,
+  PaddingAll8,
   PaddingAll19,
   PaddingAll24,
   PaddingAll25,

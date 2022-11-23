@@ -6,6 +6,7 @@ import '../../screens/game_over_dialog/index.dart';
 import '../../screens/game_rules/index.dart';
 import '../../screens/game_start_screen_screen/index.dart';
 import '../../screens/home/home.dart';
+import '../../screens/navbar.dart';
 import '../../screens/past_activity_screen/index.dart';
 import '../../screens/high_score_screen/index.dart';
 import '../../screens/profile/index.dart';
@@ -81,7 +82,7 @@ static List<GetPage> pages = [
  // GetPage(name:updateScreen, page: ()=> UpdateScreen(),transition: Transition.fadeIn, bindings: [UpdateBinding()]),
  GetPage(name:verifyEmail, page: ()=> OtpView(),transition: Transition.downToUp, bindings: [ VerifyEmailBinding()]),
  //
- GetPage(name:gameHomeScreen, page: ()=> HomeView(),transition: Transition.size,
+ GetPage(name:gameHomeScreen, page: ()=> const NavbarView(),transition: Transition.size,
      middlewares: [AuthGuard()],
      children: [
         GetPage(name:gameRulesScreen, page: ()=> RulesView(),transition: Transition.rightToLeft, bindings: [ GamePlayBinding()]),

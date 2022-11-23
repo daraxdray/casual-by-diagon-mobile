@@ -53,7 +53,7 @@ class AllGamesView extends StatelessWidget {
                               const SizedBox(
                                 height: 10,
                               ),
-                              playerIcons(context, "${gameList[index].players}")
+                              playerIcons(context, gameList[index])
                             ])),
                         // TextButton(
                         //     onPressed: () {},
@@ -65,7 +65,9 @@ class AllGamesView extends StatelessWidget {
                         //             fontWeight: FontWeight.bold))),
                         CustomButton(
                           width: 80,
+                          shape: ButtonShape.RoundedBorder5,
                           padding: ButtonPadding.PaddingAll11,
+
                           variant: ButtonVariant
                               .GradientLightgreen700Lightgreen400,
                           text: "lbl_play".tr,
@@ -73,7 +75,8 @@ class AllGamesView extends StatelessWidget {
                             left: 10,
                             bottom: 1,
                           ),
-                          onTap: ()=>Get.toNamed(DgRoutes.authRoute(DgRoutes.gameRulesScreen),arguments:{'gameId':gameList[index].sId}),
+                          onTap: ()=>Get.toNamed(DgRoutes.authRoute(DgRoutes.gameRulesScreen), arguments:
+                          {"gameId": gameList[index].sId , "image": gameList[index].image}),
                         ),
 
                       ],

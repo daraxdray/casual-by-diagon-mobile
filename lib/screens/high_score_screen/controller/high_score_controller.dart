@@ -11,7 +11,7 @@ import '../models/high_score_model.dart';
 
 class HighScoreController extends GetxController {
   Rx<PastActivityModel> pastActivityModelObj = PastActivityModel().obs;
-  RxList pastActivityList = [].obs;
+  RxList highScoreList = [].obs;
   final UserProvider userProvider = UserProvider();
   final DgAuthService dgAuth = DgAuthService();
   final _paginationFilter = PaginationFilter().obs;
@@ -40,16 +40,15 @@ class HighScoreController extends GetxController {
 
 void _getAllHighScore()async {
     isLoading(true);
-   UserModel result = await userProvider.getHighScore();
-
-  // pastActivityList.addAll(result);
+   dynamic result = await userProvider.getHighScore();
+  highScoreList.addAll(result);
   isLoading(false);
-  if(pastActivityList.value.isEmpty){
+  if(highScoreList.value.isEmpty){
     _lastPage(true);
   }
 }
   void changeTotalPerPage(int limitValue) {
-    pastActivityList.clear();
+    highScoreList.clear();
     _lastPage.value = false;
     _changePaginationFilter(1, limitValue);
   }

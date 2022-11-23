@@ -63,7 +63,8 @@ class PastActivitiesView extends GetWidget<PastActivityController> {
                                      Row(children: [
                                        ClipRRect(
                                            borderRadius: BorderRadius.circular(10),
-                                           child: CommonImageView(url: model.name,
+                                           child: CommonImageView(
+                                               imagePath: "assets/img/${model.name?.toLowerCase().replaceAll(" ", "_")}.jpg",
                                                height: 40, width: 40, fit: BoxFit.cover)),
                                        const SizedBox(width: 10),
                                        Column(
@@ -95,7 +96,7 @@ class PastActivitiesView extends GetWidget<PastActivityController> {
               SizedBox(
                   child: ClipRect(
                       child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
+                          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                           child:
                           Column(mainAxisSize: MainAxisSize.min, children: [
                             Padding(

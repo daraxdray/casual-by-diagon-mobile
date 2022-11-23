@@ -6,6 +6,8 @@ class DgApiRoutes {
  static String resendVerification = 'auth/resend-verification-code';
  static String checkUsername = 'auth/username/';
  static String getGameList = 'games';
+ static String topGameList = 'games/top-games';
+ static String slideGameList = 'games/slide-games';
  static String getGameById = 'games/';
  static String profile = 'profile/';
  static String activity = 'activity/';

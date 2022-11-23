@@ -42,13 +42,13 @@ class DailyChallengeView extends StatelessWidget {
                               height: 140, width: 140, fit: BoxFit.fill),
                         ),
                          const SizedBox(height: 20,),
-                         Text("${gameList[index].title}",
+                         Text("${gameList[index].title?.capitalize}",
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18)),
                         const SizedBox(height: 10),
-                        playerIcons(context)
+                        playerIcons(context, gameList[index])
                       ],
                     ))):
             ListView.separated(
@@ -70,55 +70,5 @@ class DailyChallengeView extends StatelessWidget {
                     ))))
       ],
     );
-  }
-
-  Widget playerIcons(context) {
-    return Row(children: [
-      SizedBox(
-          height: 18,
-          width: 54,
-          child: Stack(children: [
-            Positioned(
-                left: 30,
-                child: Container(
-                  height: 18,
-                  width: 18,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black,
-                      ),
-                      borderRadius: BorderRadius.circular(100),
-                      image: const DecorationImage(
-                          image: AssetImage('assets/img/user_profile.png'))),
-                )),
-            Positioned(
-                left: 15,
-                child: Container(
-                  height: 18,
-                  width: 18,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black,
-                      ),
-                      borderRadius: BorderRadius.circular(100),
-                      image: const DecorationImage(
-                          image: AssetImage('assets/img/user_profile.png'))),
-                )),
-            Positioned(
-                left: 0,
-                child: Container(
-                  height: 18,
-                  width: 18,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black,
-                      ),
-                      borderRadius: BorderRadius.circular(100),
-                      image: const DecorationImage(
-                          image: AssetImage('assets/img/user_profile.png'))),
-                )),
-          ])),
-      const Text('56', style: TextStyle(color: Colors.white))
-    ]);
   }
 }

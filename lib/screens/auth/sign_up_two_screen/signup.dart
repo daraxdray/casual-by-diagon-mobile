@@ -122,12 +122,36 @@ const SignupView({Key? key}) : super(key: key);
                       fontSize: 11,
                       fontWeight: FontWeight.w500),
                   const SizedBox(height: 30),
-              AppButton.button(
-                      child: AppText.text('Next',
-                          fontSize: 15, fontWeight: FontWeight.w600),
-                      minimumSize:
-                      Size(MediaQuery.of(context).size.width - 40, 55),
-                      onPressed: ()=> controller.signUp()),
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      // margin: const EdgeInsets.only(top: 40, bottom: 40),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: AppButton.button(
+                          padding: const EdgeInsets.all(0),
+                          backgroundColor: Colors.transparent,
+                          child: Ink(
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color(0xFFFF0101),
+                                      Color(0xFFFF6363)
+                                    ]),
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(8.0)),
+                              ),
+                              child: Container(
+                                  constraints: BoxConstraints(
+                                      minWidth:
+                                      MediaQuery.of(context).size.width,
+                                      minHeight: 55.0),
+                                  alignment: Alignment.center,
+                                  child: AppText.text('Next',
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600))),
+                          onPressed: ()=> controller.signUp()
+                          )),
                 ],
               ),)),
       ),))

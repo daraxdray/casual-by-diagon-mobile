@@ -57,8 +57,9 @@ class UserProvider extends GetConnect with DgMixing{
   }
   Future<bool> updateProfile(Map<String,String> data) async {
     var response = await dgResponse(() async {
+      UserModel user = dgAuthService.getAuthUser();
       return networkService.post(
-        DgApiRoutes.profile, body: data);
+        DgApiRoutes.profile, body: {...data, "user":user.id,"email":user.email});
     });
       return response != null;
   }
@@ -119,13 +120,10 @@ class UserProvider extends GetConnect with DgMixing{
       "points": "${gameResult.params?.levelScore ?? gameResult.params?.totalScore}"
     },
     );
-    print(result);
   }
 
 
   Future<List<PastActivityItemModel>> getActivities(PaginationFilter filter) async {
-
-
     List<dynamic> result = await networkService.get(
       "${DgApiRoutes.activity}${dgAuthService.getAuthUser().id}?offset=${filter.page}&limit=${filter.limit}",);
     return  result.map((e) => PastActivityItemModel.fromJson(e)).toList();

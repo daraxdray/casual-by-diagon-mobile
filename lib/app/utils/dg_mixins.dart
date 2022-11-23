@@ -11,7 +11,8 @@ abstract class DgMixing {
 
       return result;
     }on BadRequestException catch(resp, cust) {
-      if(resp.response.runtimeType != String){
+
+      if(resp.response['message'].runtimeType != String){
       failedSnack("Error",resp.response['message'][0]);
       }else{
       failedSnack("Error",resp.response['message'],);

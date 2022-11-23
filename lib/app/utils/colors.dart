@@ -9,6 +9,8 @@ class AppColors {
   static const Color green = Color(0xFF8CDC70);
   static const Color mutedText = Color(0xFF5C617A);
   static const Color visibleText = Color(0xFFFFFFFF);
+  static const Color blue = Color(0xFF00A3FF);
+
 
   // Shades of grey 🌚 🚀
   static const Color grey = Color(0xFFC1C1C1);

@@ -42,8 +42,8 @@ class SignUpTwoController extends GetxController {
       SignUpModel signUpModelObj = SignUpModel(Get.arguments['firstName'], Get.arguments['lastName'], Get.arguments['userName'],emailCtr.text, passwordCtr.text);
           var result = await userProvider.signup(signUpModelObj);
     loading(false);
-        Get.offNamed(DgRoutes.logInScreen,);
     if(result){
+        Get.offNamed(DgRoutes.logInScreen,);
     }
 
   }

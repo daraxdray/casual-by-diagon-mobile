@@ -57,13 +57,13 @@ HomeScreenController  controller = Get.put(HomeScreenController());
                     ),
                    Obx(()=> Column(children: [
                      controller.componentsLoaded.value? heroImage(context, null) : heroImage(context, ShimmerShape(),),
-                      TopGamesView(gameList: controller.gameList,),
+                      TopGamesView(gameList: controller.topGameList,),
                      const SizedBox(height: 40),
                       DailyChallengeView(gameList: controller.dailyChallenge,),
                      const SizedBox(height: 40),
                      const TournamentsView(),
                      const SizedBox(height: 40),
-                      AllGamesView(gameList: controller.dailyChallenge,),
+                      AllGamesView(gameList: controller.gameList,),
                      const SizedBox(height: 40),
                      const EarnTokenView(),
                      const SizedBox(height: 60),
@@ -74,7 +74,7 @@ HomeScreenController  controller = Get.put(HomeScreenController());
               SizedBox(
                   child: ClipRect(
                       child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
+                          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                           child:
                               Column(mainAxisSize: MainAxisSize.min, children: [
                             Padding(
@@ -100,7 +100,7 @@ HomeScreenController  controller = Get.put(HomeScreenController());
         enlargeStrategy: CenterPageEnlargeStrategy.height,
         enlargeCenterPage: true,
     ),
-    items: controller.gameList.map((element) => Container(
+    items: controller.slideGameList.map((element) => Container(
       padding: const EdgeInsets.only(left: 10,right:10),
         margin: const EdgeInsets.only( bottom: 30, top: 120),
         width: MediaQuery.of(context).size.width,

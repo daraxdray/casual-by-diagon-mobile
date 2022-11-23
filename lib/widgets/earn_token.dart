@@ -10,7 +10,7 @@ class EarnTokenView extends StatelessWidget {
       children: [
         const Padding(
             padding: EdgeInsets.only(left: 20),
-            child: Text('Earn Token',
+            child: Text('Don\'t Miss out',
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

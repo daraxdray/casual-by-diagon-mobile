@@ -99,12 +99,9 @@ class _GameActivePlayScreenState extends State<ActiveGamePlayScreen> {
   void processGameResult() async {
     print(gameResult.event);
     switch(gameResult.event){
-
       case "EVENT_LEVELSTART":
-
         break;
       case "EVENT_PAUSE":
-
         break;
       case "EVENT_LEVELFAIL":
         break;

@@ -12,6 +12,21 @@ class DgAuthService extends GetxService{
   // bool hasExpired = JwtDecoder.isExpired(yourToken);
 
   String get token => userData.hasData('accessToken')? userData.read('accessToken') : "";
+  static final List<String> imageList =
+  ["assets/img/avatars/avatar63.png",
+    "assets/img/avatars/avatar64.png",
+    "assets/img/avatars/avatar65.png",
+    "assets/img/avatars/avatar66.png",
+    "assets/img/avatars/avatar67.png",
+    "assets/img/avatars/avatar68.png",
+    "assets/img/avatars/avatar69.png",
+    "assets/img/avatars/avatar70.png",
+    "assets/img/avatars/avatar71.png",
+    "assets/img/avatars/avatar72.png",
+    "assets/img/avatars/avatar73.png",
+    "assets/img/avatars/avatar74.png",
+    "assets/img/avatars/avatar75.png",
+    "assets/img/avatars/avatar76.png"];
 
   bool isAuthenticated(){
     try {

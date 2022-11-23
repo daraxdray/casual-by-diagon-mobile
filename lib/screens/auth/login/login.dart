@@ -74,26 +74,70 @@ class LoginView extends GetWidget<LogInController> {
                               child: SvgPicture.asset(
                                   'assets/svg/password.svg')))),
                   const SizedBox(height: 30),
-                    AppButton.button(
-
-                      backgroundColor: const Color(0xFF00B2FF),
-                      child: AppText.text('Log in',
-                          fontSize: 15, fontWeight: FontWeight.w600),
-                      minimumSize:
-                      Size(MediaQuery.of(context).size.width - 40, 55),
-                      onPressed: () => controller.signIn()),
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      // margin: const EdgeInsets.only(top: 40, bottom: 40),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: AppButton.button(
+                          padding: const EdgeInsets.all(0),
+                          backgroundColor: Colors.transparent,
+                          child: Ink(
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color(0xFF00B2FF),
+                                      Color(0xFF0161E9)
+                                    ]),
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(8.0)),
+                              ),
+                              child: Container(
+                                  constraints: BoxConstraints(
+                                      minWidth:
+                                      MediaQuery.of(context).size.width,
+                                      minHeight: 55.0),
+                                  alignment: Alignment.center,
+                                  child: AppText.text('Log in',
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600))),
+                          onPressed: () => controller.signIn())),
                   const SizedBox(height: 15),
                   GestureDetector(
                       child: AppText.text('Forgot your password?',
                           color: Colors.white)),
                   const SizedBox(height: 30),
-                  AppButton.button(
-                      backgroundColor: const Color(0xFF56AB2F),
-                      child: AppText.text('New user? Sign up',
-                          fontSize: 15, fontWeight: FontWeight.w600),
-                      minimumSize:
-                      Size(MediaQuery.of(context).size.width - 40, 55),
-                      onPressed: ()=> controller.onTapBtnNewusersign()),
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      // margin: const EdgeInsets.only(top: 40, bottom: 40),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: AppButton.button(
+                          padding: const EdgeInsets.all(0),
+                          backgroundColor: Colors.transparent,
+                          child: Ink(
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color(0xFF56AB2F),
+                                      Color(0xFFA2DC5F)
+                                    ]),
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(8.0)),
+                              ),
+                              child: Container(
+                                  constraints: BoxConstraints(
+                                      minWidth:
+                                      MediaQuery.of(context).size.width,
+                                      minHeight: 55.0),
+                                  alignment: Alignment.center,
+                                  child: AppText.text('New user? Sign up',
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600))),
+                          onPressed: ()=> controller.onTapBtnNewusersign()
+                          )),
                 ],
               ),
             )),)));

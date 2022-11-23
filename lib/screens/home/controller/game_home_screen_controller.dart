@@ -11,6 +11,8 @@ class HomeScreenController extends GetxController {
 
   Rx<bool> componentsLoaded = false.obs;
   RxList<GameModel> gameList = <GameModel>[].obs;
+  RxList<GameModel> slideGameList = <GameModel>[].obs;
+  RxList<GameModel> topGameList = <GameModel>[].obs;
   GameProvider gameProvider = GameProvider();
   final UserProvider userProvider = UserProvider();
 Random random = Random();
@@ -20,7 +22,7 @@ Rx<GameModel>  randomGame (){
   return gameList[randomInt.value].obs;
 }
   RxList<GameModel> dailyChallenge = <GameModel>[].obs;
-void  get5Random(){
+void  get5DailyChallenge(){
     if(gameList.isNotEmpty){
           List<int>  uniqueRand = [];
       for(int i = 0; uniqueRand.length < 4; i++){
@@ -36,11 +38,13 @@ void  get5Random(){
 
 
   void loadComponents() async {
-
     gameList.addAll(await gameProvider.getGames());
-    if(gameList.isNotEmpty){
+    slideGameList.addAll(gameList.where((element) => element.slide == true).toList());
+    topGameList.addAll(await gameProvider.getTopGames());
+
+    if(gameList.isNotEmpty ){
     randomInt(random.nextInt(gameList.length));
-    get5Random();
+    get5DailyChallenge();
         componentsLoaded(true);
     }else{
       // Get.offNamed(DgRoutes.authRoute(DgRoutes.noInternet),arguments: DgRoutes.gameHomeScreen);

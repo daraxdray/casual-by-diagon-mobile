@@ -19,7 +19,6 @@ class GamePlayScreenGameOverDialog
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.primaryColor,
-        appBar: AppBar(),
         body: SafeArea(
             child: Container(
                 height: MediaQuery.of(context).size.height,
@@ -82,7 +81,7 @@ class GamePlayScreenGameOverDialog
                                       bottom: 1,
                                     ),
                                     child: Text(
-                                      "lbl_score".tr,
+                                      "Level Score",
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
                                       style: AppStyle.txtInterSemiBold15Gray904

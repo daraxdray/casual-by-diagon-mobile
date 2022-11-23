@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../../app/models/games.dart';
 import '../../app/utils/index.dart';
 import '../../widgets/index.dart';
 import 'controller/game_rules_controller.dart';
@@ -33,7 +34,7 @@ class RulesView extends GetView<GameDetailsController> {
               SizedBox(
                   child: ClipRect(
                       child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
+                          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                           child:
                               Column(mainAxisSize: MainAxisSize.min, children: [
                             Padding(
@@ -43,92 +44,6 @@ class RulesView extends GetView<GameDetailsController> {
                                 context, controller.userProvider),
                           ]))))
             ])));
-  }
-
-  Widget rulesAppBar(context) {
-    return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        width: MediaQuery.of(context).size.width,
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: SvgPicture.asset('assets/svg/back_arrow.svg',
-                  height: 30, width: 30)),
-          Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(100)),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/img/ticket.png',
-                    height: 18,
-                  ),
-                  const Text('500',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold)),
-                  const SizedBox(width: 5),
-                  Image.asset(
-                    'assets/img/dgn.png',
-                    height: 18,
-                    width: 18,
-                    fit: BoxFit.contain,
-                  ),
-                  const SizedBox(width: 5),
-                  const Text('500',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold))
-                ],
-              )),
-          SizedBox(
-              width: 43,
-              height: 33,
-              child: Stack(
-                children: [
-                  const Positioned(
-                      width: 33,
-                      top: 0,
-                      right: 0,
-                      child: Image(
-                          image: AssetImage('assets/img/user_profile.png'),
-                          height: 33,
-                          width: 33)),
-                  Positioned(
-                      top: 9,
-                      left: 0,
-                      child: Container(
-                          width: 16,
-                          height: 16,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 3,
-                                color: const Color(0xFF142261),
-                                strokeAlign: StrokeAlign.outside),
-                            borderRadius: BorderRadius.circular(100),
-                            gradient: const LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                              colors: [
-                                Color(0xFFFF8383),
-                                Color(0xFFFF1A1A),
-                              ],
-                            ),
-                          ),
-                          child: const Center(
-                              child: Text('9',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.bold)))))
-                ],
-              )),
-        ]));
   }
 
   Widget heroWidget(context) {
@@ -165,7 +80,8 @@ class RulesView extends GetView<GameDetailsController> {
                       children: [
                         controller.componentsLoaded.value
                             ? AppText.text(
-                            "${controller.gameModel.value?.title}",
+                            "${controller.gameModel.value?.title?.capitalize!}",
+
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 20)
@@ -176,10 +92,10 @@ class RulesView extends GetView<GameDetailsController> {
                             child: ShimmerShape()),
                         controller.componentsLoaded.value
                             ? Row(children: [
-                          AppText.text('Amateur'),
+                          AppText.text(controller.userProvider.dgAuthService.getAuthProfile().getRank().title.capitalize!),
                           const SizedBox(width: 20),
                           playerIcons(context,
-                              "${controller.gameModel.value?.players ?? 0}")
+                             controller.gameModel.value ?? GameModel())
                         ])
                             : Container(
                             margin: EdgeInsets.only(top:3, bottom: 3),
@@ -300,3 +216,5 @@ class RulesView extends GetView<GameDetailsController> {
         .slide(duration: 400.ms);
   }
 }
+
+

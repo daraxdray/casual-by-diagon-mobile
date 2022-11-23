@@ -42,7 +42,7 @@ class ProfileView extends GetView<UserProfileController> {
                       child: ClipRect(
                           child: BackdropFilter(
                               filter:
-                                  ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                                  ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                               child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [

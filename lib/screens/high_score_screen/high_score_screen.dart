@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 
 import '../../app/utils/colors.dart';
 import '../../widgets/index.dart';
@@ -26,12 +27,17 @@ class HighScoreView extends GetWidget<HighScoreController> {
                         bottom: 20),
                     child: AppText.text('High Scores',
                         fontWeight: FontWeight.w900, fontSize: 22)),
-                Expanded(child: highScores(context))
+              Expanded(child: controller.highScoreList.isNotEmpty && controller.lastPage == false?
+    LazyLoadScrollView(
+    onEndOfPage: controller.loadNextPage,
+    isLoading: controller.lastPage,
+    child: highScores(context)): Center(child: AppText.text("No Highscore"),),
+                )
               ]),
               SizedBox(
                   child: ClipRect(
                       child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                           child:
                               Column(mainAxisSize: MainAxisSize.min, children: [
                             Padding(
@@ -40,6 +46,43 @@ class HighScoreView extends GetWidget<HighScoreController> {
                             highScoreAppBar(context),
                           ]))))
             ])));
+  }
+
+  Widget highScores(context) {
+    return  ListView.separated(
+      shrinkWrap: true,
+      padding: const EdgeInsets.only(bottom: 40),
+      physics: PageScrollPhysics(),
+      itemCount: controller.highScoreList.value
+          .length,
+      separatorBuilder: (_, i) {
+        return const SizedBox(height: 15);
+      },
+      itemBuilder: (_, i) {
+        var model = controller
+            .highScoreList
+            .value
+        [i];
+        return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                color: AppColors.accent, borderRadius: BorderRadius.circular(10)),
+            child: Row(children: [
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset('assets/img/hero_image.png',
+                      height: 70, width: 70, fit: BoxFit.cover)),
+              const SizedBox(width: 10),
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                AppText.text('Billiard Classic',
+                    fontSize: 19, fontWeight: FontWeight.bold),
+                AppText.text('23,345',
+                    color: const Color(0xFFFFA800), fontWeight: FontWeight.w600)
+              ])
+            ]));
+      },
+    );
   }
 }
 
@@ -100,34 +143,4 @@ Widget highScoreAppBar(context) {
       ]));
 }
 
-Widget highScores(context) {
-  return ListView.separated(
-    // shrinkWrap: true,
-    padding: const EdgeInsets.only(bottom: 40),
-    physics: const BouncingScrollPhysics(),
-    separatorBuilder: (_, i) {
-      return const SizedBox(height: 15);
-    },
-    itemCount: 12,
-    itemBuilder: (_, i) {
-      return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-              color: AppColors.accent, borderRadius: BorderRadius.circular(10)),
-          child: Row(children: [
-            ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.asset('assets/img/hero_image.png',
-                    height: 70, width: 70, fit: BoxFit.cover)),
-            const SizedBox(width: 10),
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              AppText.text('Billiard Classic',
-                  fontSize: 19, fontWeight: FontWeight.bold),
-              AppText.text('23,345',
-                  color: const Color(0xFFFFA800), fontWeight: FontWeight.w600)
-            ])
-          ]));
-    },
-  );
-}
+

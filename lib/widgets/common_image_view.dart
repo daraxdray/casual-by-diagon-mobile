@@ -31,7 +31,7 @@ class CommonImageView extends StatelessWidget {
     this.height,
     this.width,
     this.fit = BoxFit.fill,
-    this.placeHolder = 'assets/images/logo.png',
+    this.placeHolder = 'assets/img/logo.png',
   });
 
   @override
@@ -87,6 +87,21 @@ class CommonImageView extends StatelessWidget {
         height: height,
         width: width,
         fit: fit,
+        errorBuilder:
+            (BuildContext context, Object exception, StackTrace? stackTrace) {
+          // Appropriate logging or analytics, e.g.
+          // myAnalytics.recordError(
+          //   'An error occurred loading "https://example.does.not.exist/image.jpg"',
+          //   exception,
+          //   stackTrace,
+          // );
+          return  Image.asset(
+            placeHolder,
+            height: height,
+            width: width,
+            fit: fit,
+          );
+        },
       );
     }
     return SizedBox();
