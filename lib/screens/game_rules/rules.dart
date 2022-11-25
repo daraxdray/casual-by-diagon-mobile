@@ -126,7 +126,7 @@ class RulesView extends GetView<GameDetailsController> {
           Row(children: [
             SvgPicture.asset('assets/svg/cup_icon.svg'),
             const SizedBox(width: 5),
-            AppText.text(controller.getHighScore(),
+            AppText.text("${controller.getHighScore()} Points",
                 color: const Color(0xFFFFA800), fontWeight: FontWeight.w600)
           ])
         ]));

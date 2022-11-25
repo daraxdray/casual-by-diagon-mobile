@@ -54,6 +54,7 @@ class NavbarState extends State<NavbarView> {
   Container createBottombar(BuildContext context) {
     return Container(
         height: 80,
+        padding: EdgeInsets.only(left:30, right:30),
         decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(38), topLeft: Radius.circular(38)),

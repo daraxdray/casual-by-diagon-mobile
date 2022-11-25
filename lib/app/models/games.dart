@@ -13,13 +13,15 @@ class GameModel {
   String? rules;
   bool? slide;
   Random rand = Random();
-  List<int>? playersImage = [1,2,3];
+  Set<int> playersImage = {};
   // DgAuthService dgAuth = DgAuthService();
   GameModel({this.sId, this.title, this.url, this.image, this.players, this.rules, this.slide})
   {
-    playersImage = List.generate(3, (index){
-      return rand.nextInt(10);
-    });
+    while(playersImage.length < 4){
+        playersImage.add(rand.nextInt(10));
+    }
+
+
   }
 
   GameModel.fromJson(Map<String, dynamic> json) {
@@ -30,9 +32,11 @@ class GameModel {
     slide  = json['slide'];
     players = json['players'];
     rules = json['rules'];
-playersImage = List.generate(3, (index){
-return rand.nextInt(10);
-});
+    while(playersImage.length < 4){
+
+      playersImage.add(rand.nextInt(10));
+    }
+    print(playersImage);
   }
 
   Map<String, dynamic> toJson() {

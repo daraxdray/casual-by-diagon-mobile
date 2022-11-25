@@ -34,7 +34,8 @@ Widget homeAppBar(context, UserProvider userProvider) {
                     width: 33,
                     top: 0,
                     right: 0,
-                    child: DgClickable(child: CommonImageView(
+                    child: DgClickable(child:
+                    CommonImageView(
                         imagePath: userProvider.dgAuthService.getAvatar(),
                         height: 33,
                         width: 33), onTap: ()=> Get.toNamed(DgRoutes.authRoute(DgRoutes.profileSettingsScreen)),)),
@@ -80,7 +81,7 @@ Widget homeAppBar(context, UserProvider userProvider) {
                   'assets/img/ticket.png',
                   height: 18,
                 ),
-                 Text("${userProvider.dgAuthService.getAuthProfile().tickets}",
+                 Text("${userProvider.dgAuthService.getAuthProfile().getTicket}",
                     style: const TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold)),
                 const SizedBox(width: 5),
@@ -123,7 +124,7 @@ Widget backBalanceProfileAppBar(context, UserProvider userProvider) {
                   'assets/img/ticket.png',
                   height: 18,
                 ),
-                Text("${userProvider.dgAuthService.getAuthProfile().tickets}",
+                Text("${userProvider.dgAuthService.getAuthProfile().getPoint}",
                     style: const TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold)),
                 const SizedBox(width: 5),
@@ -144,14 +145,14 @@ Widget backBalanceProfileAppBar(context, UserProvider userProvider) {
             height: 33,
             child: Stack(
               children: [
-                const Positioned(
+                 Positioned(
                     width: 33,
                     top: 0,
                     right: 0,
-                    child: Image(
-                        image: AssetImage('assets/img/user_profile.png'),
+                    child: CommonImageView(
+                        imagePath: userProvider.dgAuthService.getAvatar(),
                         height: 33,
-                        width: 33)),
+                        width: 33),),
                 Positioned(
                     top: 9,
                     left: 0,

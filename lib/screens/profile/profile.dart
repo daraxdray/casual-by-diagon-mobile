@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:casual/app/models/games.dart';
 import 'package:casual/app/routes/routes.dart';
 import 'package:casual/screens/profile/controller/user_profile_controller.dart';
 import 'package:flutter/material.dart';
@@ -130,11 +131,11 @@ class ProfileView extends GetView<UserProfileController> {
                       ],
                     ))),
             const SizedBox(height: 20),
-            AppText.text('@${controller.userProfileModel.value.username}',
+            AppText.text('@${controller.userProfileModel.value.username?.capitalize}',
                 fontSize: 24, fontWeight: FontWeight.bold),
             const SizedBox(height: 13),
             AppText.text(
-                "${controller.userProfileModel.value.firstName} ${controller.userProfileModel.value.lastName}",
+                "${controller.userProfileModel.value.firstName?.capitalize} ${controller.userProfileModel.value.lastName?.capitalize}",
                 fontWeight: FontWeight.w500),
           ],
         ));
@@ -229,7 +230,7 @@ class ProfileView extends GetView<UserProfileController> {
                   width: 2,
                   height: 18,
                   color: Colors.white.withOpacity(0.3)),
-              AppText.text(controller.userProfileModel.value.getRank().title,
+              AppText.text("${controller.userProfileModel.value.getRank().title!.capitalize}",
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
                   color: Colors.white),
@@ -261,63 +262,90 @@ class ProfileView extends GetView<UserProfileController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppText.text('Your referrals'),
-            SizedBox(
-                width: MediaQuery.of(context).size.width * 0.6,
-                child: AppText.text('For Every New Member 5 DGN',
-                    fontWeight: FontWeight.w900, fontSize: 24)),
-            playerIcons(context)
+
+            Container(
+                height:                 80.00,
+                width:                 215.00,
+                margin: EdgeInsets.only(
+                    top: 10,
+                    right: 17),
+                child: Stack(
+                    alignment:
+                    Alignment
+                        .bottomRight,
+                    children: [
+                      Align(
+                          alignment:
+                          Alignment
+                              .topLeft,
+                          child: Container(
+                              width: 215.00,
+                              margin: EdgeInsets.only(bottom: 10),
+                              child: Text("msg_for_every_new_m".tr, maxLines: null, textAlign: TextAlign.left, style: AppStyle.txtInterBold24.copyWith(fontWeight:FontWeight.w900, fontSize: 24)))),
+                      Align(
+                          alignment:
+                          Alignment
+                              .center,
+                          child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: 70,
+                                  top: 0,
+                                  right: 70),
+                              child: CommonImageView(imagePath: "assets/img/dgn.png", height: 34.00, width:28.00)))
+                    ])),
+            playerIcons(context,GameModel())
           ],
         ));
   }
 
-  Widget playerIcons(context) {
-    return Row(children: [
-      SizedBox(
-          height: 18,
-          width: 54,
-          child: Stack(children: [
-            Positioned(
-                left: 30,
-                child: Container(
-                  height: 18,
-                  width: 18,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color(0xFF00C64F),
-                      ),
-                      borderRadius: BorderRadius.circular(100),
-                      image: const DecorationImage(
-                          image: AssetImage('assets/img/user_profile.png'))),
-                )),
-            Positioned(
-                left: 15,
-                child: Container(
-                  height: 18,
-                  width: 18,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color(0xFF00C64F),
-                      ),
-                      borderRadius: BorderRadius.circular(100),
-                      image: const DecorationImage(
-                          image: AssetImage('assets/img/user_profile.png'))),
-                )),
-            Positioned(
-                left: 0,
-                child: Container(
-                  height: 18,
-                  width: 18,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color(0xFF00C64F),
-                      ),
-                      borderRadius: BorderRadius.circular(100),
-                      image: const DecorationImage(
-                          image: AssetImage('assets/img/user_profile.png'))),
-                )),
-          ]))
-    ]);
-  }
+  // Widget playerIcons(context) {
+  //   return Row(children: [
+  //     SizedBox(
+  //         height: 18,
+  //         width: 54,
+  //         child: Stack(children: [
+  //           Positioned(
+  //               left: 30,
+  //               child: Container(
+  //                 height: 18,
+  //                 width: 18,
+  //                 decoration: BoxDecoration(
+  //                     border: Border.all(
+  //                       color: const Color(0xFF00C64F),
+  //                     ),
+  //                     borderRadius: BorderRadius.circular(100),
+  //                     image: const DecorationImage(
+  //                         image: AssetImage('assets/img/user_profile.png'))),
+  //               )),
+  //           Positioned(
+  //               left: 15,
+  //               child: Container(
+  //                 height: 18,
+  //                 width: 18,
+  //                 decoration: BoxDecoration(
+  //                     border: Border.all(
+  //                       color: const Color(0xFF00C64F),
+  //                     ),
+  //                     borderRadius: BorderRadius.circular(100),
+  //                     image: const DecorationImage(
+  //                         image: AssetImage('assets/img/user_profile.png'))),
+  //               )),
+  //           Positioned(
+  //               left: 0,
+  //               child: Container(
+  //                 height: 18,
+  //                 width: 18,
+  //                 decoration: BoxDecoration(
+  //                     border: Border.all(
+  //                       color: const Color(0xFF00C64F),
+  //                     ),
+  //                     borderRadius: BorderRadius.circular(100),
+  //                     image: const DecorationImage(
+  //                         image: AssetImage('assets/img/user_profile.png'))),
+  //               )),
+  //         ]))
+  //   ]);
+  // }
 
   Widget highScore(context) {
     return Padding(

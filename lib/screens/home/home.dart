@@ -65,8 +65,9 @@ HomeScreenController  controller = Get.put(HomeScreenController());
                      const SizedBox(height: 40),
                       AllGamesView(gameList: controller.gameList,),
                      const SizedBox(height: 40),
-                     const EarnTokenView(),
-                     const SizedBox(height: 60),
+                      EarnTokenView(),
+                     const SizedBox(height: 90),
+
                    ]))
                   ])
                 ]),

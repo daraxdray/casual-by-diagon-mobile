@@ -4,7 +4,7 @@ import 'package:image_stack/image_stack.dart';
 
 import '../app/models/games.dart';
 
-Widget playerIcons(context, GameModel game,) {
+Widget playerIcons(context, GameModel game, {hideTotal = false}) {
   return Row(children: [
     // SizedBox(
     //     height: 18,
@@ -63,6 +63,6 @@ Widget playerIcons(context, GameModel game,) {
       showTotalCount: false,
     ),),
 
-    Text("${game.players}", style: const  TextStyle(color: Colors.white))
+    if(hideTotal)Text("${game.players}", style: const  TextStyle(color: Colors.white))
   ]);
 }

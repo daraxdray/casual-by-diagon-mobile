@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class EarnTokenView extends StatelessWidget {
-  const EarnTokenView({Key? key}) : super(key: key);
-
+   EarnTokenView({Key? key}) : super(key: key);
+  List<String> images = [
+    "assets/img/d_miss_out.png",
+    "assets/img/d_bitcoin.png"
+  ];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,12 +26,12 @@ class EarnTokenView extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 separatorBuilder: (context, index) => const SizedBox(width: 14),
-                itemCount: 10,
+                itemCount: images.length,
                 itemBuilder: (context, index) => GestureDetector(
                         child: Stack(children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                        child: Image.asset('assets/img/earn_token.png',
+                        child: Image.asset(images[index],
                             height: MediaQuery.of(context).size.height,
                             width: MediaQuery.of(context).size.width * 0.8,
                             fit: BoxFit.cover),

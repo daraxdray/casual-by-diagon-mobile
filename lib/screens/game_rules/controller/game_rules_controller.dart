@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../../../app/models/games.dart';
 import '../../../app/providers/games_provider.dart';
 import '../../../app/providers/user_provider.dart';
@@ -33,8 +34,9 @@ class GameDetailsController extends GetxController {
   }
 
   String getHighScore(){
+    var f = NumberFormat.decimalPattern("en_US");
     String? id = gameModel.value?.title?.replaceAll(" ", "-").toLowerCase() ?? "nothing";
-    return "${gameProvider.getHighscore(id) ?? 0}";
+    return f.format(gameProvider.getHighscore(id) ?? 0);
   }
   @override
   void onReady() {

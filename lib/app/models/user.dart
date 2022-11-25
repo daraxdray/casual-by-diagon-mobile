@@ -26,6 +26,7 @@ class UserModel {
   var f = NumberFormat.decimalPattern("en_US");
   String get getPoint => f.format(points);
   String get getTicket => f.format(tickets);
+  String get getDgn => f.format(dgn);
 
   UserModel(
       {this.id,
