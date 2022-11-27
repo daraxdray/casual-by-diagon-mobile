@@ -18,14 +18,14 @@ class ProfileView extends GetView<UserProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xFF020412),
-        body:  SizedBox(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Stack(children: [
-                    Obx(() => FullScreenLoader(
-            color: AppColors.black900,
-            isloading: controller.loading.value,
-            child: SingleChildScrollView(
+        body: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Stack(children: [
+              Obx(() => FullScreenLoader(
+                  color: AppColors.black900,
+                  isloading: controller.loading.value,
+                  child: SingleChildScrollView(
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -39,22 +39,18 @@ class ProfileView extends GetView<UserProfileController> {
                         referralCode(context),
                         community(context)
                       ])))),
-                  SizedBox(
-                      child: ClipRect(
-                          child: BackdropFilter(
-                              filter:
-                                  ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                              child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Padding(
-                                        padding: EdgeInsets.only(
-                                            top: MediaQuery.of(context)
-                                                .padding
-                                                .top)),
-                                    profileAppBar(context),
-                                  ]))))
-                ])));
+              SizedBox(
+                  child: ClipRect(
+                      child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                          child:
+                              Column(mainAxisSize: MainAxisSize.min, children: [
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).padding.top)),
+                            profileAppBar(context),
+                          ]))))
+            ])));
   }
 
   Widget profileAppBar(context) {
@@ -131,8 +127,10 @@ class ProfileView extends GetView<UserProfileController> {
                       ],
                     ))),
             const SizedBox(height: 20),
-            AppText.text('@${controller.userProfileModel.value.username?.capitalize}',
-                fontSize: 24, fontWeight: FontWeight.bold),
+            AppText.text(
+                '@${controller.userProfileModel.value.username?.capitalize}',
+                fontSize: 24,
+                fontWeight: FontWeight.bold),
             const SizedBox(height: 13),
             AppText.text(
                 "${controller.userProfileModel.value.firstName?.capitalize} ${controller.userProfileModel.value.lastName?.capitalize}",
@@ -186,8 +184,12 @@ class ProfileView extends GetView<UserProfileController> {
                       height: 20,
                       width: 20,
                     ),
-                    AppText.text(controller.loading.value?'0': controller.userProfileModel.value.getTicket,
-                        fontSize: 15, fontWeight: FontWeight.bold)
+                    AppText.text(
+                        controller.loading.value
+                            ? '0'
+                            : controller.userProfileModel.value.getTicket,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold)
                   ],
                 ),
               )
@@ -221,7 +223,8 @@ class ProfileView extends GetView<UserProfileController> {
                       Color(0xFF171B3A),
                     ])),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              AppText.text('Level ${controller.userProfileModel.value.getRank().level}',
+              AppText.text(
+                  'Level ${controller.userProfileModel.value.getRank().level}',
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
                   color: Colors.white),
@@ -230,7 +233,8 @@ class ProfileView extends GetView<UserProfileController> {
                   width: 2,
                   height: 18,
                   color: Colors.white.withOpacity(0.3)),
-              AppText.text("${controller.userProfileModel.value.getRank().title!.capitalize}",
+              AppText.text(
+                  "${controller.userProfileModel.value.getRank().title!.capitalize}",
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
                   color: Colors.white),
@@ -242,7 +246,11 @@ class ProfileView extends GetView<UserProfileController> {
               Row(children: [
                 SvgPicture.asset('assets/svg/cup_icon.svg'),
                 const SizedBox(width: 5),
-                AppText.text(controller.loading.value?'0':controller.userProfileModel.value.getPoint, fontWeight: FontWeight.w600)
+                AppText.text(
+                    controller.loading.value
+                        ? '0'
+                        : controller.userProfileModel.value.getPoint,
+                    fontWeight: FontWeight.w600)
               ])
             ])));
   }
@@ -262,38 +270,20 @@ class ProfileView extends GetView<UserProfileController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppText.text('Your referrals'),
-
-            Container(
-                height:                 80.00,
-                width:                 215.00,
-                margin: EdgeInsets.only(
-                    top: 10,
-                    right: 17),
-                child: Stack(
-                    alignment:
-                    Alignment
-                        .bottomRight,
-                    children: [
-                      Align(
-                          alignment:
-                          Alignment
-                              .topLeft,
-                          child: Container(
-                              width: 215.00,
-                              margin: EdgeInsets.only(bottom: 10),
-                              child: Text("msg_for_every_new_m".tr, maxLines: null, textAlign: TextAlign.left, style: AppStyle.txtInterBold24.copyWith(fontWeight:FontWeight.w900, fontSize: 24)))),
-                      Align(
-                          alignment:
-                          Alignment
-                              .center,
-                          child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 70,
-                                  top: 0,
-                                  right: 70),
-                              child: CommonImageView(imagePath: "assets/img/dgn.png", height: 34.00, width:28.00)))
-                    ])),
-            playerIcons(context,GameModel())
+            const SizedBox(height: 4),
+            AppText.text('For Every New ',
+                fontWeight: FontWeight.w900, fontSize: 24),
+            Row(
+              children: [
+                AppText.text('Member ',
+                    fontWeight: FontWeight.w900, fontSize: 24),
+                Image.asset('assets/img/dgn-2.png', height: 28, width: 28),
+                AppText.text(' 5 DGN ',
+                    fontWeight: FontWeight.w900, fontSize: 24),
+              ],
+            ),
+            const SizedBox(height: 10),
+            playerIcons(context, GameModel())
           ],
         ));
   }
@@ -352,7 +342,8 @@ class ProfileView extends GetView<UserProfileController> {
         padding: const EdgeInsets.symmetric(horizontal: 20)
             .add(const EdgeInsets.only(top: 10)),
         child: AppButton.button(
-            onPressed: () => Get.toNamed(DgRoutes.authRoute(DgRoutes.highScoreScreen)),
+            onPressed: () =>
+                Get.toNamed(DgRoutes.authRoute(DgRoutes.highScoreScreen)),
             backgroundColor: const Color(0xFF251654),
             child: Row(children: [
               SvgPicture.asset('assets/svg/high_score.svg'),
@@ -366,7 +357,8 @@ class ProfileView extends GetView<UserProfileController> {
         padding: const EdgeInsets.symmetric(horizontal: 20)
             .add(const EdgeInsets.only(top: 10)),
         child: AppButton.button(
-            onPressed: () =>Get.toNamed(DgRoutes.authRoute(DgRoutes.pastActivityScreen)),
+            onPressed: () =>
+                Get.toNamed(DgRoutes.authRoute(DgRoutes.pastActivityScreen)),
             backgroundColor: const Color(0xFF123732),
             child: Row(children: [
               SvgPicture.asset('assets/svg/past_activity.svg'),

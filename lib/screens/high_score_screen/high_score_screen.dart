@@ -27,11 +27,16 @@ class HighScoreView extends GetWidget<HighScoreController> {
                         bottom: 20),
                     child: AppText.text('High Scores',
                         fontWeight: FontWeight.w900, fontSize: 22)),
-              Expanded(child: controller.highScoreList.isNotEmpty && controller.lastPage == false?
-    LazyLoadScrollView(
-    onEndOfPage: controller.loadNextPage,
-    isLoading: controller.lastPage,
-    child: highScores(context)): Center(child: AppText.text("No Highscore"),),
+                Expanded(
+                  child: controller.highScoreList.isNotEmpty &&
+                          controller.lastPage == false
+                      ? LazyLoadScrollView(
+                          onEndOfPage: controller.loadNextPage,
+                          isLoading: controller.lastPage,
+                          child: highScores(context))
+                      : Center(
+                          child: AppText.text("No Highscore"),
+                        ),
                 )
               ]),
               SizedBox(
@@ -49,25 +54,22 @@ class HighScoreView extends GetWidget<HighScoreController> {
   }
 
   Widget highScores(context) {
-    return  ListView.separated(
+    return ListView.separated(
       shrinkWrap: true,
       padding: const EdgeInsets.only(bottom: 40),
       physics: PageScrollPhysics(),
-      itemCount: controller.highScoreList.value
-          .length,
+      itemCount: controller.highScoreList.value.length,
       separatorBuilder: (_, i) {
         return const SizedBox(height: 15);
       },
       itemBuilder: (_, i) {
-        var model = controller
-            .highScoreList
-            .value
-        [i];
+        var model = controller.highScoreList.value[i];
         return Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: AppColors.accent, borderRadius: BorderRadius.circular(10)),
+                color: AppColors.accent,
+                borderRadius: BorderRadius.circular(10)),
             child: Row(children: [
               ClipRRect(
                   borderRadius: BorderRadius.circular(10),
@@ -142,5 +144,3 @@ Widget highScoreAppBar(context) {
             )),
       ]));
 }
-
-

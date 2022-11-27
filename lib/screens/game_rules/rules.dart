@@ -26,91 +26,107 @@ class RulesView extends GetView<GameDetailsController> {
             child: Stack(children: [
               SingleChildScrollView(
                   child: Column(children: [
+                SizedBox(height: MediaQuery.of(context).padding.top + 53),
                 heroWidget(context),
                 highScore(context),
                 rules(context),
                 startPlaying(context)
               ])),
-              SizedBox(
-                  child: ClipRect(
-                      child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                          child:
-                              Column(mainAxisSize: MainAxisSize.min, children: [
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).padding.top)),
-                            backBalanceProfileAppBar(
-                                context, controller.userProvider),
-                          ]))))
+              Container(
+                color: const Color(0xFF000000),
+                padding:
+                    EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+                child:
+                    backBalanceProfileAppBar(context, controller.userProvider),
+              ),
             ])));
   }
 
   Widget heroWidget(context) {
     return Container(
-        height: MediaQuery.of(context).size.width,
-        width: MediaQuery.of(context).size.width,
-        // alignment: Alignment.bottomLeft,
-        // decoration:  BoxDecoration(
-        //     borderRadius: BorderRadius.vertical(bottom: Radius.circular(50)),
-        //     image: DecorationImage(
-        //         image: NetworkImage("${Get.arguments["image"] != null?Get.arguments['image'] : controller.gameModel.value?.image }",),
-        //         fit: BoxFit.fill)
-        // ),
-        child:  Stack(children: [
-          ClipRRect(borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(50), bottomRight: Radius.circular(50) ),child: CommonImageView(
-            url: "${Get.arguments != null ? Get.arguments['image'] : controller.gameModel.value?.image}",
-          ),),
-          Align(alignment: Alignment.bottomLeft,child: Padding(padding: EdgeInsets.all(20),child: SizedBox(
-              height: 57,
-              child: Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: CommonImageView(
-                      url: "${Get.arguments != null ? Get.arguments['image'] : controller.gameModel.value?.image}",
-                      height: 57,
-                      width: 57,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Obx(() => Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        controller.componentsLoaded.value
-                            ? AppText.text(
-                            "${controller.gameModel.value?.title?.capitalize!}",
-
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20)
-                            : Container(
-                          margin: EdgeInsets.only(top:3),
-                            height: 10,
-                            width: 120,
-                            child: ShimmerShape()),
-                        controller.componentsLoaded.value
-                            ? Row(children: [
-                          AppText.text(controller.userProvider.dgAuthService.getAuthProfile().getRank().title.capitalize!),
-                          const SizedBox(width: 20),
-                          playerIcons(context,
-                             controller.gameModel.value ?? GameModel())
-                        ])
-                            : Container(
-                            margin: EdgeInsets.only(top:3, bottom: 3),
-                            height: 10,
-                            width: 120,
-                            child: ShimmerShape()),
-                        if (!controller.componentsLoaded.value)
-                          SizedBox(
-                              height: 10,
-                              width: 120,
-                              child: ShimmerShape()),
-                      ]))
-                ],
-              )),))
-        ]),);
+      height: MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width,
+      // alignment: Alignment.bottomLeft,
+      // decoration:  BoxDecoration(
+      //     borderRadius: BorderRadius.vertical(bottom: Radius.circular(50)),
+      //     image: DecorationImage(
+      //         image: NetworkImage("${Get.arguments["image"] != null?Get.arguments['image'] : controller.gameModel.value?.image }",),
+      //         fit: BoxFit.fill)
+      // ),
+      child: Stack(children: [
+        ClipRRect(
+          borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(50),
+              bottomRight: Radius.circular(50)),
+          child: CommonImageView(
+            url:
+                "${Get.arguments != null ? Get.arguments['image'] : controller.gameModel.value?.image}",
+          ),
+        ),
+        Align(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: SizedBox(
+                  height: 57,
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: CommonImageView(
+                          url:
+                              "${Get.arguments != null ? Get.arguments['image'] : controller.gameModel.value?.image}",
+                          height: 57,
+                          width: 57,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Obx(() => Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                controller.componentsLoaded.value
+                                    ? AppText.text(
+                                        "${controller.gameModel.value?.title?.capitalize!}",
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20)
+                                    : Container(
+                                        margin: EdgeInsets.only(top: 3),
+                                        height: 10,
+                                        width: 120,
+                                        child: ShimmerShape()),
+                                controller.componentsLoaded.value
+                                    ? Row(children: [
+                                        AppText.text(controller
+                                            .userProvider.dgAuthService
+                                            .getAuthProfile()
+                                            .getRank()
+                                            .title
+                                            .capitalize!),
+                                        const SizedBox(width: 20),
+                                        playerIcons(
+                                            context,
+                                            controller.gameModel.value ??
+                                                GameModel())
+                                      ])
+                                    : Container(
+                                        margin:
+                                            EdgeInsets.only(top: 3, bottom: 3),
+                                        height: 10,
+                                        width: 120,
+                                        child: ShimmerShape()),
+                                if (!controller.componentsLoaded.value)
+                                  SizedBox(
+                                      height: 10,
+                                      width: 120,
+                                      child: ShimmerShape()),
+                              ]))
+                    ],
+                  )),
+            ))
+      ]),
+    );
   }
 
   Widget highScore(context) {
@@ -209,12 +225,12 @@ class RulesView extends GetView<GameDetailsController> {
                             minWidth: MediaQuery.of(context).size.width,
                             minHeight: 55.0),
                         alignment: Alignment.center,
-                        child: Text('Start Playing',
-                            style: AppStyle.txtInterMedium15,))),
+                        child: Text(
+                          'Start Playing',
+                          style: AppStyle.txtInterMedium15,
+                        ))),
                 onPressed: () => controller.gotoGame()))
         .animate()
         .slide(duration: 400.ms);
   }
 }
-
-

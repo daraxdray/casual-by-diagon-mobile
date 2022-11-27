@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import '../../../app/utils/index.dart';
 import '../../../widgets/index.dart';
 
-
 class WalletView extends StatelessWidget {
   const WalletView({Key? key}) : super(key: key);
 
@@ -14,7 +13,7 @@ class WalletView extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.only(bottom: 100),
       child: Column(children: [
-        const SizedBox(height: 100),
+        const SizedBox(height: 140),
         walletBalance(context),
         const SizedBox(height: 33),
         transactionHistory()
@@ -80,19 +79,19 @@ class WalletView extends StatelessWidget {
               icon: 'assets/svg/reward_icon.svg',
               reward: '+50',
               coin: 'assets/img/ticket.png'),
-          Divider(color: Colors.grey.withOpacity(0.4), thickness: 1),
+          Divider(color: Colors.grey.withOpacity(0.2), thickness: 1),
           transationItem(
               title: '1 Vs 1 challenge',
               icon: 'assets/svg/challenge_icon.svg',
               reward: '+50',
               coin: 'assets/img/ticket.png'),
-          Divider(color: Colors.grey.withOpacity(0.4), thickness: 1),
+          Divider(color: Colors.grey.withOpacity(0.2), thickness: 1),
           transationItem(
               title: 'Tournament',
               icon: 'assets/svg/challenge_icon.svg',
               reward: '+50',
               coin: 'assets/img/ticket.png'),
-          Divider(color: Colors.grey.withOpacity(0.4), thickness: 1),
+          Divider(color: Colors.grey.withOpacity(0.2), thickness: 1),
           transationItem(
               title: 'Referral Bonus',
               icon: 'assets/svg/referal_bonus.svg',
