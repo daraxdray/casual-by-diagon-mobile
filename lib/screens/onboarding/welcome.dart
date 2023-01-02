@@ -34,20 +34,18 @@ class WelcomeView extends StatelessWidget {
                         child: SvgPicture.asset('assets/svg/casual_text.svg')),
                     Column(
                       children: [
-                        // AppButton.button(
-                        //     child: AppText.text('Create Account',
-                        //         color: Colors.black,
-                        //         fontWeight: FontWeight.w600,
-                        //         fontSize: 15),
-                        //     onPressed: () {
-                        //       Navigator.push(
-                        //           context,
-                        //           MaterialPageRoute(
-                        //               builder: ((context) => AddUsernameView())));
-                        //     },
-                        //     minimumSize:
-                        //         Size(MediaQuery.of(context).size.width * 0.8, 55),
-                        //     backgroundColor: Colors.white),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: AppButton.button(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 17),
+                            child: AppText.text('Create an Account',
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 15),
+                            onPressed: () =>   Get.toNamed(DgRoutes.addUsername),
+                            minimumSize: Size(MediaQuery.of(context).size.width * 0.9, 55),
+                            backgroundColor: Colors.white)),
                         const SizedBox(height: 15),
                         Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),

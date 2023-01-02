@@ -3,6 +3,7 @@ import 'package:casual/widgets/full_page_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import '../../app/routes/routes.dart';
 import '../../app/utils/index.dart';
 import '../../widgets/index.dart';
 import 'controller/edit_profile_controller.dart';
@@ -17,7 +18,7 @@ class EditProfileView extends GetWidget<EditProfileController> {
         body: SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: Obx(() => FullScreenLoader(
+            child: Obx(() => DgFullScreenLoader(
                 isloading: controller.loading.value,
                 child: Stack(
                   children: [
@@ -81,7 +82,7 @@ class EditProfileView extends GetWidget<EditProfileController> {
     return Padding(
       padding: const EdgeInsets.only(top: 60),
       child: GestureDetector(
-          onTap: () {},
+          onTap: () => controller.selectAvatar(),
           child: SizedBox(
               width: 141,
               height: 122,
@@ -91,11 +92,11 @@ class EditProfileView extends GetWidget<EditProfileController> {
                       width: 122,
                       top: 0,
                       right: 0,
-                      child: Image(
+                      child:  ClipRRect(borderRadius: BorderRadius.circular(60), child:   CommonImageView(
                           fit: BoxFit.cover,
-                          image: AssetImage(controller.authService.getAvatar()),
+                          url: "https://www.diagon.io/images/avatars/${controller.selectedImage.value}.png",
                           height: 122,
-                          width: 122)),
+                          width: 122))),
                   Positioned(
                       top: 42,
                       left: 0,
@@ -134,7 +135,8 @@ class EditProfileView extends GetWidget<EditProfileController> {
                         cursorColor: Colors.white,
                         textColor: Colors.white)
                   ],
-                )),
+                )
+                ),
                 const SizedBox(width: 20),
                 Expanded(
                     child: Column(
@@ -164,6 +166,7 @@ class EditProfileView extends GetWidget<EditProfileController> {
               const SizedBox(height: 8),
               AppTextInput.input(
                   key: controller.uNameField,
+                  enabled: false,
                   onChanged: (val) =>
                       controller.uNameField.currentState!.validate(),
                   controller: controller.usernameCtr,

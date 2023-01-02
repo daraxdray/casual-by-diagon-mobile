@@ -14,6 +14,7 @@ class LogInController extends GetxController{
   final emailField = GlobalKey<FormFieldState>();
   final pwField = GlobalKey<FormFieldState>();
   final UserProvider userProvider = UserProvider();
+  RxBool passVisible = false.obs;
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   Rx<bool> loading = false.obs;
 
@@ -26,8 +27,7 @@ class LogInController extends GetxController{
   @override
   void onClose() {
     super.onClose();
-    emailCtr.dispose();
-    passwordCtr.dispose();
+
     userProvider.dispose();
     loading.close();
   }

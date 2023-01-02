@@ -11,16 +11,19 @@ class AppText {
       FontWeight? fontWeight,
       TextDecoration? decoration,
       String? fontFamily,
-      TextAlign? textAlign}) {
+      TextAlign? textAlign,
+      TextOverflow? overflow,
+      TextStyle? style}) {
     return Text(text,
         textAlign: textAlign ?? TextAlign.left,
-        style: TextStyle(
+        style:   style ?? TextStyle(
           fontFamily: 'Inter',
             color: color ?? AppColors.visibleText,
             fontSize: fontSize ?? 14,
             fontWeight: fontWeight ?? FontWeight.normal,
             decoration: decoration ?? TextDecoration.none,
           ),
+      overflow: overflow,
         );
   }
 

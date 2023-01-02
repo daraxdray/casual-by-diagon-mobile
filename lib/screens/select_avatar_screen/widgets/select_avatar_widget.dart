@@ -26,7 +26,9 @@ SelectAvatarItemWidget(this.image);
         borderRadius: BorderRadius.circular(45),
       ),
       child:  image != ""?  InkWell(child: CommonImageView(
-        imagePath: image,) ,onTap: ()=>Get.back(result:image),)
+        url: "https://www.diagon.io/images/avatars/$image.png",) ,onTap: (){
+        Get.back(result:image);})
+
           : InkWell(child: Container(
         height: 90.00,
         width: 90.00,

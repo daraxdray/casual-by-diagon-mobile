@@ -63,6 +63,6 @@ Widget playerIcons(context, GameModel game, {hideTotal = false}) {
       showTotalCount: false,
     ),),
 
-    if(hideTotal)Text("${game.players}", style: const  TextStyle(color: Colors.white))
+    if(hideTotal == false)Text("${game.getPlayers}", style: const  TextStyle(color: Colors.white))
   ]);
 }

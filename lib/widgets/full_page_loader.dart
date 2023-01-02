@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 import '../app/utils/colors.dart';
 
-class FullScreenLoader extends StatelessWidget {
+class DgFullScreenLoader extends StatelessWidget {
   final Widget child;
   final bool isloading;
   final Color? color;
-   const FullScreenLoader({ Key? key, required this.child, required this.isloading, this.color}) : super(key: key);
+   const DgFullScreenLoader({ Key? key, required this.child, required this.isloading, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +18,10 @@ class FullScreenLoader extends StatelessWidget {
                 color: color ?? Colors.black45,
                 child: Center(child:  Container(
                     margin: const EdgeInsets.only(left: 10),
-                    height: 20,
-                    width: 20,
+                    height: 30,
+                    width: 30,
                     child: const CircularProgressIndicator(
-                      strokeWidth: 1.4,
+                      strokeWidth: 3.4,
                       color: Colors.white,
                     ))),)
 

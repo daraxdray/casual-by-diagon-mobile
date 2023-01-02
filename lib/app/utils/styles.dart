@@ -414,14 +414,14 @@ class AppStyle {
     color: AppColors.whiteA700,
     fontSize: 17,
     fontFamily: 'Inter',
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.bold,
   );
 
   static TextStyle txtInterBold18 = TextStyle(
     color: AppColors.whiteA700,
     fontSize: 18,
     fontFamily: 'Inter',
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.bold,
   );
 
   static TextStyle txtInterSemiBold13Bluegray100 = TextStyle(

@@ -16,21 +16,20 @@ class DiagonNet {
   static String? get apiKey => _apiKey;
   String? queryLink;
   final http.Client? trClient = http.Client();
-  static const baseUrl = "https://test-api.diagon.io/";
+  static const baseUrl = "https://api.diagon.gg/";
   static const localUrl = "http://172.20.10.5/";
   final dgAuthService = Get.find<DgAuthService>();
 
   Future<dynamic> get(String url, {body, token, encoding}) async {
     var responseJson;
     try {
-      print("${dgAuthService.token}");
       final response = await trClient!.get(Uri.parse(baseUrl + url), headers: {
         "accept": "application/json",
         "Authorization": "Bearer ${dgAuthService.token}"
       });
 
       if (response.statusCode == 200 || response.statusCode == 401) {
-        responseJson = _response(response);
+        responseJson = _response(response, url);
       } else {
         throw Exception('Request Error: ${response.statusCode}');
       }
@@ -50,7 +49,7 @@ class DiagonNet {
     try {
       final response = await trClient!.get(Uri.parse(url), headers: headers);
       if (response.statusCode == 200 || response.statusCode == 401) {
-        responseJson = _response(response);
+        responseJson = _response(response, url);
       } else {
         throw Exception('Request Error: ${response.statusCode}');
       }
@@ -63,7 +62,6 @@ class DiagonNet {
 
   Future<dynamic> post(String url, {body, headers, encoding}) async {
     var responseJson;
-
     headers = {
       "accept": "application/json",
       "Authorization": "Bearer ${dgAuthService.token}"
@@ -78,7 +76,56 @@ class DiagonNet {
           throw Exception(
               "Error while fetching data, Error: ${response.statusCode}");
         }
-        responseJson = _response(response);
+        responseJson = _response(response,url);
+      });
+    } on SocketException {
+      throw FetchDataException({'message':'No Internet connection'});
+    }
+    return responseJson;
+  }
+  Future<dynamic> patch(String url, {body, headers, encoding}) async {
+    var responseJson;
+
+    headers = {
+      "accept": "application/json",
+      "Authorization": "Bearer ${dgAuthService.token}"
+    };
+    try {
+      await http
+          .patch(Uri.parse(baseUrl + url),
+              body: body, headers: headers, encoding: encoding)
+          .then((http.Response response) {
+        final int statusCode = response.statusCode;
+        if (statusCode < 200 || json == null) {
+          throw Exception(
+              "Error while fetching data, Error: ${response.statusCode}");
+        }
+        responseJson = _response(response,url);
+      });
+    } on SocketException {
+      throw FetchDataException({'message':'No Internet connection'});
+    }
+    return responseJson;
+  }
+
+  Future<dynamic> delete(String url, {body, headers, encoding}) async {
+    var responseJson;
+
+    headers = {
+      "accept": "application/json",
+      "Authorization": "Bearer ${dgAuthService.token}"
+    };
+    try {
+      await http
+          .delete(Uri.parse(baseUrl + url),
+              body: body, headers: headers, encoding: encoding)
+          .then((http.Response response) {
+        final int statusCode = response.statusCode;
+        if (statusCode < 200 || json == null) {
+          throw Exception(
+              "Error while fetching data, Error: ${response.statusCode}");
+        }
+        responseJson = _response(response,url);
       });
     } on SocketException {
       throw FetchDataException({'message':'No Internet connection'});
@@ -146,7 +193,7 @@ class DiagonNet {
           throw Exception(
               "Error while fetching data, Error: ${response.statusCode}");
         }
-        responseJson = _response(response);
+        responseJson = _response(response, url);
       });
     } on SocketException {
       throw FetchDataException({'message':'No Internet connection'});
@@ -155,8 +202,7 @@ class DiagonNet {
   }
 
   //handles the response from api
-  dynamic _response(http.Response response) {
-    debugPrint(response.body);
+  dynamic _response(http.Response response, String url) {
     log(response.statusCode.toString());
 
     switch (response.statusCode) {

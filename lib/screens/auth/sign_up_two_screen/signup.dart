@@ -17,7 +17,7 @@ const SignupView({Key? key}) : super(key: key);
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: authAppBar("Sign up"),
-      body: Obx(() => FullScreenLoader(
+      body: Obx(() => DgFullScreenLoader(
       isloading: controller.loading.value,
       child:  SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -51,9 +51,10 @@ const SignupView({Key? key}) : super(key: key);
 
                                     shape: IconButtonShape
                                         .RoundedBorder19,
-                                    child: CommonImageView(
-                                        imagePath:
-                                        controller.dgAuthService.userData.read("avatar"))),
+                                    child: ClipRRect(borderRadius: BorderRadius.circular(60), child:CommonImageView(
+                                        placeHolder: 'assets/img/avatars/avatar72.png',
+                                        url:
+                                        "https://www.diagon.io/images/avatars/${controller.dgAuthService.userData.read("avatar")}.png"))),
                                 Padding(
                                     padding:
                                     const EdgeInsets.only(
@@ -104,23 +105,53 @@ const SignupView({Key? key}) : super(key: key);
                             if (value == null ||
                                 (!isValidPassword(value,
                                     isRequired: true))) {
-                              return "Please enter valid email";
+                              return "Please enter valid password";
                             }
                             return null;
                           },
                           minLines: 1,
                           maxLines: 1,
-                          obscureText: true,
+                          obscureText: !controller.passVisible.value,
+                          suffix: IconButton(onPressed: ()=> controller.passVisible(!controller.passVisible.value), icon: controller.passVisible.value?const Icon(Icons.visibility_off,color: AppColors.primaryColor,): const Icon(Icons.visibility,color: AppColors.primaryColor)),
                           hintText: 'Password',
                           prefix: Padding(
                               padding: const EdgeInsets.all(10),
                               child: SvgPicture.asset(
                                   'assets/svg/password.svg')))),
-                  const SizedBox(height: 18),
-                  AppText.text('Password must be at least 5 characters',
-                      color: Colors.white,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500),
+                  const SizedBox(height: 10),
+                 Padding(padding: EdgeInsets.only(left: 25,top: 0),
+                 child: Column(children: [
+                   Align(alignment: Alignment.centerLeft,
+                     child: AppText.text('- Password must be at least 8 characters',
+                         color: Colors.white,
+                         fontSize: 11,
+                         fontWeight: FontWeight.w500),),
+                   Align(alignment: Alignment.centerLeft,
+                       child:AppText.text('- Use letters and numbers',
+                           color: Colors.white,
+                           fontSize: 11,
+                           fontWeight: FontWeight.w500)),
+                   Align(alignment: Alignment.centerLeft,
+                       child:AppText.text('- Use special characters (@#\$\%^)',
+                           color: Colors.white,
+                           fontSize: 11,
+                           fontWeight: FontWeight.w500)),
+                 ],),),
+                  const SizedBox(height: 20),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: AppTextInput.input(
+                          key: controller.refferedField,
+                          onChanged: (val)=>controller.refferedField.currentState?.validate(),
+                          controller: controller.refferedCtr,
+                          validator: (value) {
+                            return null;
+                          },
+                          hintText: 'Enter referrer code (optional)',
+                          prefix: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child:
+                              SvgPicture.asset('assets/svg/referal_bonus.svg')))),
                   const SizedBox(height: 30),
                   Container(
                       width: MediaQuery.of(context).size.width,
@@ -148,7 +179,7 @@ const SignupView({Key? key}) : super(key: key);
                                       minHeight: 55.0),
                                   alignment: Alignment.center,
                                   child: AppText.text('Next',
-                                      fontSize: 15,
+                                      fontSize: 18,
                                       fontWeight: FontWeight.w600))),
                           onPressed: ()=> controller.signUp()
                           )),

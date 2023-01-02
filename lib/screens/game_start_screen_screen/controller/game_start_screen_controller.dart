@@ -11,7 +11,7 @@ class GameStartScreenController extends GetxController
   AnimationController? animation;
   final DgAuthService dgAuthService = DgAuthService();
   Rxn<GameModel> gameModel = Rxn<GameModel>();
-  Rx<int> countdown = 2.obs;
+  Rx<int> countdown = 3.obs;
   Timer? _timer;
   RxBool gameStarted = false.obs;
 
@@ -37,7 +37,7 @@ class GameStartScreenController extends GetxController
         _timer?.cancel();
         gameStarted(true);
         Get.offNamed(DgRoutes.authRoute(DgRoutes.activeGamePlayScreen),
-            arguments: {'url': gameModel.value?.url});
+            arguments: {'url': gameModel.value?.url,'image':gameModel.value?.image, 'title':gameModel.value?.title});
       } else {
         countdown.value--;
       }

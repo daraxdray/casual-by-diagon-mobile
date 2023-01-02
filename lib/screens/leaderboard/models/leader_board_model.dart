@@ -6,6 +6,8 @@ class LeaderBoardModel {
   String? sId;
   String? firstName;
   String? lastName;
+  String? username;
+  String? avatar;
   int? points;
   int? challenge;
   String? date;
@@ -31,6 +33,7 @@ class LeaderBoardModel {
       {this.sId,
       this.firstName,
       this.lastName,
+      this.username,
       this.points,
       this.challenge,
       this.date});
@@ -41,6 +44,8 @@ class LeaderBoardModel {
     firstName = json['firstName'];
 
     lastName = json['lastName'];
+    username = json['username'];
+    avatar = "${json['avatar'] ?? 1}";
 
     points = json['points'];
 
@@ -54,7 +59,9 @@ class LeaderBoardModel {
     data['_id'] = this.sId;
     data['firstName'] = this.firstName;
     data['lastName'] = this.lastName;
+    data['username'] = username;
     data['points'] = this.points;
+    data['avatar'] = this.avatar;
     data['challenge'] = this.challenge;
     data['date'] = this.date;
     return data;

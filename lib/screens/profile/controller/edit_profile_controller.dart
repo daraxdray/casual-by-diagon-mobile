@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../../app/models/user.dart';
 import '../../../app/providers/user_provider.dart';
+import '../../../app/routes/routes.dart';
 import '../../../app/services/auth_service.dart';
 
 class EditProfileController extends GetxController {
@@ -17,6 +18,7 @@ class EditProfileController extends GetxController {
   final fNameField = GlobalKey<FormFieldState>();
   final lNameField = GlobalKey<FormFieldState>();
   final uNameField = GlobalKey<FormFieldState>();
+  RxString selectedImage = "".obs;
   final UserProvider userProvider = UserProvider();
   UserModel? user;
   RxBool  loading = false.obs;
@@ -31,6 +33,7 @@ class EditProfileController extends GetxController {
   @override
   void onInit(){
   user =  authService.getAuthUser();
+  selectedImage("${authService.userData.read("avatar") ?? 1}");
   firstNameCtr.text = "${user?.firstName}";
   lastNameCtr.text = "${user?.lastName}";
   usernameCtr.text = "${user?.username}";
@@ -50,11 +53,10 @@ class EditProfileController extends GetxController {
         return;
       }
       loading(true);
-
       var result = await userProvider.updateProfile({
-        "firstName": firstNameCtr.text,
-        "lastName":lastNameCtr.text,
-        "username": usernameCtr.text
+        "first_name": firstNameCtr.text,
+        "last_name":lastNameCtr.text,
+        "avatar":selectedImage.value
       });
       loading(false);
       if(result){
@@ -62,5 +64,10 @@ class EditProfileController extends GetxController {
       }else{
         failedSnack("Failed!!!", "Unable to update profile");
       }
+  }
+
+  void selectAvatar() async {
+    selectedImage.value = await Get.toNamed(DgRoutes.selectAvatarScreen, arguments: Get.currentRoute);
+    user?.setAvatar(selectedImage.value);
   }
 }

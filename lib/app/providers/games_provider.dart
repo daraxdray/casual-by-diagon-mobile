@@ -26,7 +26,7 @@ class GameProvider extends GetConnect{
   Future<List<GameModel>> getTopGames() async {
     try {
       List<dynamic> result = await networkService.get(
-          "${DgApiRoutes.topGameList}?limit=5");
+          "${DgApiRoutes.topGameList}");
       return result.map((e) => GameModel.fromJson(e)).toList();
     }
     catch(e){
@@ -48,7 +48,7 @@ class GameProvider extends GetConnect{
   Future<List<LeaderBoardModel>> getLeaderBoard() async {
     try {
       List<dynamic> result = await networkService.get(
-          DgApiRoutes.leaderBoard);
+          "${DgApiRoutes.leaderBoard}?limit=50");
       return result.map((e) => LeaderBoardModel.fromJson(e)).toList();
     }
     catch(e){
@@ -60,7 +60,6 @@ class GameProvider extends GetConnect{
     try {
       dynamic result = await networkService.get(
           DgApiRoutes.getGameById+id);
-      debugPrint(result.toString());
       return GameModel.fromJson(result);
     }
     catch(e){

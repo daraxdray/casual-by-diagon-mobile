@@ -48,8 +48,8 @@ class AllGamesView extends StatelessWidget {
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                               Text("${gameList[index].title}".capitalize!,
-                                  style: AppStyle.txtInterBold20),
+                               Text("${gameList[index].title}",
+                                  style: AppStyle.txtInterBold17),
                               const SizedBox(
                                 height: 10,
                               ),

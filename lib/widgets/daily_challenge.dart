@@ -41,13 +41,13 @@ class DailyChallengeView extends StatelessWidget {
                             url: gameList[index].image,
                               height: 140, width: 140, fit: BoxFit.fill),
                         ),
-                         const SizedBox(height: 20,),
-                         Text("${gameList[index].title?.capitalize}",
+                         const SizedBox(height: 10,),
+                         Text("${gameList[index].title}",
                             style: const TextStyle(
                                 color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18)),
-                        const SizedBox(height: 10),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 17)),
+                        const SizedBox(height: 2.5),
                         playerIcons(context, gameList[index])
                       ],
                     ))):

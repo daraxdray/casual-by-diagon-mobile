@@ -16,13 +16,19 @@ class GameDetailsController extends GetxController {
   Rx<GameModel?> gameModel = Rxn<GameModel>();
   GameProvider gameProvider = GameProvider();
   UserProvider userProvider = UserProvider();
+  RxString highScore = '0'.obs;
   var score = 0.obs;
   Rx<bool> componentsLoaded = false.obs;
+  RxList<GameModel> topGameList = <GameModel>[].obs;
 
 
   Future<void> fetchGame () async{
-
     gameModel(await gameProvider.getGameById("${Get.arguments['gameId']}"));
+
+    var f = NumberFormat.decimalPattern("en_US");
+    String? id = gameModel.value?.title?.replaceAll(" ", "_").toLowerCase() ?? "nothing";
+    highScore(f.format(gameProvider.getHighscore(id) ?? 0).toString());
+    topGameList.addAll(await gameProvider.getTopGames());
   }
 
   @override
@@ -33,11 +39,7 @@ class GameDetailsController extends GetxController {
     super.onInit();
   }
 
-  String getHighScore(){
-    var f = NumberFormat.decimalPattern("en_US");
-    String? id = gameModel.value?.title?.replaceAll(" ", "-").toLowerCase() ?? "nothing";
-    return f.format(gameProvider.getHighscore(id) ?? 0);
-  }
+
   @override
   void onReady() {
     super.onReady();
@@ -50,7 +52,9 @@ class GameDetailsController extends GetxController {
 
   void gotoGame(){
   if(gameModel.value != null && gameModel.value?.url != null){
+
     Get.toNamed(DgRoutes.authRoute(DgRoutes.gameStart), arguments:gameModel.value);
+
   }else{
     successSnack("Info", "Please wait - Loading Game");
   }

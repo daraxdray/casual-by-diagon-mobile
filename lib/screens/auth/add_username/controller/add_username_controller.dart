@@ -14,9 +14,10 @@ import '../../../../widgets/snackbar.dart';
 class AddUsernameController extends GetxController {
   TextEditingController userNameCtr = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  UserProvider _userProvider = UserProvider();
+  final UserProvider _userProvider = UserProvider();
 RxInt activeImage = 0.obs;
 RxString selectedImage = "".obs;
+bool isUpdate = false;
   Rx<bool> loading = false.obs;
   RxInt avatarCounter = 0.obs;
 
@@ -26,6 +27,11 @@ final DgAuthService _dgAuthService = DgAuthService();
     super.onReady();
   }
 
+  @override
+  void onInit() {
+    super.onInit();
+    isUpdate = Get.arguments == "update";
+  }
   @override
   void onClose() {
     super.onClose();
@@ -60,6 +66,38 @@ final DgAuthService _dgAuthService = DgAuthService();
         }else {
           failedSnack("Invalid", "The name is not available");
         }
+      }
+  updateUsername() async {
+    if(formKey.currentState?.validate() == false){
+        return;
+    }
+    loading(true);
+      if(selectedImage.value == ""){
+        failedSnack("Avatar", "Please select an avatar");
+        loading(false);
+        return;
+      }
+       var result = await _userProvider.checkNameAvailability(userNameCtr.text);
+        if(result != null && result['taken'] == false){
+          _dgAuthService.userData.write("avatar",selectedImage.value);
+          var result = await _userProvider.updateProfile({
+            "username":userNameCtr.text,
+            "first_name":"${_dgAuthService.getAuthProfile().firstName}",
+            "last_name":"${_dgAuthService.getAuthProfile().lastName}",
+            "avatar":selectedImage.value
+          });
+          loading(false);
+          if(result){
+            successSnack("Updated", "Profile Updated Successfully");
+            Get.offAllNamed(DgRoutes.gameHomeScreen);
+          }else{
+            failedSnack("Failed!!!", "Unable to update profile");
+          }
+          return;
+        }else {
+          failedSnack("Invalid", "The name is not available");
+        }
+    loading(false);
       }
   }
 

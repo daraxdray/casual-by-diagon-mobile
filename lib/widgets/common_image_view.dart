@@ -66,14 +66,14 @@ class CommonImageView extends StatelessWidget {
         width: width,
         fit: fit,
         imageUrl: url!,
-        placeholder: (context, url) => Container(
+        placeholder: (context, url) => ClipRRect(borderRadius: BorderRadius.circular(20), child: Container(
           height: 30,
           width: 30,
           child: LinearProgressIndicator(
             color: AppColors.black90033,
             backgroundColor: AppColors.primaryColor,
           ),
-        ),
+        ),),
         errorWidget: (context, url, error) => Image.asset(
           placeHolder,
           height: height,
@@ -89,12 +89,6 @@ class CommonImageView extends StatelessWidget {
         fit: fit,
         errorBuilder:
             (BuildContext context, Object exception, StackTrace? stackTrace) {
-          // Appropriate logging or analytics, e.g.
-          // myAnalytics.recordError(
-          //   'An error occurred loading "https://example.does.not.exist/image.jpg"',
-          //   exception,
-          //   stackTrace,
-          // );
           return  Image.asset(
             placeHolder,
             height: height,

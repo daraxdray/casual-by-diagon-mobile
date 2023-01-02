@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../app/providers/user_provider.dart';
 import '../../../../app/routes/routes.dart';
+import '../../../../app/services/auth_service.dart';
 import '../../../../widgets/snackbar.dart';
 import '../models/verify_email_model.dart';
 
@@ -13,8 +14,9 @@ class VerifyEmailController extends GetxController{
   final UserProvider userProvider = UserProvider();
   Rx<bool> loading = false.obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Rx<int> countdown = 20.obs;
+  Rx<int> countdown = 50.obs;
   Timer? _timer;
+  DgAuthService authService = DgAuthService();
 
 
   @override
@@ -41,10 +43,10 @@ class VerifyEmailController extends GetxController{
   }
 
   void sendCodeToEmail() async {
-    countdown(20);
+    countdown(50);
     timerCountDown();
-     var sent = await  userProvider.sendEmailCode();
-    if(sent != null ){
+     var sent = await  userProvider.sendEmailCode();;
+    if(sent != false ){
       successSnack("Succcessful","Code has been sent to your email");
     }}
 
@@ -59,9 +61,7 @@ class VerifyEmailController extends GetxController{
       if(result) {
         Get.toNamed(DgRoutes.gameHomeScreen, arguments: {"email":codeCtr.text});
         successSnack("Successful","Your email has been verified",);
-      } else {
-        failedSnack("Error","Could not complete verification",);
-    }
+      }
     // catch(e){
     //   loading(false);
     //   debugPrint(e.toString());
@@ -71,6 +71,14 @@ class VerifyEmailController extends GetxController{
 
 
   }
+
+  void logUserOut(){
+    if(authService.logOut()){
+      Get.offAllNamed(DgRoutes.logInScreen);
+    };
+
+  }
+
 
   @override
   void onInit() {

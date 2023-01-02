@@ -1,9 +1,18 @@
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+// import 'package:casual/widgets/index.dart';
+import 'package:get/get.dart';
+
+// import '../app/models/games.dart';
+import '../app/routes/routes.dart';
+import '../app/utils/styles.dart';
+import 'clickable.dart';
+import '../app/models/games.dart';
 import 'common_image_view.dart';
 
 class TournamentsView extends StatelessWidget {
-  const TournamentsView({Key? key}) : super(key: key);
+  List<GameModel> gameList;
+   TournamentsView({Key? key, required this.gameList }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +34,12 @@ class TournamentsView extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 separatorBuilder: (context, index) => const SizedBox(width: 14),
-                itemCount: 10,
+                itemCount: gameList.length ?? 0,
                 itemBuilder: (context, index) => GestureDetector(
                         child: Stack(children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                        child: Image.asset('assets/img/tournament_bg.png',
+                        child: CommonImageView(url : "https://diagon.io/images/tournaments/${gameList[index].title?.replaceAll(" ","_").toLowerCase()}.jpg",
                             height: MediaQuery.of(context).size.height,
                             width: MediaQuery.of(context).size.width - 20,
                             fit: BoxFit.cover),
@@ -43,20 +52,24 @@ class TournamentsView extends StatelessWidget {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  backgroundColor: Colors.white,
+                                  backgroundColor: Colors.white.withOpacity(0.8),
                                   foregroundColor: Colors.black,
                                   minimumSize: const Size(100, 0)),
                               onPressed: () {},
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Text(
-                                    '1st PRIZE ',
+                                   Text(
+                                    'NGN ${gameList[index].getPrize} PRIZE POOL',
                                   ),
                                   Row(
                                     children: [
-                                      CommonImageView(imagePath:'assets/img/ticket.png', height: 20,width: 20,),
-                                      const Text('100',
+                                      const Text('+',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20)),
+                                      CommonImageView(imagePath:'assets/img/dgn.png', height: 20,width: 20,),
+                                      const Text('1,000 DGN',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 20))
@@ -70,7 +83,7 @@ class TournamentsView extends StatelessWidget {
                               width: MediaQuery.of(context).size.width - 20,
                               padding: const EdgeInsets.all(20),
                               decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.4),
+                                  color: Colors.black.withOpacity(0.8),
                                   borderRadius: const BorderRadius.vertical(
                                       bottom: Radius.circular(20))),
                               child: Row(
@@ -80,18 +93,18 @@ class TournamentsView extends StatelessWidget {
                                     Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        children: const [
-                                          Text('Table Tennis',
-                                              style: TextStyle(
+                                        children:  [
+                                          Text("${gameList[index].title}",
+                                              style: const TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 20)),
+                                                  fontSize: 17)),
                                           SizedBox(height: 8),
-                                          Text('Closed',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              )),
+                                          // Text('Closed',
+                                          //     style: TextStyle(
+                                          //       color: Colors.white,
+                                          //       fontWeight: FontWeight.bold,
+                                          //     )),
                                         ]),
                                     Column(
                                       crossAxisAlignment:
@@ -110,8 +123,8 @@ class TournamentsView extends StatelessWidget {
                                                   color: Colors.white)),
                                         ),
                                         const SizedBox(height: 8),
-                                        const Text('1 Playing',
-                                            style: TextStyle(
+                                         Text( '${gameList[index].getPlayers} Playing',
+                                            style: const TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 16))

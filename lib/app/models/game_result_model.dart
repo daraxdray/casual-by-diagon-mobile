@@ -1,18 +1,20 @@
 class GameResult {
   String? scope;
+  String? title;
   String? gameID;
   int? gameTime;
   String? event;
   Params? params;
   int? accumulated;
+  String? image;
 
-  GameResult({this.scope, this.gameID, this.gameTime, this.event, this.params, this.accumulated});
-  String get gameName => gameID?.replaceAll("-", " ").toUpperCase() ?? "Name Unknown";
+  GameResult({this.scope, this.gameID, this.gameTime, this.event, this.params, this.accumulated, this.title});
   GameResult.fromJson(Map<String, dynamic> json) {
     scope = json['scope'];
     gameID = json['gameID'];
     gameTime = json['gameTime'];
     event = json['event'];
+    title = json['title'];
     params =
     json['params'] != null ? Params.fromJson(json['params']) : null;
   }
@@ -23,6 +25,8 @@ class GameResult {
     data['gameID'] = this.gameID;
     data['gameTime'] = this.gameTime;
     data['event'] = this.event;
+    data['title'] = this.title;
+    data['image'] = this.image;
     if (this.params != null) {
       data['params'] = this.params!.toJson();
     }

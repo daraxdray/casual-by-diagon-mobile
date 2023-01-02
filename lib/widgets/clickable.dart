@@ -93,7 +93,6 @@ class _DgClickableState extends State<DgClickable> with SingleTickerProviderStat
           splashColor: Colors.transparent,
           onTapDown: (details){
             ctr?.forward(from: 0.7);
-            print("clicked: $details");
           },
           onTap:(){
             widget.onTap!();},

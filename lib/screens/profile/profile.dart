@@ -2,10 +2,13 @@ import 'dart:ui';
 import 'package:casual/app/models/games.dart';
 import 'package:casual/app/routes/routes.dart';
 import 'package:casual/screens/profile/controller/user_profile_controller.dart';
+import 'package:casual/screens/profile/referral.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import '../../app/services/auth_service.dart';
 import '../../app/utils/index.dart';
 import '../../widgets/full_page_loader.dart';
 import '../../widgets/index.dart';
@@ -21,8 +24,14 @@ class ProfileView extends GetView<UserProfileController> {
         body:  SizedBox(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
-                child: Stack(children: [
-                    Obx(() => FullScreenLoader(
+                child:   SmartRefresher(
+                enablePullDown: true,
+                enablePullUp: false,
+    header: const MaterialClassicHeader(backgroundColor: Colors.black45,color: Colors.grey,),
+    controller: controller.refreshController,
+    onRefresh: controller.onRefresh,
+    child: Stack(children: [
+                    Obx(() => DgFullScreenLoader(
             color: AppColors.black900,
             isloading: controller.loading.value,
             child: SingleChildScrollView(
@@ -54,7 +63,7 @@ class ProfileView extends GetView<UserProfileController> {
                                                 .top)),
                                     profileAppBar(context),
                                   ]))))
-                ])));
+                ]))));
   }
 
   Widget profileAppBar(context) {
@@ -93,13 +102,14 @@ class ProfileView extends GetView<UserProfileController> {
                             width: 95,
                             top: 0,
                             right: 0,
-                            child: Image(
+                            child: ClipRRect(borderRadius: BorderRadius.circular(60), child: CommonImageView(
                                 fit: BoxFit.cover,
-                                image: AssetImage(controller
+                                url: controller
                                     .userProfileModel.value
-                                    .getAvatar()),
+                                    .getAvatar(),
+                                placeHolder: 'assets/img/avatars/avatar72.png',
                                 height: 95,
-                                width: 95)),
+                                width: 95))),
                         Positioned(
                             top: 32.5,
                             left: 0,
@@ -121,17 +131,17 @@ class ProfileView extends GetView<UserProfileController> {
                                     ],
                                   ),
                                 ),
-                                child: const Center(
-                                    child: Text('9',
+                                child:  Center(
+                                    child: Text("${controller.userProfileModel.value.getRank().level}",
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style:const TextStyle(
                                             color: Colors.white,
                                             fontSize: 11,
                                             fontWeight: FontWeight.bold)))))
                       ],
                     ))),
             const SizedBox(height: 20),
-            AppText.text('@${controller.userProfileModel.value.username?.capitalize}',
+            AppText.text('@${controller.userProfileModel.value.username}',
                 fontSize: 24, fontWeight: FontWeight.bold),
             const SizedBox(height: 13),
             AppText.text(
@@ -186,7 +196,8 @@ class ProfileView extends GetView<UserProfileController> {
                       height: 20,
                       width: 20,
                     ),
-                    AppText.text(controller.loading.value?'0': controller.userProfileModel.value.getTicket,
+                    SizedBox(width: 10,),
+                    AppText.text(controller.loading.value?'0': "${controller.userProfileModel.value.getTicket}",
                         fontSize: 15, fontWeight: FontWeight.bold)
                   ],
                 ),
@@ -242,7 +253,7 @@ class ProfileView extends GetView<UserProfileController> {
               Row(children: [
                 SvgPicture.asset('assets/svg/cup_icon.svg'),
                 const SizedBox(width: 5),
-                AppText.text(controller.loading.value?'0':controller.userProfileModel.value.getPoint, fontWeight: FontWeight.w600)
+                AppText.text(controller.loading.value?'0': "${controller.userProfileModel.value.getPoint}", fontWeight: FontWeight.w600)
               ])
             ])));
   }
@@ -250,7 +261,7 @@ class ProfileView extends GetView<UserProfileController> {
   Widget userReferral(context) {
     return Container(
         margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.only(left:20,top: 20,bottom: 20),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -264,36 +275,24 @@ class ProfileView extends GetView<UserProfileController> {
             AppText.text('Your referrals'),
 
             Container(
-                height:                 80.00,
-                width:                 215.00,
+                width:                 300.00,
                 margin: EdgeInsets.only(
                     top: 10,
-                    right: 17),
-                child: Stack(
-                    alignment:
-                    Alignment
-                        .bottomRight,
-                    children: [
-                      Align(
-                          alignment:
-                          Alignment
-                              .topLeft,
-                          child: Container(
-                              width: 215.00,
-                              margin: EdgeInsets.only(bottom: 10),
-                              child: Text("msg_for_every_new_m".tr, maxLines: null, textAlign: TextAlign.left, style: AppStyle.txtInterBold24.copyWith(fontWeight:FontWeight.w900, fontSize: 24)))),
-                      Align(
-                          alignment:
-                          Alignment
-                              .center,
-                          child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 70,
-                                  top: 0,
-                                  right: 70),
-                              child: CommonImageView(imagePath: "assets/img/dgn.png", height: 34.00, width:28.00)))
-                    ])),
-            playerIcons(context,GameModel())
+                    right: 10),
+                child:  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: RichText(
+                        text:TextSpan(
+                            text:"For every New Member earn ",
+                            children: [
+                              // TextSpan(text:"new_m".tr,style: AppStyle.txtInterBold24.copyWith(fontWeight:FontWeight.w900,)),
+                              WidgetSpan(child: CommonImageView(imagePath: "assets/img/ticket.png", height: 29.00, width:28.00)),
+
+                              TextSpan(text:" 5 tickets", style: AppStyle.txtInterBold24.copyWith(fontWeight:FontWeight.w900,)),
+                            ],
+                            style: AppStyle.txtInterBold24.copyWith(fontWeight:FontWeight.w900,
+                                fontSize: 24))))),
+            playerIcons(context,GameModel(), hideTotal: true)
           ],
         ));
   }
@@ -357,7 +356,7 @@ class ProfileView extends GetView<UserProfileController> {
             child: Row(children: [
               SvgPicture.asset('assets/svg/high_score.svg'),
               const SizedBox(width: 10),
-              AppText.text('Your High Score', fontWeight: FontWeight.w500)
+              AppText.text('My Total Scores', fontWeight: FontWeight.w500)
             ])));
   }
 
@@ -371,7 +370,7 @@ class ProfileView extends GetView<UserProfileController> {
             child: Row(children: [
               SvgPicture.asset('assets/svg/past_activity.svg'),
               const SizedBox(width: 10),
-              AppText.text('Past Activity', fontWeight: FontWeight.w500)
+              AppText.text('My Past Activities', fontWeight: FontWeight.w500)
             ])));
   }
 
@@ -380,12 +379,12 @@ class ProfileView extends GetView<UserProfileController> {
         padding: const EdgeInsets.symmetric(horizontal: 20)
             .add(const EdgeInsets.only(top: 10)),
         child: AppButton.button(
-            onPressed: () {},
+            onPressed: () =>Get.toNamed(DgRoutes.authRoute(DgRoutes.referralScreen)),
             backgroundColor: const Color(0xFF12162E),
             child: Row(children: [
               SvgPicture.asset('assets/svg/user_group.svg'),
               const SizedBox(width: 10),
-              AppText.text('Referral Code', fontWeight: FontWeight.w500)
+              AppText.text('My Referral Code', fontWeight: FontWeight.w500)
             ])));
   }
 
@@ -414,11 +413,12 @@ class ProfileView extends GetView<UserProfileController> {
                       color: const Color(0xFF020412)),
                   child: Column(children: [
                     GestureDetector(
+                      onTap: ()=> DgAuthService.launchURL('https://discord.gg/GDZgb8qZsm'),
                       child: Row(
                         children: [
                           SvgPicture.asset('assets/svg/discord.svg'),
                           const SizedBox(width: 10),
-                          AppText.text('Discord',
+                          AppText.text('Discord Server',
                               color: const Color(0xFFD4D8E9),
                               fontWeight: FontWeight.w600)
                         ],
@@ -426,12 +426,13 @@ class ProfileView extends GetView<UserProfileController> {
                     ),
                     Divider(color: Colors.grey.withOpacity(0.6), height: 30),
                     GestureDetector(
+                      onTap: ()=> DgAuthService.launchURL('https://t.me/diagonio'),
                       child: Row(
                         children: [
                           SvgPicture.asset('assets/svg/telegram.svg',
                               height: 22, width: 22),
                           const SizedBox(width: 10),
-                          AppText.text('Telegram Group Hangout',
+                          AppText.text('Telegram Group',
                               color: const Color(0xFFD4D8E9),
                               fontWeight: FontWeight.w600)
                         ],
@@ -439,6 +440,7 @@ class ProfileView extends GetView<UserProfileController> {
                     ),
                     Divider(color: Colors.grey.withOpacity(0.6), height: 30),
                     GestureDetector(
+                      onTap: ()=> DgAuthService.launchURL('https://twitter.com/diagonio'),
                       child: Row(
                         children: [
                           SvgPicture.asset(
@@ -453,6 +455,7 @@ class ProfileView extends GetView<UserProfileController> {
                     ),
                     Divider(color: Colors.grey.withOpacity(0.6), height: 30),
                     GestureDetector(
+                      onTap: ()=> DgAuthService.launchURL('https://www.instagram.com/diagonio/'),
                       child: Row(
                         children: [
                           SvgPicture.asset('assets/svg/instagram.svg',
@@ -467,4 +470,6 @@ class ProfileView extends GetView<UserProfileController> {
                   ])))
         ]));
   }
+
+
 }

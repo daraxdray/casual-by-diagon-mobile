@@ -37,14 +37,28 @@ class _GameActivePlayScreenState extends State<ActiveGamePlayScreen> {
   final DgAuthService dgAuth = DgAuthService();
   late ContextMenu contextMenu;
   String url = "";
+  String? image;
+  String? title;
   double progress = 0;
   final urlController = TextEditingController();
   int accumulated = 0;
   GameResult gameResult = GameResult.fromJson({});
+  InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
+      crossPlatform: InAppWebViewOptions(
+        useShouldOverrideUrlLoading: true,
+        mediaPlaybackRequiresUserGesture: false,
+      ),
+      android: AndroidInAppWebViewOptions(
+        useHybridComposition: true,
+      ),
+      ios: IOSInAppWebViewOptions(
+        allowsInlineMediaPlayback: true,
+      ));
   @override
   void initState() {
     super.initState();
-
+    image = Get.arguments['image'];
+    title = Get.arguments['title'];
     contextMenu = ContextMenu(
         menuItems: [
           ContextMenuItem(
@@ -56,19 +70,19 @@ class _GameActivePlayScreenState extends State<ActiveGamePlayScreen> {
         ],
         // settings: ContextMenuSettings(hideDefaultSystemContextMenuItems: false),
         onCreateContextMenu: (hitTestResult) async {
-          print("onCreateContextMenu");
-          print(hitTestResult.extra);
-          print(await webViewController?.getSelectedText());
+          // print("onCreateContextMenu");
+          // print(hitTestResult.extra);
+          // print(await webViewController?.getSelectedText());
         },
         onHideContextMenu: () {
-          print("onHideContextMenu");
+          // print("onHideContextMenu");
         },
         onContextMenuActionItemClicked: (contextMenuItemClicked) async {
           var id = contextMenuItemClicked.androidId;
-          print("onContextMenuActionItemClicked: " +
-              id.toString() +
-              " " +
-              contextMenuItemClicked.title);
+          // print("onContextMenuActionItemClicked: " +
+          //     id.toString() +
+          //     " " +
+          //     contextMenuItemClicked.title);
         });
 
     pullToRefreshController = kIsWeb || ![TargetPlatform.iOS, TargetPlatform.android].contains(defaultTargetPlatform)
@@ -97,7 +111,7 @@ class _GameActivePlayScreenState extends State<ActiveGamePlayScreen> {
 
 
   void processGameResult() async {
-    print(gameResult.event);
+    // print(gameResult.event);
     switch(gameResult.event){
       case "EVENT_LEVELSTART":
         break;
@@ -112,7 +126,7 @@ class _GameActivePlayScreenState extends State<ActiveGamePlayScreen> {
         userProvider.setGameScore(gameResult);
         break;
       default:
-        print(gameResult.event);
+
     }
 
 
@@ -153,20 +167,24 @@ class _GameActivePlayScreenState extends State<ActiveGamePlayScreen> {
                       // URLRequest(url: Uri.parse(Uri.base.toString().replaceFirst("/#/", "/") + 'page.html')),
                       // initialFile: "assets/index.html",
                       initialUserScripts: UnmodifiableListView<UserScript>([]),
-                      initialOptions: InAppWebViewGroupOptions(crossPlatform: settings),
+                      initialOptions: options,
                       // contextMenu: contextMenu,
-                      // pullToRefreshController: pullToRefreshController,
+                      pullToRefreshController: pullToRefreshController,
                       onWebViewCreated: (controller) async {
                         webViewController = controller;
                         webViewController?.addJavaScriptHandler(handlerName: 'handleResult', callback: (callback){
                           //check if message is game event
+                          // print(callback);
                           try{
                             if(callback[0].runtimeType.toString() == '_InternalLinkedHashMap<String, dynamic>') {
                               Map<String,
                                   dynamic> logMessage = callback[0] as Map<
                                   String,
                                   dynamic>;
+
                               gameResult = GameResult.fromJson(logMessage);
+                              gameResult.image = image;
+                              gameResult.title = title;
                               accumulated += (gameResult.params?.levelScore ?? gameResult.params?.totalScore)! ?? 0;
                               processGameResult();
 
@@ -176,7 +194,7 @@ class _GameActivePlayScreenState extends State<ActiveGamePlayScreen> {
 
                           }
                         });
-                        print(await controller.getUrl());
+                        // print(await controller.getUrl());
                       },
                       onLoadStart: (controller, url) async {
                         setState(() {
@@ -230,13 +248,16 @@ class _GameActivePlayScreenState extends State<ActiveGamePlayScreen> {
                           urlController.text = this.url;
                         });
                       },
+                      onLoadError: (controller, url, status, type) async {
+
+                      },
                       // onReceivedError: (controller, request, error) {
                       //   pullToRefreshController?.endRefreshing();
                       // },
                       onProgressChanged: (controller, progress) {
-                        // if (progress == 100) {
-                        //   pullToRefreshController?.endRefreshing();
-                        // }
+                        if (progress == 100) {
+                          pullToRefreshController?.endRefreshing();
+                        }
                         setState(() {
                           this.progress = progress / 100;
                           urlController.text = this.url;

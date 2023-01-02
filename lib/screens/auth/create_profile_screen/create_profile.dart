@@ -46,10 +46,11 @@ class CreateProfileView extends GetWidget<CreateProfileController> {
                                             .CircleBorder47,
                                         alignment: Alignment
                                             .centerRight,
-                                        child: CommonImageView(
+                                        child: ClipRRect(borderRadius: BorderRadius.circular(60), child:CommonImageView(
                                             height: 350,
                                             width: 350,
-                                            imagePath: Get.arguments['avatar'])),
+                                            placeHolder: 'assets/img/avatars/avatar72.png',
+                                            url: "https://www.diagon.io/images/avatars/${Get.arguments['avatar']}.png"))),
                                   ]))),
                       const SizedBox(height: 62),
                       Padding(

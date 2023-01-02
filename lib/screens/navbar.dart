@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:casual/app/providers/user_provider.dart';
-import 'package:casual/screens/raffle_draw/view/raffle_draw.dart';
+import 'package:casual/screens/raffle_draw/index.dart';
 import 'package:casual/screens/wallet/view/wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,9 +25,10 @@ class NavbarState extends State<NavbarView> {
   UserProvider userProvider = UserProvider();
   List<Widget> screens = [
      HomeView(),
-    const RaffleDrawView(),
+     RaffleDrawView(),
      LeaderboardView(),
-    const WalletView(),
+    WalletView(),
+
   ];
 
   @override
@@ -37,31 +38,36 @@ class NavbarState extends State<NavbarView> {
         backgroundColor: Colors.transparent,
         body: Stack(children: [
           screens[currentTabIndex],
-          SizedBox(
-              child: ClipRect(
-                  child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                      child: Column(mainAxisSize: MainAxisSize.min, children: [
-                        Padding(
-                            padding: EdgeInsets.only(
-                                top: MediaQuery.of(context).padding.top)),
-                        homeAppBar(context,userProvider),
-                      ]))))
+          // SizedBox(
+          //     child: ClipRect(
+          //         child: BackdropFilter(
+          //             filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+          //             child: Column(mainAxisSize: MainAxisSize.min, children: [
+          //               Padding(
+          //                   padding: EdgeInsets.only(
+          //                       top: MediaQuery.of(context).padding.top)),
+          //               homeAppBar(context,userProvider),
+          //             ]))))
         ]),
         bottomNavigationBar: createBottombar(context));
   }
 
   Container createBottombar(BuildContext context) {
     return Container(
-        height: 80,
-        padding: EdgeInsets.only(left:30, right:30),
+        height: 70,
+        padding: const EdgeInsets.only(left:30, right:30),
         decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(38), topLeft: Radius.circular(38)),
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Color(0xFF34374B), Color(0xFF06091F)])),
+                colors: [
+                  Color.fromARGB(240,52,55,75),
+                  Color.fromARGB(240,6,9,31)
+                ],
+
+            )),
         child: ClipRRect(
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(38.0),
@@ -84,33 +90,71 @@ class NavbarState extends State<NavbarView> {
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                   backgroundColor: Colors.transparent,
-                  icon: SvgPicture.asset(
+                  icon: Column(children: [
+                    Padding(padding: const EdgeInsets.only(bottom:5),child: SvgPicture.asset(
+                      'assets/svg/games_icon.svg',
+                      color: Colors.white.withOpacity(0.5),
+                    ),),
+                    Text("Games", style:TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 10))
+                  ],),
+                  activeIcon: Column(children: [
+                    Padding(padding: const EdgeInsets.only(bottom:5),child: SvgPicture.asset(
                     'assets/svg/games_icon.svg',
-                    color: Colors.white.withOpacity(0.5),
-                  ),
-                  activeIcon: SvgPicture.asset('assets/svg/games_icon.svg'),
-                  label: 'Games'),
+                    ),),
+                    Text("Games", style:TextStyle(color: Colors.white, fontSize: 10))
+                  ],),
+                  label: ''),
               BottomNavigationBarItem(
                   backgroundColor: Colors.transparent,
-                  icon: SvgPicture.asset('assets/svg/raffle_draw_icon.svg',
-                      color: Colors.white.withOpacity(0.5)),
-                  activeIcon: SvgPicture.asset(
+                  icon: Column(children: [
+                    Padding(padding: const EdgeInsets.only(bottom:5),child: SvgPicture.asset(
                       'assets/svg/raffle_draw_icon.svg',
-                      color: Colors.white),
-                  label: 'Raffle Draw'),
+                      color: Colors.white.withOpacity(0.5),
+                    ),),
+                    Text("Raffle Draw", style:TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 10))
+                  ],),
+                  activeIcon: Column(children: [
+                    Padding(padding: const EdgeInsets.only(bottom:5),child: SvgPicture.asset(
+                      'assets/svg/raffle_draw_icon.svg',
+                      color: Colors.white,
+                    ),),
+                   const Text("Raffle Draw", style:TextStyle(color: Colors.white, fontSize: 10))
+                  ],),
+                  label: ''),
               BottomNavigationBarItem(
                   backgroundColor: Colors.transparent,
-                  icon: SvgPicture.asset('assets/svg/leaderboard_icon.svg',
-                      color: Colors.white.withOpacity(0.5)),
-                  activeIcon:
-                      SvgPicture.asset('assets/svg/leaderboard_icon.svg'),
-                  label: 'Leaderboard'),
+                  icon: Column(children: [
+                    Padding(padding: const EdgeInsets.only(bottom:5),child: SvgPicture.asset(
+                  'assets/svg/leaderboard_icon.svg',
+                      color: Colors.white.withOpacity(0.5),
+                    ),),
+                    Text("Leaderboard", style:TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 10))
+                  ],),
+                  activeIcon: Column(children: [
+                    Padding(padding: const EdgeInsets.only(bottom:5),child: SvgPicture.asset(
+                      'assets/svg/leaderboard_icon.svg',
+                      color: Colors.white,
+                    ),),
+                   const Text("Leaderboard", style:TextStyle(color: Colors.white, fontSize: 10))
+                  ],),
+                  label: ''),
               BottomNavigationBarItem(
                   backgroundColor: Colors.transparent,
-                  icon: SvgPicture.asset('assets/svg/wallet_icon.svg',
-                      color: Colors.white.withOpacity(0.5)),
-                  activeIcon: SvgPicture.asset('assets/svg/wallet_icon.svg'),
-                  label: 'Wallet'),
+                  icon: Column(children: [
+                    Padding(padding: const EdgeInsets.only(bottom:5),child: SvgPicture.asset(
+                      'assets/svg/wallet_icon.svg',
+                      color: Colors.white.withOpacity(0.5),
+                    ),),
+                     Text("Wallet", style:TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 10))
+                  ],),
+                  activeIcon: Column(children: [
+                    Padding(padding: const EdgeInsets.only(bottom:5),child: SvgPicture.asset(
+                      'assets/svg/wallet_icon.svg',
+                      color: Colors.white,
+                    ),),
+                    const Text("Wallet", style:TextStyle(color: Colors.white, fontSize: 10))
+                  ],),
+                  label: ''),
             ],
           ),
         ));

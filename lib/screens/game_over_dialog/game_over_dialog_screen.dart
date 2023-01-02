@@ -139,7 +139,7 @@ class GamePlayScreenGameOverDialog
                                       top: 1,
                                     ),
                                     child: Text(
-                                      "${controller.getGameResult.gameTime}s",
+                                      "${controller.getGameResult.gameTime ?? 0}s",
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
                                       style: AppStyle.txtInterSemiBold18

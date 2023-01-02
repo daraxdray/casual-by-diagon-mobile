@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import '../../../app/routes/routes.dart';
 import '../../../app/utils/validation_functions.dart';
 import '../../../widgets/common_image_view.dart';
 import '../../../widgets/custom_icon_button.dart';
@@ -21,7 +22,7 @@ class LoginView extends GetWidget<LogInController> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: authAppBar("Log in"),
-      body: Obx(() => FullScreenLoader(
+      body: Obx(() => DgFullScreenLoader(
           isloading: controller.loading.value,
         child: SizedBox(
             height: MediaQuery.of(context).size.height,
@@ -54,12 +55,9 @@ class LoginView extends GetWidget<LogInController> {
                   Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: AppTextInput.input(
-                        key: controller.pwField,
-                          onChanged: (val)=> controller.pwField.currentState?.validate(),
                           controller: controller.passwordCtr,
-                          minLines: 1,
-                          maxLines: 1,
-                          obscureText: true,
+                          key: controller.pwField,
+                          onChanged: (val)=> controller.pwField.currentState?.validate(),
                           validator: (value) {
                             if (value == null ||
                                 (!isValidPassword(value,
@@ -69,6 +67,10 @@ class LoginView extends GetWidget<LogInController> {
                             return null;
                           },
                           hintText: 'Password',
+                          obscureText: !controller.passVisible.value,
+                          minLines: 1,
+                          maxLines: 1,
+                          suffix: IconButton(onPressed: ()=> controller.passVisible(!controller.passVisible.value), icon: controller.passVisible.value?const Icon(Icons.visibility_off,color: AppColors.primaryColor,): const Icon(Icons.visibility,color: AppColors.primaryColor)),
                           prefix: Padding(
                               padding: const EdgeInsets.all(10),
                               child: SvgPicture.asset(
@@ -105,6 +107,7 @@ class LoginView extends GetWidget<LogInController> {
                           onPressed: () => controller.signIn())),
                   const SizedBox(height: 15),
                   GestureDetector(
+                    onTap: ()=>Get.toNamed(DgRoutes.forgotPassword),
                       child: AppText.text('Forgot your password?',
                           color: Colors.white)),
                   const SizedBox(height: 30),
@@ -138,6 +141,11 @@ class LoginView extends GetWidget<LogInController> {
                                       fontWeight: FontWeight.w600))),
                           onPressed: ()=> controller.onTapBtnNewusersign()
                           )),
+                  const SizedBox(height: 30),
+                  // GestureDetector(
+                  //     onTap: ()=>Get.toNamed(DgRoutes.browseLink,arguments: {'url':"diagon.io"}),
+                  //     child: AppText.text('UI Test?',
+                  //         color: Colors.white)),
                 ],
               ),
             )),)));

@@ -98,10 +98,11 @@ class GameStartScreen extends GetWidget<GameStartScreenController> {
                         width: 33,
                         top: 0,
                         right: 0,
-                        child: Image(
-                            image: AssetImage("${controller.dgAuthService.getAvatar()}"),
+                        child: ClipRRect(borderRadius: BorderRadius.circular(20), child:  CommonImageView(
+                            url: controller.dgAuthService.getAvatar(),
+                            placeHolder: 'assets/img/avatars/avatar72.png',
                             height: 33,
-                            width: 33)),
+                            width: 33))),
                     Positioned(
                         top: 9,
                         left: 0,
@@ -259,11 +260,12 @@ class GameStartScreen extends GetWidget<GameStartScreenController> {
                                         borderRadius: BorderRadius.circular(
                                           36.00,
                                         ),
-                                        child: CommonImageView(
-                                          imagePath: controller.dgAuthService.getAvatar(),
+                                        child:ClipRRect(borderRadius: BorderRadius.circular(20), child:  CommonImageView(
+                                          url: controller.dgAuthService.getAvatar(),
+                                          placeHolder: 'assets/img/avatars/avatar72.png',
                                           height: 72.00,
                                           width: 72.00,
-                                        ),
+                                        )),
                                       ),
                                     ),
                                   ],
@@ -366,10 +368,10 @@ class GameStartScreen extends GetWidget<GameStartScreenController> {
                                 bottom: 12,
                               ),
                               child: Text(
-                                "${controller.dgAuthService.getAuthUser().username}".toUpperCase(),
+                                "${controller.dgAuthService.getAuthUser().username}",
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
-                                style: AppStyle.txtInterSemiBold14.copyWith(),
+                                style: AppStyle.txtInterBold17.copyWith(),
                               ),
                             ),
                             Padding(

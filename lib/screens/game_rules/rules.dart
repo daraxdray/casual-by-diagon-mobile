@@ -29,12 +29,13 @@ class RulesView extends GetView<GameDetailsController> {
                 heroWidget(context),
                 highScore(context),
                 rules(context),
-                startPlaying(context)
+                startPlaying(context),
+                    Obx(()=>controller.componentsLoaded.value?   TopGamesView(gameList: controller.topGameList,) : TopGamesView(gameList: [],),)
               ])),
               SizedBox(
                   child: ClipRect(
                       child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                          filter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
                           child:
                               Column(mainAxisSize: MainAxisSize.min, children: [
                             Padding(
@@ -50,18 +51,23 @@ class RulesView extends GetView<GameDetailsController> {
     return Container(
         height: MediaQuery.of(context).size.width,
         width: MediaQuery.of(context).size.width,
-        // alignment: Alignment.bottomLeft,
-        // decoration:  BoxDecoration(
-        //     borderRadius: BorderRadius.vertical(bottom: Radius.circular(50)),
-        //     image: DecorationImage(
-        //         image: NetworkImage("${Get.arguments["image"] != null?Get.arguments['image'] : controller.gameModel.value?.image }",),
-        //         fit: BoxFit.fill)
-        // ),
         child:  Stack(children: [
           ClipRRect(borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(50), bottomRight: Radius.circular(50) ),child: CommonImageView(
             url: "${Get.arguments != null ? Get.arguments['image'] : controller.gameModel.value?.image}",
           ),),
-          Align(alignment: Alignment.bottomLeft,child: Padding(padding: EdgeInsets.all(20),child: SizedBox(
+          Align(alignment: Alignment.bottomLeft,child: Padding(padding: EdgeInsets.all(20),child:
+          Container(
+            width: MediaQuery.of(context).size.width,
+            padding: const EdgeInsets.all(0),
+            decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.8),
+                borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30)
+                )),
+            child: SizedBox(
               height: 57,
               child: Row(
                 children: [
@@ -80,7 +86,7 @@ class RulesView extends GetView<GameDetailsController> {
                       children: [
                         controller.componentsLoaded.value
                             ? AppText.text(
-                            "${controller.gameModel.value?.title?.capitalize!}",
+                            "${controller.gameModel.value?.title!}",
 
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -109,7 +115,7 @@ class RulesView extends GetView<GameDetailsController> {
                               child: ShimmerShape()),
                       ]))
                 ],
-              )),))
+              )),)))
         ]),);
   }
 
@@ -126,15 +132,15 @@ class RulesView extends GetView<GameDetailsController> {
           Row(children: [
             SvgPicture.asset('assets/svg/cup_icon.svg'),
             const SizedBox(width: 5),
-            AppText.text("${controller.getHighScore()} Points",
-                color: const Color(0xFFFFA800), fontWeight: FontWeight.w600)
+           Obx(()=> AppText.text(controller.highScore.value,
+               color: const Color(0xFFFFA800), fontWeight: FontWeight.w600))
           ])
         ]));
   }
 
   Widget rules(context) {
     return Container(
-        margin: const EdgeInsets.only(top: 10, bottom: 20),
+        margin: const EdgeInsets.only(top: 10, bottom: 10),
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,7 +196,7 @@ class RulesView extends GetView<GameDetailsController> {
   Widget startPlaying(context) {
     return Container(
             width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.only(top: 40, bottom: 40),
+            margin: const EdgeInsets.only(top: 20, bottom: 30),
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: AppButton.button(
                 padding: const EdgeInsets.all(0),

@@ -4,11 +4,12 @@ class PastActivityItemModel {
   String? user;
   String? type;
   String? name;
+  String? image;
   int? points;
   String? date;
 
   PastActivityItemModel(
-  {this.id, this.user, this.type, this.name, this.points, this.date});
+  {this.id, this.user, this.type, this.name, this.points, this.date, this.image});
 
   PastActivityItemModel.fromJson(Map<String, dynamic> json) {
   id = json['id'];
@@ -16,6 +17,7 @@ class PastActivityItemModel {
   type = json['type'];
   name = json['name'];
   points = json['points'];
+  image = json['image'];
   date = json['date'];
   }
 
@@ -26,6 +28,7 @@ class PastActivityItemModel {
   data['type'] = this.type;
   data['name'] = this.name;
   data['points'] = this.points;
+  data['image'] = this.image;
   data['date'] = this.date;
   return data;
   }

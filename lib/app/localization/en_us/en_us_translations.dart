@@ -131,7 +131,10 @@ final Map<String, String> enUs = {
   "lbl_log_in2": "Log In",
   "lbl_5_820": "5,820",
   "lbl_8_ball_billards": "8 Ball Billards",
-  "msg_for_every_new_m": "For every New\nMember         5 DGN",
+  "msg_for_every": "For every New\n",
+  "new_m": "Member Earn \n",
+  "5_ticket": "5 tickets",
+
   "lbl_surname": "Surname",
   "lbl_lastname":"Last name",
   "lbl_create_profile": "Create Profile",

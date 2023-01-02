@@ -18,7 +18,7 @@ class AuthGuard extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
     // Navigate to login if client is not authenticated other wise continue
-
+    if (dgAuthService.hasUsername() == false) return RouteSettings(name: DgRoutes.addUsername,arguments: "update");
     if (dgAuthService.isAuthenticated() == false) return RouteSettings(name: DgRoutes.logInScreen);
     if (dgAuthService.isVerified() == false)return RouteSettings(name: DgRoutes.verifyEmail);
 

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class EarnTokenView extends StatelessWidget {
    EarnTokenView({Key? key}) : super(key: key);
   List<String> images = [
-    "assets/img/d_miss_out.png",
-    "assets/img/d_bitcoin.png"
+    "assets/img/raffles/raffle.png",
+    "assets/img/raffles/d_miss_out.png",
+    "assets/img/raffles/bitcoin.png",
+
   ];
   @override
   Widget build(BuildContext context) {

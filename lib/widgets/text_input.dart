@@ -10,6 +10,7 @@ class AppTextInput {
       Function(String val)? onChanged,
       FormFieldValidator<String>? validator,
       String? labelText,
+        bool? enabled = true,
       String? hintText,
       TextInputType? keyboardType,
       bool? autofocus,
@@ -18,14 +19,17 @@ class AppTextInput {
       int? minLines,
       int? maxLines,
       Widget? prefix,
+      Widget? suffix,
         FocusNode? focusNode,
         Color? fillColor,
         Color? cursorColor,
         Color? textColor,
+        TextStyle? hintStyle,
       List<TextInputFormatter>? inputFormatters}) {
     return TextFormField(
       key: key,
       controller: controller,
+      enabled: enabled,
       keyboardType: keyboardType ?? TextInputType.text,
       cursorColor: cursorColor ?? Colors.black,
       focusNode: focusNode,
@@ -46,9 +50,12 @@ class AppTextInput {
           fontFamily: 'Inter'),
       decoration: InputDecoration(
         fillColor: fillColor ?? Colors.white,
+        contentPadding: EdgeInsets.all(20),
         filled: true,
         prefixIcon: prefix,
         // prefix: prefix,
+        suffixIcon: suffix,
+        hintStyle: hintStyle,
         labelText: labelText,
         labelStyle: const TextStyle(
             // fontFamily: 'Lato',
@@ -63,6 +70,10 @@ class AppTextInput {
           // borderSide: BorderSide(width: 1, color: Color(0xFF050529)),
         ),
         enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          // borderSide: BorderSide(color: Color(0xFFF3F3F3)),
+        ),
+        disabledBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           // borderSide: BorderSide(color: Color(0xFFF3F3F3)),
         ),

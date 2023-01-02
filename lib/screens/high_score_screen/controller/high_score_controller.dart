@@ -1,7 +1,9 @@
 
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../../../app/models/highscore_model.dart';
 import '../../../app/models/pagination_filter.dart';
 import '../../../app/models/user.dart';
 import '../../../app/providers/user_provider.dart';
@@ -11,7 +13,7 @@ import '../models/high_score_model.dart';
 
 class HighScoreController extends GetxController {
   Rx<PastActivityModel> pastActivityModelObj = PastActivityModel().obs;
-  RxList highScoreList = [].obs;
+  RxList<HighScoreModel> highScoreList = <HighScoreModel> [].obs;
   final UserProvider userProvider = UserProvider();
   final DgAuthService dgAuth = DgAuthService();
   final _paginationFilter = PaginationFilter().obs;
@@ -20,6 +22,22 @@ class HighScoreController extends GetxController {
   int get _page => _paginationFilter.value.page ?? 1;
   bool get lastPage => _lastPage.value;
   RxBool isLoading = false.obs;
+  final RefreshController refreshController =
+  RefreshController(initialRefresh: false);
+  final DgAuthService authService = DgAuthService();
+
+
+  void onRefresh() async{
+    isLoading(true);
+    refreshController.refreshCompleted();
+     _getAllHighScore(refresh: true);
+    Future.delayed(const Duration(milliseconds:900 ),() {
+    isLoading(false);
+
+    });
+  }
+
+
   @override
   void onReady() {
     super.onReady();
@@ -31,6 +49,7 @@ class HighScoreController extends GetxController {
   }
 
 
+
   @override
   void onInit() async{
     ever(_paginationFilter, (_) => _getAllHighScore());
@@ -38,15 +57,18 @@ class HighScoreController extends GetxController {
     super.onInit();
   }
 
-void _getAllHighScore()async {
+void _getAllHighScore({bool? refresh = false})async {
     isLoading(true);
-   dynamic result = await userProvider.getHighScore();
+   List<HighScoreModel> result = await userProvider.getHighScore();
+   if(refresh == true) highScoreList.clear();
+
   highScoreList.addAll(result);
   isLoading(false);
   if(highScoreList.value.isEmpty){
     _lastPage(true);
   }
 }
+
   void changeTotalPerPage(int limitValue) {
     highScoreList.clear();
     _lastPage.value = false;

@@ -4,8 +4,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../widgets/index.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'controller/game_home_screen_controller.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeView extends GetView<HomeScreenController> {
    HomeView({Key? key}) : super(key: key);
@@ -20,68 +20,73 @@ HomeScreenController  controller = Get.put(HomeScreenController());
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Stack(children: [
-              SingleChildScrollView(
-                child: Column(children: [
-                  Stack(children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: Stack(
-                        fit: StackFit.loose,
-                        children: [
-                          Obx(()=> CommonImageView(url: "${controller.componentsLoaded.value?controller.randomGame().value.image:''}",),
-                          ),
-                          ClipRRect(
-                            // Clip it cleanly.
-                            child: BackdropFilter(
-                              filter: ImageFilter.blur(
-                                sigmaX: 30,
-                                sigmaY: 30,
-                              ),
-                              child: Container(),
+                SmartRefresher(
+                enablePullDown: true,
+                enablePullUp: true,
+                header: MaterialClassicHeader(backgroundColor: Colors.black45,color: Colors.grey,),
+                controller: controller.refreshController,
+                onRefresh: controller.onRefresh,
+                child:
+                SingleChildScrollView(
+                child: Stack(children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: Stack(
+                      fit: StackFit.loose,
+                      children: [
+                        Obx(()=> CommonImageView(url: "${controller.componentsLoaded.value?controller.randomGame().value.image:''}",),
+                        ),
+                        ClipRRect(
+                          // Clip it cleanly.
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(
+                              sigmaX: 30,
+                              sigmaY: 30,
                             ),
+                            child: Container(),
                           ),
-                          Container(
-                              height: MediaQuery.of(context).size.height,
-                              decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                colors: [
-                                  Colors.black,
-                                  Colors.transparent,
-                                  Colors.transparent,
-                                ],
-                                begin: Alignment.bottomCenter,
-                                end: Alignment.topCenter,
-                              )))
-                        ],
-                      ),
+                        ),
+                        Container(
+                            height: MediaQuery.of(context).size.height,
+                            decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.black,
+                                    Colors.transparent,
+                                    Colors.transparent,
+                                  ],
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                )))
+                      ],
                     ),
-                   Obx(()=> Column(children: [
-                     controller.componentsLoaded.value? heroImage(context, null) : heroImage(context, ShimmerShape(),),
-                      TopGamesView(gameList: controller.topGameList,),
-                     const SizedBox(height: 40),
-                      DailyChallengeView(gameList: controller.dailyChallenge,),
-                     const SizedBox(height: 40),
-                     const TournamentsView(),
-                     const SizedBox(height: 40),
-                      AllGamesView(gameList: controller.gameList,),
-                     const SizedBox(height: 40),
-                      EarnTokenView(),
-                     const SizedBox(height: 90),
+                  ),
+                  Obx(()=> Column(children: [
+                    controller.componentsLoaded.value? heroImage(context, null) : heroImage(context, ShimmerShape(),),
+                    controller.componentsLoaded.value?   TopGamesView(gameList: controller.topGameList,) : TopGamesView(gameList: [],),
+                    const SizedBox(height: 20),
+                    DailyChallengeView(gameList: controller.dailyChallenge,),
+                    const SizedBox(height: 20),
+                    controller.componentsLoaded.value? TournamentsView(gameList: controller.gameList.where((element) => element.tournament == true).toList(),) :TournamentsView(gameList: [],)  ,
+                    const SizedBox(height: 20),
+                    AllGamesView(gameList: controller.gameList,),
+                    const SizedBox(height: 20),
+                    EarnTokenView(),
+                    const SizedBox(height: 40),
 
-                   ]))
-                  ])
+                  ]))
                 ]),
-              ),
+              )),
               SizedBox(
                   child: ClipRect(
                       child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                          filter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
                           child:
                               Column(mainAxisSize: MainAxisSize.min, children: [
                             Padding(
                                 padding: EdgeInsets.only(
                                     top: MediaQuery.of(context).padding.top)),
-                            homeAppBar(context,controller.userProvider),
+                            homeAppBar(context),
                           ]))))
             ])));
   }
@@ -92,7 +97,7 @@ HomeScreenController  controller = Get.put(HomeScreenController());
         options: CarouselOptions(
         autoPlay: true,
           viewportFraction: 1,
-          autoPlayInterval: const Duration(seconds: 15),
+          autoPlayInterval: const Duration(seconds: 3),
           onPageChanged: (int index, reason){
             controller.randomInt(index);
           },

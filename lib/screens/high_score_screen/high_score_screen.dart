@@ -2,10 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import '../../../widgets/full_page_loader.dart';
 
 import '../../app/utils/colors.dart';
+import '../../app/utils/styles.dart';
 import '../../widgets/index.dart';
 import 'controller/high_score_controller.dart';
 
@@ -20,30 +24,38 @@ class HighScoreView extends GetWidget<HighScoreController> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Stack(children: [
-              Column(children: [
+                SmartRefresher(
+                enablePullDown: true,
+                enablePullUp: false,
+                header: const MaterialClassicHeader(backgroundColor: Colors.black45,color: Colors.grey,),
+                controller: controller.refreshController,
+                onRefresh: controller.onRefresh,
+                child:  Obx(()=>DgFullScreenLoader(
+            isloading: controller.isLoading.value,
+            color: Colors.black,
+            child:  Column(children: [
                 Padding(
                     padding: EdgeInsets.only(
                         top: MediaQuery.of(context).padding.top + 100,
                         bottom: 20),
-                    child: AppText.text('High Scores',
-                        fontWeight: FontWeight.w900, fontSize: 22)),
-              Expanded(child: controller.highScoreList.isNotEmpty && controller.lastPage == false?
-    LazyLoadScrollView(
-    onEndOfPage: controller.loadNextPage,
-    isLoading: controller.lastPage,
-    child: highScores(context)): Center(child: AppText.text("No Highscore"),),
+                    child: AppText.text('Total Scores',
+                        style: AppStyle.txtInterBold25)),
+              Expanded(child:   controller.highScoreList.isNotEmpty?
+                highScores(context):
+                Center(child: AppText.text("No Highscore"),
+              ),
                 )
-              ]),
+              ])))),
               SizedBox(
                   child: ClipRect(
                       child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                          filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
                           child:
                               Column(mainAxisSize: MainAxisSize.min, children: [
                             Padding(
                                 padding: EdgeInsets.only(
                                     top: MediaQuery.of(context).padding.top)),
-                            highScoreAppBar(context),
+                                backProfileAppBar(context,controller.userProvider),
                           ]))))
             ])));
   }
@@ -61,7 +73,6 @@ class HighScoreView extends GetWidget<HighScoreController> {
       itemBuilder: (_, i) {
         var model = controller
             .highScoreList
-            .value
         [i];
         return Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -71,13 +82,13 @@ class HighScoreView extends GetWidget<HighScoreController> {
             child: Row(children: [
               ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset('assets/img/hero_image.png',
+                  child: CommonImageView(url: model.image,
                       height: 70, width: 70, fit: BoxFit.cover)),
               const SizedBox(width: 10),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                AppText.text('Billiard Classic',
+                AppText.text(model.game ?? '',
                     fontSize: 19, fontWeight: FontWeight.bold),
-                AppText.text('23,345',
+                AppText.text(model.getScore,
                     color: const Color(0xFFFFA800), fontWeight: FontWeight.w600)
               ])
             ]));

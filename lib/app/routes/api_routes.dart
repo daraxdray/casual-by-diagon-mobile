@@ -10,6 +10,13 @@ class DgApiRoutes {
  static String slideGameList = 'games/slide-games';
  static String getGameById = 'games/';
  static String profile = 'profile/';
+ static String addReferrer = 'auth/who-referred-you';
+ static String appInfo = 'app-info/';
  static String activity = 'activity/';
+ static String highscore = 'activity/high-scores/';
  static String leaderBoard = 'leaderboard/';
+ static String forgotPassword = 'auth/forgot-password/';
+ static String resetPassword = 'auth/reset-password/';
+ static String deleteAccount = 'auth/';
+ static String transaction = 'transaction/';
 }

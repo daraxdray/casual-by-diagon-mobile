@@ -37,9 +37,10 @@ class SelectAvatarScreen extends GetWidget<SelectAvatarController> {
                       return StaggeredTile.fit(2);
                     },
                     itemCount: controller
-                        .SelectAvatarItemList.length,
+                        .selectAvatarItemList.length,
                     itemBuilder: (context, index) {
-                      String image = controller.SelectAvatarItemList
+
+                      String image = controller.selectAvatarItemList
                       [index];
                       return SelectAvatarItemWidget(image);
                     },

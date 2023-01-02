@@ -2,9 +2,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../app/routes/routes.dart';
+import '../../app/services/auth_service.dart';
+import '../../app/utils/colors.dart';
+import '../../widgets/full_page_loader.dart';
 import '../../widgets/index.dart';
 import 'controller/profile_settings_controller.dart';
 
@@ -19,18 +21,25 @@ class ProfileSettingView extends GetView<ProfileSettingsController> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Stack(children: [
-              SingleChildScrollView(
-                  padding: const EdgeInsets.only(bottom: 40),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(width: MediaQuery.of(context).size.width),
-                        title(context),
-                        generalSettings(context),
-                        support(context),
-                        signout(context),
-                        deleteAccount(),
-                      ])),
+                SmartRefresher(
+                enablePullDown: true,
+                enablePullUp: false,
+                header: const MaterialClassicHeader(backgroundColor: Colors.black45,color: Colors.grey,),
+                controller: controller.refreshController,
+                onRefresh: controller.onRefresh,
+                child:  SingleChildScrollView(child:Obx(()=>DgFullScreenLoader(
+                    isloading: controller.isLoading.value,
+                    color: Colors.black,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(width: MediaQuery.of(context).size.width),
+                          title(context),
+                          generalSettings(context),
+                          support(context),
+                          signout(context),
+                          deleteAccount(),
+                        ]))))),
               SizedBox(
                   child: ClipRect(
                       child: BackdropFilter(
@@ -84,9 +93,15 @@ class ProfileSettingView extends GetView<ProfileSettingsController> {
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Row(children: [
-              Image.asset(controller
-                  .authService
-                  .getAvatar(), height: 33, width: 33),
+              ClipRRect(borderRadius: BorderRadius.circular(20), child:   FutureBuilder(
+                builder: (context,snapshot){
+                  return CommonImageView(url:controller
+                      .authService.userModel.getAvatar(),
+                      placeHolder: 'assets/img/avatars/avatar72.png',
+                      height: 33, width: 33);
+                },
+
+              )),
               const SizedBox(width: 10),
               AppText.text('Name & Avatar', fontWeight: FontWeight.w500)
             ]),
@@ -118,8 +133,9 @@ class ProfileSettingView extends GetView<ProfileSettingsController> {
               const SizedBox(width: 10),
               AppText.text('Notifications', fontWeight: FontWeight.w500)
             ]),
-            GestureDetector(
-                child: SvgPicture.asset('assets/svg/toggle_off.svg'))
+            Obx(() => GestureDetector(
+                onTap: ()=>controller.toggleNotification(),
+                child: controller.notificationStatus.value? SvgPicture.asset('assets/svg/toggle_on.svg') : SvgPicture.asset('assets/svg/toggle_off.svg')))
           ])),
       gradientContainer(context,
           child:
@@ -129,8 +145,9 @@ class ProfileSettingView extends GetView<ProfileSettingsController> {
               const SizedBox(width: 10),
               AppText.text('Game Sounds', fontWeight: FontWeight.w500)
             ]),
-            GestureDetector(
-                child: SvgPicture.asset('assets/svg/toggle_off.svg'))
+            Obx(()=>GestureDetector(
+                onTap: ()=>controller.toggleGameSound(),
+                child: controller.gameSoundStatus.value ? SvgPicture.asset('assets/svg/toggle_on.svg') : SvgPicture.asset('assets/svg/toggle_off.svg')))
           ])),
     ]);
   }
@@ -160,6 +177,7 @@ class ProfileSettingView extends GetView<ProfileSettingsController> {
                       color: const Color(0xFF020412)),
                   child: Column(children: [
                     GestureDetector(
+                      onTap: ()=> DgAuthService.launchURL('https://www.diagon.io/about'),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -167,7 +185,7 @@ class ProfileSettingView extends GetView<ProfileSettingsController> {
                             children: [
                               SvgPicture.asset('assets/svg/about.svg'),
                               const SizedBox(width: 10),
-                              AppText.text('About Decagon',
+                              AppText.text('About Diagon',
                                   color: const Color(0xFFD4D8E9),
                                   fontWeight: FontWeight.w600),
                             ],
@@ -178,6 +196,7 @@ class ProfileSettingView extends GetView<ProfileSettingsController> {
                     ),
                     Divider(color: Colors.grey.withOpacity(0.6), height: 30),
                     GestureDetector(
+                      onTap: ()=> DgAuthService.launchEmail('help@diagon.io'),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -196,6 +215,7 @@ class ProfileSettingView extends GetView<ProfileSettingsController> {
                     ),
                     Divider(color: Colors.grey.withOpacity(0.6), height: 30),
                     GestureDetector(
+                      onTap: ()=> DgAuthService.launchURL('https://diagon.io/support'),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -214,6 +234,10 @@ class ProfileSettingView extends GetView<ProfileSettingsController> {
                     ),
                     Divider(color: Colors.grey.withOpacity(0.6), height: 30),
                     GestureDetector(
+                      onTap: () =>  DgAuthService.launchURL("https://www.diagon.io/privacy-policy"),
+                      // async{
+                      //   controller.viewPdf("https://www.diagon.gg/documents/legal/privacy-policy.pdf");
+                      // },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -232,6 +256,7 @@ class ProfileSettingView extends GetView<ProfileSettingsController> {
                     ),
                     Divider(color: Colors.grey.withOpacity(0.6), height: 30),
                     GestureDetector(
+                      onTap: ()=> DgAuthService.launchURL('https://www.diagon.io/terms-of-use'),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -239,7 +264,7 @@ class ProfileSettingView extends GetView<ProfileSettingsController> {
                             children: [
                               SvgPicture.asset('assets/svg/t_and_c.svg'),
                               const SizedBox(width: 10),
-                              AppText.text('Terms & Conditions',
+                              AppText.text('Terms of Use',
                                   color: const Color(0xFFD4D8E9),
                                   fontWeight: FontWeight.w600),
                             ],
@@ -317,6 +342,14 @@ class ProfileSettingView extends GetView<ProfileSettingsController> {
 
   Widget deleteAccount() {
     return GestureDetector(
+      onTap: ()=> Get.defaultDialog(
+          title: "Delete Account",
+          titleStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+          middleText: "Do you want to delete your account?",
+          middleTextStyle: TextStyle(fontSize: 12, color: Colors.white),
+          backgroundColor: AppColors.bluegray800Cc,
+          onConfirm: ()=>controller.userProvider.deleteAccount("${controller.authService.getAuthProfile().id}"),
+        onCancel: ()=> {}),
         child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

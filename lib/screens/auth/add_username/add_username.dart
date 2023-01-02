@@ -22,7 +22,7 @@ class AddUsernameView extends GetWidget<AddUsernameController> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: authAppBar("Create Profile"),
-      body: Obx(() => FullScreenLoader(
+      body: Obx(() => DgFullScreenLoader(
       isloading: controller.loading.value,
       child:SizedBox(
               height: MediaQuery.of(context).size.height,
@@ -39,9 +39,11 @@ class AddUsernameView extends GetWidget<AddUsernameController> {
                           .CircleBorder47,
                       alignment: Alignment
                           .center,
-                      child: CommonImageView(
+                      child: ClipRRect(borderRadius: BorderRadius.circular(60), child:CommonImageView(
                           height: 200,
-                          imagePath: controller.selectedImage.value)):
+                          placeHolder: 'assets/img/avatars/avatar72.png',
+                          url: "https://www.diagon.io/images/avatars/${controller
+                              .selectedImage.value}.png"))):
                   DgClickable(child: SvgPicture.asset('assets/svg/add_photo.svg'),onTap: ()=> controller.selectAvatar()),
                   const SizedBox(height: 17),
                   AppText.text('Choose Avatar',
@@ -89,7 +91,7 @@ class AddUsernameView extends GetWidget<AddUsernameController> {
                       child: AppText.text('Next',
                           fontSize: 15,
                           fontWeight: FontWeight.w600))),
-              onPressed: () => controller.onTapBtnNext(),
+              onPressed: () =>controller.isUpdate? controller.updateUsername(): controller.onTapBtnNext(),
     ))]),)
     ))));
   }

@@ -21,16 +21,16 @@ class RankModel {
   RankModel({required this.title, required this.max, required this.image, required this.description, required this.level, required this.min});
 
   static List<int> levels = [
-    5000,
-    20000,
-    30000,
     50000,
-    70000,
-    90000,
-    100000,
-    130000,
+    150000,
+    300000,
     500000,
-    2000000
+    750000,
+    1000000,
+    1300000,
+    1750000,
+    2300000,
+    3000000
   ];
 
   static List<RankModel> rankLists =  [

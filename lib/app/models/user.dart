@@ -24,9 +24,10 @@ class UserModel {
   int? exp;
 
   var f = NumberFormat.decimalPattern("en_US");
-  String get getPoint => f.format(points);
-  String get getTicket => f.format(tickets);
-  String get getDgn => f.format(dgn);
+  String? get getPoint => f.format(points ?? 0);
+  String? get getTicket => f.format(tickets ?? 0);
+  String? get getDgn => f.format(dgn ?? 0);
+  String? get getNgnValue => f.format((dgn ?? 0) * 10);
 
   UserModel(
       {this.id,
@@ -40,47 +41,46 @@ class UserModel {
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    firstName = json['firstName'];
-    lastName = json['lastName'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
     username = json['username'];
     email = json['email'];
-    avatar = json['avatar'];
-    isVerified = json['isVerified'];
+    avatar = "${json['avatar'] ?? '1'}";
+    isVerified = json['is_verified'];
     iat = json['iat'];
     exp = json['exp'];
   }
 
   UserModel.profileFromJson(Map<String, dynamic> json) {
     id = json['id'];
-    firstName = json['firstName'];
-    avatar = json['avatar'];
-    lastName = json['lastName'];
+    firstName = json['first_name'];
+    avatar = "${json['avatar'] ?? '1'}";
+    lastName = json['last_name'];
     username = json['username'];
     email = json['email'];
-    isVerified = json['isVerified'];
+    isVerified = json['is_verified'];
     country = json['country'];
     phone = json['phone'];
-    evmAddress = json['evmAddress'];
+    evmAddress = json['evm_address'];
     dgn = json['dgn'];
     ngn = json['ngn'];
     tickets = json['tickets'];
     points = json['points'];
     rank = json['rank'];
-    referrer = json['refferer'];
+    referrer = json['referrer'];
     exp = json['exp'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data =  Map<String, dynamic>();
     data['id'] = id;
-    data['firstName'] = firstName;
-    data['avatar'] = avatar;
-    data['lastName'] = lastName;
+    data['first_name'] = firstName;
+    data['avatar'] = avatar ?? '1';
+    data['last_name'] = lastName;
     data['username'] = username;
     data['email'] = email;
     data['iat'] = iat;
-    data['isVerified'] = isVerified;
-    data['isVerified'] = isVerified;
+    data['is_verified'] = isVerified;
     data['exp'] = exp;
     return data;
   }
@@ -96,8 +96,19 @@ String wonGame(){
     return DgAuthService().userData.read("wonGames") ?? "0";
 }
   String getAvatar(){
-    return DgAuthService().getAuthProfile().avatar ?? "assets/img/avatars/avatar73.png";
+    return "https://www.diagon.io/images/avatars/${DgAuthService().userData.read("avatar") ?? 1}.png";
+    //
   }
+
+   setAvatar(String value){
+     DgAuthService().userData.write("avatar", value);
+     UserModel user = DgAuthService().getAuthProfile();
+     user.avatar = value;
+     DgAuthService().setAuthProfile(user.toJson());
+
+  }
+
+
   double percentageOf(int max, int needle){
     return needle * 100 / max;
   }
