@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "17056859925",
+    "project_id": "casual-by-diagon-35764908",
+    "storage_bucket": "casual-by-diagon-35764908.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17056859925:android:004877fe47f1ba6757cb1c",
+        "android_client_info": {
+          "package_name": "io.diagon.casual"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17056859925-2t5a2cv40rr82il79v06pghqgbcbcusj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL5lrSPRoXjGG4IWTIUCKAIDLJ44vLzbc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17056859925-2t5a2cv40rr82il79v06pghqgbcbcusj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "io.diagon.casual",
+    "sha256_cert_fingerprints":
+    ["E9:E0:B9:14:BA:EC:11:09:75:C0:6B:4D:1D:FB:11:32:84:86:72:5B:4C:FE:86:BB:2D:CB:6D:F5:B0:C7:18:4D"]
+  }
+}]
