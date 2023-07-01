@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../../../../app/routes/routes.dart';
 import '../../../../app/services/auth_service.dart';
+import '../../../../app/utils/global_key_factory.dart';
 import '../models/create_profile_model.dart';
 
 class CreateProfileController extends GetxController {
@@ -9,9 +10,9 @@ class CreateProfileController extends GetxController {
   TextEditingController lastNameCtr = TextEditingController();
 
   Rx<CreateProfileModel> createProfileModelObj = CreateProfileModel().obs;
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final fNameField = GlobalKey<FormFieldState>();
-  final lNameField = GlobalKey<FormFieldState>();
+  final GlobalKey<FormState> formKey = GlobalKeyFactory.generateUniqueFormKey();
+  final GlobalKey<FormFieldState> fNameField = GlobalKeyFactory.generateUniqueFormFieldKey();
+  final GlobalKey<FormFieldState> lNameField = GlobalKeyFactory.generateUniqueFormFieldKey();
 
   final DgAuthService dgAuthService = DgAuthService();
   @override

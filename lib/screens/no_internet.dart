@@ -39,7 +39,7 @@ class NoInternetScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.5,
               child: InkWell(
                 onTap: (){
-                  Get.offAllNamed( DgRoutes.authRoute(DgRoutes.gameHomeScreen)); },
+                  Get.offAllNamed( DgRoutes.gameHomeScreen); },
                   child: Ink(
                   decoration: const BoxDecoration(
                   gradient: LinearGradient(

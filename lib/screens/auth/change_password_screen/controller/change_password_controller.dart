@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:casual/app/utils/global_key_factory.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:flutter/material.dart';
@@ -14,15 +15,15 @@ class ChangePasswordController extends GetxController{
   final UserProvider userProvider = UserProvider();
   TextEditingController passwordCtr = TextEditingController();
   TextEditingController confirmPasswordCtr = TextEditingController();
-  final pwField = GlobalKey<FormFieldState>();
-  final cfPwField = GlobalKey<FormFieldState>();
-  final codeCtrField = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState> pwField = GlobalKeyFactory.generateUniqueFormFieldKey();
+  final GlobalKey<FormFieldState> cfPwField = GlobalKeyFactory.generateUniqueFormFieldKey();
+  final GlobalKey<FormFieldState> codeCtrField = GlobalKeyFactory.generateUniqueFormFieldKey();
   RxBool newPassVisible = false.obs;
   RxBool confirmPassVisible = false.obs;
   Rx<bool> loading = false.obs;
   String? userId = "";
   String? email = "";
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKeyFactory.generateUniqueFormKey();
   Rx<int> countdown = 50.obs;
   Timer? _timer;
   DgAuthService authService = DgAuthService();

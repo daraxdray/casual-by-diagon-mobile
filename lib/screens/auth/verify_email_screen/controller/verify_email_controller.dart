@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../../app/providers/user_provider.dart';
 import '../../../../app/routes/routes.dart';
 import '../../../../app/services/auth_service.dart';
+import '../../../../app/utils/global_key_factory.dart';
 import '../../../../widgets/snackbar.dart';
 import '../models/verify_email_model.dart';
 
@@ -13,7 +14,7 @@ class VerifyEmailController extends GetxController{
   TextEditingController codeCtr = TextEditingController();
   final UserProvider userProvider = UserProvider();
   Rx<bool> loading = false.obs;
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKeyFactory.generateUniqueFormKey();
   Rx<int> countdown = 50.obs;
   Timer? _timer;
   DgAuthService authService = DgAuthService();

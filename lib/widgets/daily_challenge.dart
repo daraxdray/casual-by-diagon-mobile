@@ -31,7 +31,7 @@ class DailyChallengeView extends StatelessWidget {
                 separatorBuilder: (context, index) => const SizedBox(width: 14),
                 itemCount: gameList.length,
                 itemBuilder: (context, index) => DgClickable(
-                        onTap:()=> Get.toNamed(DgRoutes.authRoute(DgRoutes.gameRulesScreen), arguments:
+                        onTap:()=> Get.toNamed(DgRoutes.gameRulesScreen, arguments:
                         {"gameId": gameList[index].sId , "image": gameList[index].image}),
                     child: Column(
                       children: [
@@ -63,7 +63,7 @@ class DailyChallengeView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(100),
                           child: SizedBox( height: 140, width: 140,child:  ShimmerShape()),
                         ),
-                         SizedBox(height: 50,child: ShimmerShape(),),
+                         SizedBox(height: 50,width: 50,child: ShimmerShape(),),
                         const SizedBox(height: 10),
                          SizedBox(height: 50,child: ShimmerShape(),),
                       ],

@@ -11,8 +11,6 @@ import '../../../widgets/custom_icon_button.dart';
 import '../../../widgets/full_page_loader.dart';
 import '../../../widgets/index.dart';
 import 'controller/add_username_controller.dart';
-// import '../../app/utils/theme.dart';
-
 
 class AddUsernameView extends GetWidget<AddUsernameController> {
   const AddUsernameView({Key? key}) : super(key: key);

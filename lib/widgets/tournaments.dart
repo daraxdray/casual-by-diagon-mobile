@@ -39,7 +39,7 @@ class TournamentsView extends StatelessWidget {
                 itemBuilder: (context, index) => GestureDetector(
     onTap: () {
     Get.delete<GameDetailsController>();
-    Get.toNamed(DgRoutes.authRoute(DgRoutes.gameRulesScreen),
+    Get.toNamed(DgRoutes.gameRulesScreen,
     preventDuplicates: false,
 
     arguments: {

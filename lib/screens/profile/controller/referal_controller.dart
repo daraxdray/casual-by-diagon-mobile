@@ -1,4 +1,5 @@
 import 'package:casual/app/routes/routes.dart';
+import 'package:casual/app/utils/global_key_factory.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -18,7 +19,7 @@ DgAuthService dgAuthService = DgAuthService();
   RefreshController(initialRefresh: false);
   final UserProvider userProvider = UserProvider();
   final TextEditingController referrerCodeCtr = TextEditingController();
-  final GlobalKey<FormState> referrerCode = GlobalKey<FormState>();
+  final GlobalKey<FormState> referrerCode = GlobalKeyFactory.generateUniqueFormKey();
   RxInt totalReferred = 0.obs;
 
   void onRefresh() async{

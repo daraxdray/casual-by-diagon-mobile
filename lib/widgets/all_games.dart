@@ -75,7 +75,7 @@ class AllGamesView extends StatelessWidget {
                             left: 10,
                             bottom: 1,
                           ),
-                          onTap: ()=>Get.toNamed(DgRoutes.authRoute(DgRoutes.gameRulesScreen), arguments:
+                          onTap: ()=>Get.toNamed(DgRoutes.gameRulesScreen, arguments:
                           {"gameId": gameList[index].sId , "image": gameList[index].image}),
                         ),
 

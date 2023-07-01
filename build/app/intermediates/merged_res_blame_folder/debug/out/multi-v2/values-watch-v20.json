@@ -4,7 +4,7 @@
             "outputFile": "/Users/mac/Mobiles/casual/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
-                    "source": "/Users/mac/.gradle/caches/transforms-3/13c11db9378fe5d4a5611e5dfad2a7a1/transformed/jetified-play-services-auth-20.4.0/res/values-watch-v20/values.xml",
+                    "source": "/Users/mac/.gradle/caches/transforms-3/4b32ce0725486fc01cb1a80548122c6a/transformed/jetified-play-services-auth-20.4.0/res/values-watch-v20/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11",
                         "startColumns": "0,0,0,0,0,0,0,0",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/mac/.gradle/caches/transforms-3/eb430d2ed3cd09eb5ba32ca89355e03c/transformed/appcompat-1.5.1/res/values-watch-v20/values-watch-v20.xml",
+                    "source": "/Users/mac/.gradle/caches/transforms-3/6d576dbbb991073e96a9ac410a6bde05/transformed/appcompat-1.5.1/res/values-watch-v20/values-watch-v20.xml",
                     "from": {
                         "startLines": "2,5,8",
                         "startColumns": "4,4,4",

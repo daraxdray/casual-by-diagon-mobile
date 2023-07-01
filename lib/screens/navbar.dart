@@ -4,9 +4,13 @@ import 'package:casual/app/providers/user_provider.dart';
 import 'package:casual/screens/profile/profile.dart';
 import 'package:casual/screens/raffle_draw/index.dart';
 import 'package:casual/screens/wallet/view/wallet.dart';
+import 'package:casual/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
+import '../app/routes/routes.dart';
+import '../app/utils/colors.dart';
 import '../widgets/appbars.dart';
 import 'home/home.dart';
 import 'leaderboard/view/leaderboard.dart';
@@ -24,6 +28,24 @@ class NavbarView extends StatefulWidget {
 class NavbarState extends State<NavbarView> {
   int currentTabIndex = 0;
   UserProvider userProvider = UserProvider();
+
+  showLogin() async {
+    await  Get.defaultDialog(
+        title: "Log In Now!",
+        titleStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+        middleText: "To fully explore and enjoy all the features and personalized content available, please create & log in to your account?",
+        middleTextStyle: TextStyle(fontSize: 12, color: Colors.white),
+        backgroundColor: AppColors.bluegray800Cc,
+        onConfirm: (){
+          Get.toNamed(DgRoutes.logInScreen);
+        },
+        onCancel: (){
+          setState(() {
+
+          });
+        });
+  }
+
   List<Widget> screens = [
      HomeView(),
     ProfileView(),
@@ -32,6 +54,7 @@ class NavbarState extends State<NavbarView> {
     WalletView(),
 
   ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +68,7 @@ class NavbarState extends State<NavbarView> {
   Container createBottombar(BuildContext context) {
     return Container(
         height: 70,
-        padding: const EdgeInsets.only(left:30, right:30),
+        padding: const EdgeInsets.only(left:30, right:30,top: 0),
         decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(38), topLeft: Radius.circular(38)),
@@ -73,9 +96,14 @@ class NavbarState extends State<NavbarView> {
             currentIndex: currentTabIndex,
             showUnselectedLabels: true,
             onTap: (index) {
-              setState(() {
-                currentTabIndex = index;
-              });
+              if((index == 1 || index == 4) && !userProvider.dgAuthService.isAuthenticated()){
+                showLogin();
+              }else{
+
+                setState(() {
+                  currentTabIndex = index;
+                });
+              }
             },
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(

@@ -38,8 +38,7 @@ class GameStartScreenController extends GetxController
       if (countdown.value == 0) {
         _timer?.cancel();
         gameStarted(true);
-        Get.offNamed(DgRoutes.authRoute(DgRoutes.activeGamePlayScreen),
-            arguments: {'url': "$url",'image':gameModel.value?.image, 'title':gameModel.value?.title});
+        Get.offNamed(DgRoutes.activeGamePlayScreen, arguments: {'url': "$url",'image':gameModel.value?.image, 'title':gameModel.value?.title});
       } else {
         countdown.value--;
       }
@@ -47,8 +46,7 @@ class GameStartScreenController extends GetxController
   }
 
   void goToGame() {
-    Get.offNamed(DgRoutes.authRoute(DgRoutes.activeGamePlayScreen),
-        arguments: {'url': gameModel.value?.url});
+    Get.offNamed(DgRoutes.activeGamePlayScreen, arguments: {'url': gameModel.value?.url});
   }
 
   @override

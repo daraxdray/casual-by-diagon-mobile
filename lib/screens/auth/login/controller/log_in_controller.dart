@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../app/providers/user_provider.dart';
 import '../../../../app/routes/routes.dart';
+import '../../../../app/utils/global_key_factory.dart';
 import '../../../../widgets/snackbar.dart';
 import '../models/log_in_model.dart';
 
@@ -13,11 +14,11 @@ import '../models/log_in_model.dart';
 class LogInController extends GetxController{
   TextEditingController emailCtr = TextEditingController();
   TextEditingController passwordCtr = TextEditingController();
-  final emailField = GlobalKey<FormFieldState>();
-  final pwField = GlobalKey<FormFieldState>();
+  final GlobalKey<FormFieldState>  emailField = GlobalKeyFactory.generateUniqueFormFieldKey();
+  final GlobalKey<FormFieldState> pwField = GlobalKeyFactory.generateUniqueFormFieldKey();
   final UserProvider userProvider = UserProvider();
   RxBool passVisible = false.obs;
-  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> loginFormKey = GlobalKeyFactory.generateUniqueFormKey();
   Rx<bool> loading = false.obs;
   final dgAuthService = Get.find<DgAuthService>();
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -60,6 +61,7 @@ class LogInController extends GetxController{
           emailCtr.text.trim(), passwordCtr.text, deviceId!, '$deviceInfo');
       var result = await userProvider.login(logInModelObj);
       if(result) {
+
         Get.offAllNamed(DgRoutes.gameHomeScreen);
       }
       loading(false);

@@ -8,12 +8,13 @@ import '../../../../app/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../app/services/auth_service.dart';
+import '../../../../app/utils/global_key_factory.dart';
 import '../../../../widgets/snackbar.dart';
 
 
 class ForgotPasswordController extends GetxController {
   TextEditingController emailCtr = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKeyFactory.generateUniqueFormKey();
   UserProvider _userProvider = UserProvider();
 RxInt activeImage = 0.obs;
 RxString selectedImage = "".obs;

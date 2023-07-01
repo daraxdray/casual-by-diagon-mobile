@@ -11,6 +11,7 @@ import '../../app/models/game_result_model.dart';
 import '../../app/providers/user_provider.dart';
 import '../../app/routes/routes.dart';
 import '../../app/services/auth_service.dart';
+import '../../app/utils/global_key_factory.dart';
 import '../../app/utils/index.dart';
 import '../../widgets/common_image_view.dart';
 import '../../widgets/custom_icon_button.dart';
@@ -31,7 +32,7 @@ class ActiveGamePlayScreen extends StatefulWidget  {
 //USer Binding for monitoring pause events.
 // with WidgetsBindingObserver
 class _GameActivePlayScreenState extends State<ActiveGamePlayScreen>  with WidgetsBindingObserver {
-  final GlobalKey webViewKey = GlobalKey();
+  final GlobalKey webViewKey = GlobalKeyFactory.generateUniqueKey();
   InAppWebViewController? webViewController;
   InAppWebViewOptions settings = InAppWebViewOptions(
     useShouldOverrideUrlLoading: true,
@@ -41,7 +42,7 @@ class _GameActivePlayScreenState extends State<ActiveGamePlayScreen>  with Widge
     // iframeAllowFullscreen: true
   );
   final UserProvider userProvider = UserProvider();
-  final DgAuthService dgAuth = DgAuthService();
+  // final DgAuthService dgAuth = DgAuthService();
   late ContextMenu contextMenu;
   String url = "";
   String? image;
@@ -136,9 +137,9 @@ class _GameActivePlayScreenState extends State<ActiveGamePlayScreen>  with Widge
   }
 
   void processGameResult() async {
-    // print(gameResult.event);
-    // print(totalSec);
-    // infoSnack("ASD", gameResult.event);
+    print(gameResult.event);
+    print(totalSec);
+    infoSnack("ASD", gameResult.event);
     switch(gameResult.event){
       case "EVENT_CUSTOM":
         //OMNOM RUN
@@ -276,8 +277,8 @@ class _GameActivePlayScreenState extends State<ActiveGamePlayScreen>  with Widge
                 Navigator.pop(context, true);
                 if(accumulated == 0 )
                 {
-                  Get.offAllNamed(DgRoutes.authRoute(DgRoutes
-                      .gameHomeScreen));
+                  Get.offAllNamed(DgRoutes
+                      .gameHomeScreen);
                 }else {
                   Get.offAllNamed(DgRoutes.authRoute(DgRoutes
                       .gamePlayGameOver), arguments: gameResult);
@@ -341,6 +342,8 @@ class _GameActivePlayScreenState extends State<ActiveGamePlayScreen>  with Widge
                             //check if message is game event
                             if(callback[0].runtimeType.toString() == '_InternalLinkedHashMap<String, dynamic>') {
                                //get the time to prevent multiple submission.
+                              print("GETS HERE");
+
                               Map<String,
                                   dynamic> logMessage = callback[0] as Map<
                                   String,

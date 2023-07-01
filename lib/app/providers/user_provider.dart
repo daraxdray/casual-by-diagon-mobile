@@ -148,6 +148,7 @@ class UserProvider extends GetConnect with DgMixing{
 
 
   Future<UserModel?> getProfile() async {
+    if(dgAuthService.isAuthenticated()){
     Map<String,dynamic>? result1 = await  dgResponse(() async {
       Map<String,dynamic> result = await networkService.get("${DgApiRoutes.profile}${dgAuthService.getAuthUser().id}",);
       result['avatar'] = dgAuthService.userData.read("avatar") ?? 1;
@@ -158,7 +159,8 @@ class UserProvider extends GetConnect with DgMixing{
       return UserModel.profileFromJson(result1);
     } else {
       return null;
-    }
+    }}
+    return null;
   }
 
   Future<List<DgReferrerModel?>> getUserReferrers() async {

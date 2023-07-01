@@ -11,6 +11,7 @@ import '../../../app/utils/index.dart';
 import '../../../widgets/index.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import '../../app/providers/user_provider.dart';
+import '../../app/routes/routes.dart';
 import '../../widgets/full_page_loader.dart';
 import 'controller/raffle_draw_controller.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
@@ -280,6 +281,7 @@ class RaffleDrawView extends GetView<RaffleDrawController> {
                       ));
                 }),
             const SizedBox(height: 24),
+            controller.authService.isAuthenticated()?
             AppButton.button(
                 minimumSize: const Size(double.maxFinite, 49),
                 backgroundColor: controller.authService.getAuthProfile().raffleDraw == false?  const Color(0xFFDE419F)
@@ -296,7 +298,24 @@ class RaffleDrawView extends GetView<RaffleDrawController> {
                     fontWeight: FontWeight.bold),
                 onPressed: controller.authService.getAuthProfile().raffleDraw == true?
                     ()=> {}
-                    :()=> controller.joinRaffle() )
+                    :()=> controller.joinRaffle() ):
+            AppButton.button(
+                minimumSize: const Size(double.maxFinite, 49),
+                backgroundColor: controller.authService.getAuthProfile().raffleDraw == false?  const Color(0xFFDE419F)
+                    :  const Color(0x885D5659),
+                child: controller.authService.getAuthProfile().raffleDraw == true? AppText.text('You have joined the Raffle Draw',
+                    fontWeight: FontWeight.bold): controller.joinLoading.value? Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    height: 20,
+                    width: 20,
+                    child: const CircularProgressIndicator(
+                      strokeWidth: 3.4,
+                      color: Colors.white,
+                    )):AppText.text('Login to Join Raffle',
+                    fontWeight: FontWeight.bold),
+                onPressed:
+                    ()=> Get.offAndToNamed(DgRoutes.logInScreen))
+
           ],
         ));
   }
@@ -381,6 +400,7 @@ class RaffleDrawView extends GetView<RaffleDrawController> {
                       ));
                 }),
             const SizedBox(height: 24),
+            controller.authService.isAuthenticated()?
             AppButton.button(
                 minimumSize: const Size(double.maxFinite, 49),
                 backgroundColor: controller.authService.getAuthProfile().luckyDraw == false? const Color(0xFFFFAD31)
@@ -397,7 +417,22 @@ class RaffleDrawView extends GetView<RaffleDrawController> {
                     fontWeight: FontWeight.w600),
                 onPressed: controller.authService.getAuthProfile().luckyDraw == true?
                     ()=> {}
-                    :()=> controller.joinLucky() )
+                    :()=> controller.joinLucky() ):
+            AppButton.button(
+                minimumSize: const Size(double.maxFinite, 49),
+                backgroundColor: controller.authService.getAuthProfile().luckyDraw == false? const Color(0xFFFFAD31)
+                : const Color(0x885D5659),
+                child: controller.authService.getAuthProfile().raffleDraw == true? AppText.text('You have joined the Lucky Draw',
+                    fontWeight: FontWeight.bold): controller.joinLuckyLoading.value? Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    height: 20,
+                    width: 20,
+                    child: const CircularProgressIndicator(
+                      strokeWidth: 3.4,
+                      color: Colors.white,
+                    )) : AppText.text('Login to Join Lucky Draw',
+                    fontWeight: FontWeight.w600),
+                onPressed:()=> Get.offAndToNamed(DgRoutes.logInScreen) )
           ],
         ));
   }
@@ -410,7 +445,6 @@ class RaffleDrawView extends GetView<RaffleDrawController> {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
-          print(controller.raffles[index].category);
           return Container(
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
               child: Row(children: [

@@ -4,7 +4,17 @@
             "outputFile": "/Users/mac/Mobiles/casual/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-v24/values-v24.xml",
             "map": [
                 {
-                    "source": "/Users/mac/.gradle/caches/transforms-3/7ba4e02eebf1c5c3cf0304c3d90bcbb5/transformed/media-1.1.0/res/values-v24/values-v24.xml",
+                    "source": "/Users/mac/.gradle/caches/transforms-3/6d576dbbb991073e96a9ac410a6bde05/transformed/appcompat-1.5.1/res/values-v24/values-v24.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,212",
+                        "endColumns": "156,134",
+                        "endOffsets": "207,342"
+                    }
+                },
+                {
+                    "source": "/Users/mac/.gradle/caches/transforms-3/74eff0e992f2cf031a4f6e41f9233d6c/transformed/media-1.1.0/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -18,16 +28,6 @@
                         "startOffsets": "347,413,474,540",
                         "endColumns": "65,60,65,66",
                         "endOffsets": "408,469,535,602"
-                    }
-                },
-                {
-                    "source": "/Users/mac/.gradle/caches/transforms-3/eb430d2ed3cd09eb5ba32ca89355e03c/transformed/appcompat-1.5.1/res/values-v24/values-v24.xml",
-                    "from": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,212",
-                        "endColumns": "156,134",
-                        "endOffsets": "207,342"
                     }
                 }
             ]

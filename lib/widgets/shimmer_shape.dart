@@ -9,12 +9,16 @@ class ShimmerShape extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 
-    return ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(16)),
-        child: LinearProgressIndicator(
-        color: AppColors.black90033,
-        backgroundColor: AppColors.primaryColor,
-      ),
+    return SizedBox(
+     height: height ??20,
+     width: width ?? 20,
+     child: ClipRRect(
+       borderRadius: const BorderRadius.all(Radius.circular(16)),
+       child: LinearProgressIndicator(
+         color: AppColors.black90033,
+         backgroundColor: AppColors.primaryColor,
+       ),
+     ),
     );
   }
 

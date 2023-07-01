@@ -80,6 +80,33 @@ class WelcomeView extends StatelessWidget {
                                 backgroundColor: Colors.white.withOpacity(0.4),
                                 borderSide: const BorderSide(
                                     color: Colors.white, width: 1.5))),
+                        const SizedBox(height: 15),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: AppButton.button(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 17),
+                                child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SvgPicture.asset(
+                                          'assets/svg/games_icon.svg',
+                                          color: Colors.white,
+                                          width: 24),
+                                      AppText.text('Play Game',
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15),
+                                      const SizedBox(width: 24),
+                                    ]),
+                                onPressed: () => Get.toNamed(DgRoutes.gameHomeScreen),
+                                minimumSize: Size(
+                                    MediaQuery.of(context).size.width * 0.8, 55),
+                                backgroundColor: Colors.blue.withOpacity(0.4),
+                                borderSide: const BorderSide(
+                                    color: Colors.white, width: 1.5))),
+
                         const SizedBox(height: 23),
                         SizedBox(
                             width: MediaQuery.of(context).size.width * 0.8,

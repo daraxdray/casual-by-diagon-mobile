@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../../../app/providers/user_provider.dart';
 import '../../../../app/routes/routes.dart';
 import '../../../../app/services/auth_service.dart';
+import '../../../../app/utils/global_key_factory.dart';
 import '../../../../widgets/snackbar.dart';
 import '../models/sign_up_two_model.dart';
 
@@ -10,10 +11,10 @@ class SignUpTwoController extends GetxController {
   TextEditingController emailCtr = TextEditingController();
   TextEditingController refferedCtr = TextEditingController();
   TextEditingController passwordCtr = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final emailField = GlobalKey<FormFieldState>();
-  final refferedField = GlobalKey<FormFieldState>();
-  final pwField = GlobalKey<FormFieldState>();
+  final GlobalKey<FormState> formKey = GlobalKeyFactory.generateUniqueFormKey();
+  final GlobalKey<FormFieldState> emailField = GlobalKeyFactory.generateUniqueFormFieldKey();
+  final GlobalKey<FormFieldState> refferedField = GlobalKeyFactory.generateUniqueFormFieldKey();
+  final GlobalKey<FormFieldState> pwField = GlobalKeyFactory.generateUniqueFormFieldKey();
   RxBool passVisible = false.obs;
   Rx<bool> loading = false.obs;
   final DgAuthService dgAuthService = DgAuthService();

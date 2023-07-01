@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "/Users/mac/Mobiles/casual/build/flutter_inappwebview/intermediates/merged_res/release/animator/fragment_fade_exit.xml",
+        "source": "/Users/mac/.gradle/caches/transforms-3/f3e037c38f64e9309943c80e2ca7fa4f/transformed/fragment-1.3.6/res/animator/fragment_fade_exit.xml"
+    },
+    {
+        "merged": "/Users/mac/Mobiles/casual/build/flutter_inappwebview/intermediates/merged_res/release/animator/fragment_open_enter.xml",
+        "source": "/Users/mac/.gradle/caches/transforms-3/f3e037c38f64e9309943c80e2ca7fa4f/transformed/fragment-1.3.6/res/animator/fragment_open_enter.xml"
+    },
+    {
+        "merged": "/Users/mac/Mobiles/casual/build/flutter_inappwebview/intermediates/merged_res/release/animator/fragment_close_enter.xml",
+        "source": "/Users/mac/.gradle/caches/transforms-3/f3e037c38f64e9309943c80e2ca7fa4f/transformed/fragment-1.3.6/res/animator/fragment_close_enter.xml"
+    },
+    {
+        "merged": "/Users/mac/Mobiles/casual/build/flutter_inappwebview/intermediates/merged_res/release/animator/fragment_fade_enter.xml",
+        "source": "/Users/mac/.gradle/caches/transforms-3/f3e037c38f64e9309943c80e2ca7fa4f/transformed/fragment-1.3.6/res/animator/fragment_fade_enter.xml"
+    },
+    {
+        "merged": "/Users/mac/Mobiles/casual/build/flutter_inappwebview/intermediates/merged_res/release/animator/fragment_close_exit.xml",
+        "source": "/Users/mac/.gradle/caches/transforms-3/f3e037c38f64e9309943c80e2ca7fa4f/transformed/fragment-1.3.6/res/animator/fragment_close_exit.xml"
+    },
+    {
+        "merged": "/Users/mac/Mobiles/casual/build/flutter_inappwebview/intermediates/merged_res/release/animator/fragment_open_exit.xml",
+        "source": "/Users/mac/.gradle/caches/transforms-3/f3e037c38f64e9309943c80e2ca7fa4f/transformed/fragment-1.3.6/res/animator/fragment_open_exit.xml"
+    }
+]

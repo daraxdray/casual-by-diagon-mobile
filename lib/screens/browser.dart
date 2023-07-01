@@ -10,6 +10,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../app/utils/index.dart';
+import '../app/utils/global_key_factory.dart';
 
 class BrowserScreen extends StatefulWidget {
   const BrowserScreen({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class BrowserScreen extends StatefulWidget {
 }
 
 class _BrowserScreenState extends State<BrowserScreen> {
-  final GlobalKey webViewKey = GlobalKey();
+  final GlobalKey webViewKey = GlobalKeyFactory.generateUniqueKey();
   InAppWebViewController? webViewController;
   InAppWebViewOptions settings = InAppWebViewOptions(
     useShouldOverrideUrlLoading: true,

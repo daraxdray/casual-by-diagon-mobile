@@ -8,16 +8,17 @@ import '../../../app/models/user.dart';
 import '../../../app/providers/user_provider.dart';
 import '../../../app/routes/routes.dart';
 import '../../../app/services/auth_service.dart';
+import '../../../app/utils/global_key_factory.dart';
 
 class EditProfileController extends GetxController {
   TextEditingController firstNameCtr = TextEditingController();
   TextEditingController lastNameCtr = TextEditingController();
   TextEditingController usernameCtr = TextEditingController();
   DgAuthService authService = Get.find<DgAuthService>();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final fNameField = GlobalKey<FormFieldState>();
-  final lNameField = GlobalKey<FormFieldState>();
-  final uNameField = GlobalKey<FormFieldState>();
+  final GlobalKey<FormState> formKey = GlobalKeyFactory.generateUniqueFormKey();
+  final GlobalKey<FormFieldState> fNameField = GlobalKeyFactory.generateUniqueFormFieldKey();
+  final GlobalKey<FormFieldState> lNameField = GlobalKeyFactory.generateUniqueFormFieldKey();
+  final GlobalKey<FormFieldState> uNameField = GlobalKeyFactory.generateUniqueFormFieldKey();
   RxString selectedImage = "".obs;
   final UserProvider userProvider = UserProvider();
   UserModel? user;

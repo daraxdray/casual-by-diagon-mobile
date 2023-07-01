@@ -74,7 +74,7 @@ class GameDetailsController extends GetxController {
     Get.toNamed(DgRoutes.updateScreen);
     return;
     }
-    Get.toNamed(DgRoutes.authRoute(DgRoutes.gameStart), arguments:gameModel.value);
+    Get.toNamed(DgRoutes.gameStart, arguments:gameModel.value);
 
   }else{
     successSnack("Info", "Please wait - Loading Game");

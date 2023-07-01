@@ -357,7 +357,7 @@ class GameStartScreen extends GetWidget<GameStartScreenController> {
                                 bottom: 12,
                               ),
                               child: Text(
-                                "${controller.dgAuthService.getAuthProfile().username}",
+                                "${controller.dgAuthService.getAuthProfile().username ?? 'Anonymous'}",
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtInterBold17.copyWith(fontSize: 23),

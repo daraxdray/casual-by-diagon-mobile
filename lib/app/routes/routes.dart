@@ -2,6 +2,7 @@
 import 'package:casual/screens/auth/forgot_password/index.dart';
 import 'package:casual/screens/onboarding/splash_diagon.dart';
 import 'package:casual/screens/profile/referral.dart';
+import 'package:casual/shop/screens/app_nav/app_nav.dart';
 
 import '../../screens/active_game_play_screen/index.dart';
 import '../../screens/browser.dart';
@@ -80,9 +81,10 @@ static String activeGamePlayScreen = '/active_game_play';
 static String noInternet = '/no-internet';
 static String verifyEmail = '/verify-email';
 static String accountDeactivated = '/account-inactive';
+static String shopping = '/shopping';
 
 
-static String authRoute(String route) => gameHomeScreen+route;
+static String authRoute(String route) => auth+route;
 
 static List<GetPage> pages = [
  //
@@ -102,22 +104,26 @@ static List<GetPage> pages = [
   GetPage(name:accountDeactivated, page: ()=> const AccountDeactivated(),transition: Transition.rightToLeft),
 
 
- GetPage(name:gameHomeScreen, page: ()=> const NavbarView(),transition: Transition.size,
-     middlewares: [AuthGuard()],
-     children: [
-        GetPage(name:gameRulesScreen, page: ()=> RulesView(),transition: Transition.rightToLeft, bindings: [ GamePlayBinding()]),
+ GetPage(name:gameHomeScreen, page: ()=> const NavbarView(),transition: Transition.size,),
+ GetPage(name:gameRulesScreen, page: ()=> RulesView(),transition: Transition.rightToLeft, bindings: [ GamePlayBinding()]),
+ GetPage(name:gameStart, page: ()=> const GameStartScreen(),transition: Transition.rightToLeft, bindings: [ GameStartBinding()],),
+ GetPage(name:activeGamePlayScreen, page: ()=>const  ActiveGamePlayScreen(),transition: Transition.rightToLeftWithFade, bindings:[ ActiveGamePlayBinding() ]),
+ GetPage(name: shopping,page: () => const ShopNavView()),
+
+
+  GetPage(name:auth, page: ()=> const NavbarView(),transition: Transition.size,
+      middlewares: [AuthGuard()],
+      children: [
+
         GetPage(name:userProfileScreen, page: ()=>  ProfileView(),transition: Transition.upToDown, bindings: [ UserProfileBinding()]),
         GetPage(name:profileSettingsScreen, page: ()=> ProfileSettingView(),transition: Transition.upToDown, bindings: [ ProfileSettingsBinding()]),
-        GetPage(name:gameStart, page: ()=> GameStartScreen(),transition: Transition.rightToLeft, bindings: [ GameStartBinding()],),
         GetPage(name:allTransactions, page: ()=>const AllTransactions(),transition: Transition.rightToLeft, bindings: [ AllTransactionBinding()],),
         GetPage(name:allReferrers, page: ()=>const AllReferralsView(),transition: Transition.rightToLeft, bindings: [ AllReferralsBinding()],),
-        GetPage(name:activeGamePlayScreen, page: ()=>const  ActiveGamePlayScreen(),transition: Transition.rightToLeftWithFade, bindings:[ ActiveGamePlayBinding() ]),
         GetPage(name:gamePlayGameOver, page: ()=> GamePlayScreenGameOverDialog(),transition: Transition.rightToLeftWithFade,),
         GetPage(name:editProfileScreen, page: ()=> EditProfileView(),transition: Transition.rightToLeftWithFade, bindings: [ EditProfileBinding()]),
         GetPage(name:pastActivityScreen, page: ()=> PastActivitiesView(),transition: Transition.rightToLeftWithFade, bindings: [ PastActivityBinding()]),
         GetPage(name:highScoreScreen, page: ()=> HighScoreView(),transition: Transition.rightToLeftWithFade, bindings: [ HighScoreBinding()]),
-        GetPage(name: referralScreen,page: () => ReferralView(), bindings: [ReferralBinding(),],
- ),
+        GetPage(name: referralScreen,page: () => const ReferralView(), bindings: [ReferralBinding(),],),
  //        GetPage(name:leaderBoardScreen, page: ()=> LeaderBoardScreen(),transition: Transition.rightToLeftWithFade, bindings: [ LeaderBoardBinding()]),
  //        GetPage(name:gamePlayScreenRemarkScreen, page: ()=> GamePlayScreenRemarkScreen(),transition: Transition.rightToLeftWithFade, bindings: [ GamePlayScreenRemarkBinding()]),
  //        GetPage(name:gameRankingScreen, page: ()=> GameRankingScreen(),transition: Transition.rightToLeftWithFade, bindings: [ GameRankingBinding()]),

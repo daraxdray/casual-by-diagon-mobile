@@ -86,7 +86,10 @@ return;
     Future.delayed(const Duration(seconds: 0), ()
         {
 
-          return authService.isAuthenticated()?  Get.offAllNamed(DgRoutes.gameHomeScreen) :  Get.toNamed(DgRoutes.startPage);
+          return
+            // authService.isAuthenticated()?
+            Get.offAllNamed(DgRoutes.gameHomeScreen);
+              // :  Get.toNamed(DgRoutes.startPage);
         });
   }
 }

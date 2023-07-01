@@ -45,7 +45,7 @@ class DgAuthService extends GetxService{
 
   bool isAuthenticated(){
     try {
-      if (userData.hasData("access_token") == false || getAuthProfile().id  == null) {
+      if (userData.hasData("access_token") == false && getAuthProfile().id  == null) {
         return false;
       }
       return true;

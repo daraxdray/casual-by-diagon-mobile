@@ -73,7 +73,9 @@ HomeScreenController  controller = Get.put(HomeScreenController());
                     ),
                   ),
                   Obx(()=> Column(children: [
-                    controller.componentsLoaded.value? heroImage(context, null) : heroImage(context, ShimmerShape(),),
+                    controller.componentsLoaded.value?
+                    heroImage(context, null) :
+                    heroImage(context, ShimmerShape(),),
                     controller.componentsLoaded.value?   TopGamesView(gameList: controller.topGameList,) : TopGamesView(gameList: [],),
                     const SizedBox(height: 20),
                     DailyChallengeView(gameList: controller.dailyChallenge,),

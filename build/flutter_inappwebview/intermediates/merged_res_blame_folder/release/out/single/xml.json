@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/mac/Mobiles/casual/build/flutter_inappwebview/intermediates/merged_res/release/xml/image_share_filepaths.xml",
+        "source": "/Users/mac/.gradle/caches/transforms-3/903178525f4f1a44ca1fad866d6cf2a6/transformed/browser-1.4.0/res/xml/image_share_filepaths.xml"
+    },
+    {
+        "merged": "/Users/mac/Mobiles/casual/build/flutter_inappwebview/intermediates/merged_res/release/xml/provider_paths.xml",
+        "source": "/Users/mac/.pub-cache/hosted/pub.dev/flutter_inappwebview-5.7.2+2/android/src/main/res/xml/provider_paths.xml"
+    }
+]

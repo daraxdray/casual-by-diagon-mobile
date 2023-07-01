@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/mac/Mobiles/casual/build/platform_device_id/intermediates/merged_res/release/values-ar/values-ar.xml",
+            "map": [
+                {
+                    "source": "/Users/mac/.gradle/caches/transforms-3/09d9fc328044a9a584d030aa66eea31c/transformed/core-1.6.0/res/values-ar/values-ar.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/Users/mac/Mobiles/casual/build/platform_device_id/intermediates/incremental/mergeReleaseResources/merged.dir/values-ar/values-ar.xml",
+            "map": [
+                {
+                    "source": "/Users/mac/.gradle/caches/transforms-3/09d9fc328044a9a584d030aa66eea31c/transformed/core-1.6.0/res/values-ar/values-ar.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}

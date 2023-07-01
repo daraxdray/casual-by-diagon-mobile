@@ -4,10 +4,11 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app/services/auth_service.dart';
+import '../../../app/utils/global_key_factory.dart';
 
 class ActiveGamePlayController extends GetxController {
 
-  final GlobalKey webViewKey = GlobalKey();
+  // final GlobalKey webViewKey = GlobalKeyFactory.generateUniqueKey();
 
   Rx<InAppWebViewController>? webViewController;
   InAppWebViewOptions settings = InAppWebViewOptions(

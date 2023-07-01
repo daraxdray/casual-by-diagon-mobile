@@ -35,7 +35,7 @@ class TopGamesView extends StatelessWidget {
                     itemBuilder: (context, index) => DgClickable(
                         onTap: () {
                           Get.delete<GameDetailsController>();
-                          Get.toNamed(DgRoutes.authRoute(DgRoutes.gameRulesScreen),
+                          Get.toNamed(DgRoutes.gameRulesScreen,
     preventDuplicates: false,
 
     arguments: {

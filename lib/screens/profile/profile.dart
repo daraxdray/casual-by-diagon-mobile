@@ -49,6 +49,7 @@ class ProfileView extends GetView<UserProfileController> {
                         highScore(context),
                         pastActivities(context),
                         referralCode(context),
+                        shopShow(context),
                         community(context),
                           const  SizedBox(height:30)
                       ])))),
@@ -337,6 +338,18 @@ class ProfileView extends GetView<UserProfileController> {
               SvgPicture.asset('assets/svg/user_group.svg'),
               const SizedBox(width: 10),
               AppText.text('My Referral Code', fontWeight: FontWeight.w500)
+            ])));
+  }
+  Widget shopShow(context) {
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20)
+            .add(const EdgeInsets.only(top: 10)),
+        child: AppButton.button(
+            onPressed: () =>Get.toNamed(DgRoutes.shopping),backgroundColor: const Color(0xFF12162E),
+            child: Row(children: [
+              SvgPicture.asset('assets/svg/cart.svg.svg'),
+              const SizedBox(width: 10),
+              AppText.text('Go to shop', fontWeight: FontWeight.w500)
             ])));
   }
 
